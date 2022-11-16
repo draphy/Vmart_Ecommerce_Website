@@ -63,8 +63,8 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  // res.redirect('/homepage')
-  res.render("error", { user: false, issue: true });
+  res.redirect('/homepage')
+  // res.render("error", { user: false, issue: true });
 });
 
 module.exports = app;
