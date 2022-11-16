@@ -1,0 +1,306 @@
+<%-include('../partials/userHeader.ejs') %>
+<!-- Breadcrumb Section Begin -->
+<section
+  class="breadcrumb-section set-bg"
+  data-setbg="../../images/vegetables4_b72-.jpg"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <div class="breadcrumb__text">
+          <h2>Wishlist</h2>
+          <div class="breadcrumb__option">
+            <a href="./index.html">Home</a>
+            <span>Wishlist</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+  <% if(userRole.wishlist) { %> <% if(userRole.wishlist.length) { %>
+  <div class="container" id="cartListingDivId">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="shoping__cart__table">
+          <table id="cartListingTableId">
+            <thead>
+              <tr>
+                <th class="shoping__product">Product</th>
+                <th>Price</th>
+
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for (let i=0; i < wishlistItems.length; i++) { %>
+
+              <tr id="cartRowProducts<%=i+1%>">
+                <td class="shoping__cart__item">
+                  <img
+                    src="../../productsImages/<%=wishlistItems[i].productDetails._id %>.jpg"
+                    style="width: 3rem"
+                    alt=""
+                  />
+
+                  <a
+                    href="/homepage/home/<%=wishlistItems[i].productDetails.productsName.replace(' ','_')%>?productId=<%=wishlistItems[i].productDetails._id%>"
+                  >
+                    <h5>
+                      <%=wishlistItems[i].productDetails.productsName %>
+                      <span style="font-size: 1rem"
+                        >(<%=wishlistItems[i].weight
+                        %><%=wishlistItems[i].productDetails.massUnit %>)</span
+                      >
+                    </h5>
+                  </a>
+                </td>
+                <td class="shoping__cart__price">
+                  ₹
+                  <%=wishlistItems[i].productDetails.price*(wishlistItems[i].weight/500)
+                  %>
+                </td>
+
+                <td class="shoping__cart__item__close">
+                  <% if(wishlistItems[i].weight==500) { %> <%
+                  if(wishlistItems[i].productDetails.instock.half>10) { %>
+
+                  <span
+                    href="javascript:void(0);"
+                    onclick="addToCart('<%=wishlistItems[i].weight%>','<%=wishlistItems[i].productDetails._id %>','<%=i+1%>')"
+                    class="fa fa-shopping-cart"
+                    style="color: black; width: 6rem"
+                  ></span>
+
+                  <% }else { %>
+
+                  <span style="color: red">Out of Stock</span>
+
+                  <% } %> <% }else { %> <%
+                  if(wishlistItems[i].productDetails.instock.full>10) { %>
+
+                  <span
+                    href="javascript:void(0);"
+                    onclick="addToCart('<%=wishlistItems[i].weight%>','<%=wishlistItems[i].productDetails._id %>','<%=i+1%>')"
+                    class="fa fa-shopping-cart"
+                    style="color: black; width: 6rem"
+                  ></span>
+
+                  <% }else { %>
+
+                  <span style="color: red">Out of Stock</span>
+
+                  <% } %> <% } %> &nbsp; &nbsp; &nbsp;
+                  <span
+                    onclick="wishlistProductDelete('<%=wishlistItems[i].productDetails._id %>','<%=wishlistItems[i].productDetails.productsName %>','<%=i+1%>','<%=wishlistItems[i].weight%>')"
+                    class="icon_close"
+                    style="
+                      color: red;
+                      border-radius: 24px;
+                      border: 1px solid rgba(0, 0, 0, 0.5);
+                    "
+                  ></span>
+                </td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="shoping__cart__btns">
+          <a href="/homepage" class="primary-btn cart-btn btn-success"
+            >CONTINUE SHOPPING</a
+          >
+        </div>
+      </div>
+      <div class="col-lg-6"></div>
+      <div class="col-lg-6"></div>
+    </div>
+  </div>
+  <% }else {%>
+
+  <div class="row container-fluid">
+    <div class="col-md-12">
+      <div class="col-sm-12 empty-cart-cls text-center">
+        <img
+          src="../../images/cart_is_empty.gif"
+          width="380rem"
+          height="330rem"
+          class="img-fluid mb-4 mr-3"
+        />
+        <h3><strong>Your wishlist is Empty</strong></h3>
+        <h4>Add something You Wish to Buy :)</h4>
+        <a
+          href="/homepage"
+          class="btn btn-success cart-btn-transform m-3"
+          data-abc="true"
+          >continue shopping</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <% } %> <% }else {%>
+
+  <div class="row container-fluid">
+    <div class="col-md-12">
+      <div class="col-sm-12 empty-cart-cls text-center">
+        <img
+          src="../../images/cart_is_empty.gif"
+          width="380rem"
+          height="330rem"
+          class="img-fluid mb-4 mr-3"
+        />
+        <h3><strong>Your wishlist is Empty</strong></h3>
+        <h4>Add something You Wish to Buy :)</h4>
+        <a
+          href="/homepage"
+          class="btn btn-success cart-btn-transform m-3"
+          data-abc="true"
+          >continue shopping</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <% } %>
+</section>
+<!-- Shoping Cart Section End -->
+
+<!-- Footer Section Begin -->
+<%-include('../partials/userFooter.ejs') %>
+
+<script>
+  function addToCart(weight, productId, idCount) {
+    $.ajax({
+      url: "/homepage/add_to_cart",
+      data: { weight: weight, productId: productId, quantity: 1 },
+      method: "POST",
+      success: function (response) {
+        if (response.state) {
+          Swal.fire({
+            icon: "success",
+            title: "Added to Cart",
+
+            showConfirmButton: false,
+            timer: 2500,
+          }).then((state) => {
+            if (state) {
+              document.getElementById(`cartRowProducts${idCount}`).remove();
+
+              let countOrgWish = document.getElementById(
+                "spanWishlistProductCount"
+              ).innerHTML;
+              console.log(countOrgWish, "hi");
+
+              document.getElementById("spanWishlistProductCount").innerHTML =
+                Number(countOrgWish) - 1;
+
+              var rowCount = $("#cartListingTableId tr").length;
+              console.log(rowCount, "row count");
+
+              if (rowCount == 1) {
+                document.getElementById(
+                  "cartListingDivId"
+                ).innerHTML = ` <div class="row container-fluid ">
+  <div class="col-md-12">
+              <div class="col-sm-12 empty-cart-cls text-center">
+               <img src="../../images/cart_is_empty.gif" width="380rem" height="330rem" class="img-fluid mb-4 mr-3">
+              <h3><strong>Your Wishlist is Empty</strong></h3>
+               <h4>Add something You Wish to Buy :)</h4>
+               <a href="/homepage" class="btn btn-success cart-btn-transform m-3" data-abc="true">continue shopping</a>        
+     </div>
+   </div>
+</div>`;
+              }
+
+              if (response.message == "insert") {
+                let countOrg = document.getElementById(
+                  "spanCartProductCount"
+                ).innerHTML;
+                console.log(countOrg, "hi");
+                document.getElementById("spanCartProductCount").innerHTML =
+                  Number(countOrg) + 1;
+              }
+            }
+          });
+        } else {
+          showPopup();
+        }
+      },
+      error: function (err) {
+        alert("Something Error");
+      },
+    });
+  }
+
+  function wishlistProductDelete(productId, productName, idCount, weight) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to remove ${productName} `,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: "/homepage/wishlist_delete",
+          data: { productId: productId, weight: weight },
+          method: "DELETE",
+          success: function (response) {
+            Swal.fire({
+              icon: "success",
+              title: "Product Removed",
+
+              showConfirmButton: false,
+              timer: 1500,
+            }).then((state) => {
+              if (state) {
+                document.getElementById(`cartRowProducts${idCount}`).remove();
+
+                let countOrg = document.getElementById(
+                  "spanWishlistProductCount"
+                ).innerHTML;
+                console.log(countOrg, "hi");
+
+                document.getElementById("spanWishlistProductCount").innerHTML =
+                  Number(countOrg) - 1;
+
+                var rowCount = $("#cartListingTableId tr").length;
+                console.log(rowCount, "row count");
+
+                if (rowCount == 1) {
+                  document.getElementById(
+                    "cartListingDivId"
+                  ).innerHTML = ` <div class="row container-fluid ">
+  <div class="col-md-12">
+              <div class="col-sm-12 empty-cart-cls text-center">
+               <img src="../../images/cart_is_empty.gif" width="380rem" height="330rem" class="img-fluid mb-4 mr-3">
+              <h3><strong>Your Wishlist is Empty</strong></h3>
+               <h4>Add something You Wish to Buy :)</h4>
+               <a href="/homepage" class="btn btn-success cart-btn-transform m-3" data-abc="true">continue shopping</a>        
+     </div>
+   </div>
+</div>`;
+                }
+              }
+            });
+          },
+          error: function (err) {
+            alert("Something Error");
+          },
+        });
+      }
+    });
+  }
+</script>

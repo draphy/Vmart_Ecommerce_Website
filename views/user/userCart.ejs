@@ -1,0 +1,562 @@
+<%-include('../partials/userHeader.ejs') %>
+<!-- Breadcrumb Section Begin -->
+<section
+  class="breadcrumb-section set-bg"
+  data-setbg="../../images/vegetables4_b72-.jpg"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <div class="breadcrumb__text">
+          <h2>Shopping Cart</h2>
+          <div class="breadcrumb__option">
+            <a href="./index.html">Home</a>
+            <span>Shopping Cart</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+  <% if(cartItems.length) { %>
+
+  <div class="container" id="cartListingDivId">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="shoping__cart__table">
+          <table id="cartListingTableId">
+            <thead>
+              <tr>
+                <th class="shoping__product">Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for (let i=0; i < cartItems.length; i++) { %>
+
+              <tr id="cartRowProducts<%=i+1%>">
+                <td class="shoping__cart__item">
+                  <img
+                    src="../../productsImages/<%=cartItems[i].productDetails._id %>.jpg"
+                    style="width: 3rem"
+                    alt=""
+                  />
+                  <h5>
+                    <%=cartItems[i].productDetails.productsName %>
+                    <span style="font-size: 1rem"
+                      >(<%=cartItems[i].weight
+                      %><%=cartItems[i].productDetails.massUnit %>)</span
+                    >
+                  </h5>
+                </td>
+                <td class="shoping__cart__price">
+                  ₹
+                  <%=cartItems[i].productDetails.price*(cartItems[i].weight/500)
+                  %>
+                </td>
+
+                <% if(cartItems[i].weight==500) { %> <%
+                if(cartItems[i].productDetails.instock.half>10) { %>
+
+                <td class="shoping__cart__quantity">
+                  <div class="quantity">
+                    <div class="pro-qty">
+                      <input
+                        onclick="cartCountUpdate('<%=cartItems[i].productDetails._id %>','<%=i+1%>','<%=cartItems[i].categoryDetails.offer %>','<%=cartItems[i].productDetails.price*(cartItems[i].weight/500) %>','<%=cartItems[i].quantity %>','<%=cartItems[i].weight %>','<%=cartItems[i].uniqueId%>')"
+                        id="cartCountUpdateInput<%=i+1%>"
+                        type="number"
+                        value="<%=cartItems[i].quantity %>"
+                        readonly="readonly"
+                      />
+                    </div>
+                  </div>
+                </td>
+
+                <% }else { %>
+
+                <td style="width: 10rem">
+                  <span style="color: red">Out of Stock</span>
+                </td>
+
+                <% } %> <% }else { %> <%
+                if(cartItems[i].productDetails.instock.full>10) { %>
+
+                <td class="shoping__cart__quantity">
+                  <div class="quantity">
+                    <div class="pro-qty">
+                      <input
+                        onclick="cartCountUpdate('<%=cartItems[i].productDetails._id %>','<%=i+1%>','<%=cartItems[i].categoryDetails.offer %>','<%=cartItems[i].productDetails.price*(cartItems[i].weight/500) %>','<%=cartItems[i].quantity %>','<%=cartItems[i].weight %>','<%=cartItems[i].uniqueId%>')"
+                        id="cartCountUpdateInput<%=i+1%>"
+                        type="number"
+                        value="<%=cartItems[i].quantity %>"
+                        readonly="readonly"
+                      />
+                    </div>
+                  </div>
+                </td>
+
+                <% }else { %>
+
+                <td style="width: 10rem">
+                  <span style="color: red">Out of Stock</span>
+                </td>
+
+                <% } %> <% } %>
+
+                <td class="shoping__cart__total" id="singleProductCart<%=i+1%>">
+                  ₹
+                  <%=cartItems[i].productDetails.price*(cartItems[i].weight/500)*cartItems[i].quantity
+                  %>
+                </td>
+                <td class="shoping__cart__item__close">
+                  <span
+                    onclick="cartProductDelete('<%=cartItems[i].productDetails._id %>','<%=cartItems[i].productDetails.productsName %>','<%=i+1%>','<%=cartItems[i].categoryDetails.offer %>','<%=cartItems[i].productDetails.price*(cartItems[i].weight/500) %>','<%=cartItems[i].quantity %>','<%=cartItems[i].weight %>')"
+                    class="icon_close"
+                  ></span>
+                </td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="shoping__checkout">
+          <h5>Cart Total</h5>
+          <ul>
+            <li>
+              Subtotal <span id="cartTotalAmountId"><%=totalAmount%></span
+              ><span>₹</span>
+            </li>
+            <li>
+              Discount <span id="cartTotalDiscountId"><%=totalDiscount%></span
+              ><span>₹</span>
+            </li>
+            <li>
+              Total
+              <span id="cartRealTotalId"><%=totalAmount-totalDiscount%></span
+              ><span>₹</span>
+            </li>
+          </ul>
+          <a
+            href="#"
+            onclick="userProceedToCheckout()"
+            class="primary-btn btn-success"
+            >PROCEED TO CHECKOUT</a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="shoping__cart__btns">
+          <a href="/homepage" class="primary-btn cart-btn btn-success"
+            >CONTINUE SHOPPING</a
+          >
+          <!-- <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                        Upadate Cart</a> -->
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <!-- <div class="shoping__continue">
+                    <div class="shoping__discount">
+                        <h5>Discount Codes</h5>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your coupon code">
+                            <button type="submit" class="site-btn btn-success">APPLY COUPON</button>
+                        </form>
+                    </div>
+                </div> -->
+      </div>
+      <div class="col-lg-6">
+        <!-- <div class="shoping__checkout">
+                    <h5>Cart Total</h5>
+                    <ul>
+                        <li >Subtotal  <span id="cartTotalAmountId"  ><%=totalAmount%></span><span>₹</span></li>
+                        <li>Discount <span id="cartTotalDiscountId"  ><%=totalDiscount%></span><span>₹</span></li>
+                        <li>Total <span id="cartRealTotalId" ><%=totalAmount-totalDiscount%></span><span>₹</span></li>
+                    </ul>
+                    <a href="#" class="primary-btn btn-success">PROCEED TO CHECKOUT</a>
+                </div> -->
+      </div>
+    </div>
+  </div>
+  <% }else {%>
+
+  <div class="row container-fluid">
+    <div class="col-md-12">
+      <div class="col-sm-12 empty-cart-cls text-center">
+        <img
+          src="../../images/cart_is_empty.gif"
+          width="380rem"
+          height="330rem"
+          class="img-fluid mb-4 mr-3"
+        />
+        <h3><strong>Your Cart is Empty</strong></h3>
+        <h4>Add something to make me happy :)</h4>
+        <a
+          href="/homepage"
+          class="btn btn-success cart-btn-transform m-3"
+          data-abc="true"
+          >continue shopping</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <% } %>
+</section>
+<!-- Shoping Cart Section End -->
+
+<!-- Footer Section Begin -->
+<%-include('../partials/userFooter.ejs') %>
+
+<script>
+  var oldQuantityState = 0;
+
+  /*-------------------
+		Quantity change
+	--------------------- */
+  var proQty = $(".pro-qty");
+  proQty.prepend('<span class="dec qtybtn">-</span>');
+  proQty.append('<span class="inc qtybtn">+</span>');
+  proQty.on("click", ".qtybtn", function () {
+    var $button = $(this);
+    var oldValue = $button.parent().find("input").val();
+
+    window.oldQuantityState = oldValue;
+
+    if ($button.hasClass("inc")) {
+      var newVal = parseFloat(oldValue) + 1;
+    } else {
+      // Don't allow decrementing below zero
+      if (oldValue > 0) {
+        var newVal = parseFloat(oldValue) - 1;
+      } else {
+        newVal = 0;
+      }
+    }
+    $button.parent().find("input").val(newVal);
+    $button.parent().find("input").click();
+  });
+
+  function cartProductDelete(
+    productId,
+    productName,
+    idCount,
+    categoryOffer,
+    productPrice,
+    orgQuantity,
+    weight
+  ) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to delete ${productName} `,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: "/homepage/cart_delete",
+          data: { productId: productId, weight: weight },
+          method: "DELETE",
+          success: function (response) {
+            console.log(window.oldQuantityState, "hiiiiiiiiiiiiiiiiiiiii");
+
+            let subTotal =
+              document.getElementById("cartTotalAmountId").innerHTML;
+            let totalDiscount = document.getElementById(
+              "cartTotalDiscountId"
+            ).innerHTML;
+            //  let total =     document.getElementById(  "cartRealTotalId").innerHTML
+
+            let quantity = document.getElementById(
+              `cartCountUpdateInput${idCount}`
+            ).value;
+            console.log(quantity);
+
+            Swal.fire({
+              icon: "success",
+              title: "Product Removed",
+
+              showConfirmButton: false,
+              timer: 1500,
+            }).then((state) => {
+              if (state) {
+                document.getElementById(`cartRowProducts${idCount}`).remove();
+
+                let countOrg = document.getElementById(
+                  "spanCartProductCount"
+                ).innerHTML;
+                console.log(countOrg, "hi");
+
+                document.getElementById("spanCartProductCount").innerHTML =
+                  Number(countOrg) - 1;
+
+                var rowCount = $("#cartListingTableId tr").length;
+                console.log(rowCount, "row count");
+
+                if (rowCount == 1) {
+                  document.getElementById(
+                    "cartListingDivId"
+                  ).innerHTML = ` <div class="row container-fluid ">
+  <div class="col-md-12">
+              <div class="col-sm-12 empty-cart-cls text-center">
+               <img src="../../images/cart_is_empty.gif" width="380rem" height="330rem" class="img-fluid mb-4 mr-3">
+              <h3><strong>Your Cart is Empty</strong></h3>
+               <h4>Add something to make me happy :)</h4>
+               <a href="/homepage" class="btn btn-success cart-btn-transform m-3" data-abc="true">continue shopping</a>        
+     </div>
+   </div>
+</div>`;
+                } else {
+                  let categoryOffers = Number(categoryOffer);
+                  let productPrices = Number(productPrice);
+                  let orgQuantitys = Number(orgQuantity);
+                  console.log(categoryOffer, "categoryOffers");
+                  console.log(productPrices, "productPrices");
+                  console.log(orgQuantitys, "orgQuantitys");
+
+                  console.log(subTotal, "subtotal");
+                  let newSubTotal =
+                    Number(subTotal) - productPrices * Number(quantity);
+                  let newTotalDiscount =
+                    Number(totalDiscount) -
+                    productPrices * (categoryOffers / 100) * Number(quantity);
+                  document.getElementById("cartRealTotalId").innerHTML = (
+                    newSubTotal - newTotalDiscount
+                  ).toFixed(2);
+
+                  console.log(newSubTotal, "neew");
+                  document.getElementById("cartTotalAmountId").innerHTML =
+                    newSubTotal.toFixed(2);
+                  document.getElementById("cartTotalDiscountId").innerHTML =
+                    newTotalDiscount.toFixed(2);
+                }
+              }
+            });
+          },
+          error: function (err) {
+            alert("Something Error");
+          },
+        });
+      }
+    });
+  }
+
+  function cartCountUpdate(
+    productId,
+    idCount,
+    categoryOffer,
+    productPrice,
+    orgQuantity,
+    weight,
+    uniqueId
+  ) {
+    let quantity = document.getElementById(
+      `cartCountUpdateInput${idCount}`
+    ).value;
+    console.log(quantity);
+
+    if (Number(quantity)) {
+      $.ajax({
+        url: "/homepage/cart_count",
+        data: {
+          productId: productId,
+          quantity: quantity,
+          weight: weight,
+          uniqueId: uniqueId,
+        },
+        method: "PATCH",
+        success: function (response) {
+          console.log(window.oldQuantityState, "hiiiiiiiiiiiiiiiiiiiii");
+
+          let subTotal = document.getElementById("cartTotalAmountId").innerHTML;
+          let totalDiscount = document.getElementById(
+            "cartTotalDiscountId"
+          ).innerHTML;
+          //  let total =     document.getElementById(  "cartRealTotalId").innerHTML
+
+          quantity = document.getElementById(
+            `cartCountUpdateInput${idCount}`
+          ).value;
+          // console.log(quantity)
+
+          let categoryOffers = Number(categoryOffer);
+          let productPrices = Number(productPrice);
+          let orgQuantitys = Number(orgQuantity);
+          console.log(categoryOffer, "categoryOffers");
+          console.log(productPrices, "productPrices");
+          console.log(orgQuantitys, "orgQuantitys");
+
+          console.log(subTotal, "subtotal");
+          let newSubTotal =
+            Number(subTotal) -
+            productPrices * window.oldQuantityState +
+            productPrices * Number(quantity);
+          let newTotalDiscount =
+            Number(totalDiscount) -
+            productPrices * (categoryOffers / 100) * window.oldQuantityState +
+            productPrices * (categoryOffers / 100) * Number(quantity);
+          console.log(newSubTotal, "neew");
+
+          document.getElementById("cartTotalAmountId").innerHTML =
+            newSubTotal.toFixed(2);
+          document.getElementById("cartTotalDiscountId").innerHTML =
+            newTotalDiscount.toFixed(2);
+          document.getElementById("cartRealTotalId").innerHTML = (
+            newSubTotal - newTotalDiscount
+          ).toFixed(2);
+
+          document.getElementById(`singleProductCart${idCount}`).innerHTML =
+            "₹" + (Number(productPrice) * Number(quantity)).toFixed(2);
+          //   window.location.reload()
+        },
+        error: function (err) {
+          alert("Something Error");
+        },
+      });
+    } else {
+      $.ajax({
+        url: "/homepage/cart_count",
+        data: {
+          productId: productId,
+          quantity: quantity,
+          weight: weight,
+          uniqueId: uniqueId,
+        },
+        method: "PATCH",
+        success: function (response) {
+          console.log(window.oldQuantityState, "hiiiiiiiiiiiiiiiiiiiii");
+
+          let subTotal = document.getElementById("cartTotalAmountId").innerHTML;
+          let totalDiscount = document.getElementById(
+            "cartTotalDiscountId"
+          ).innerHTML;
+          //  let total =     document.getElementById(  "cartRealTotalId").innerHTML
+
+          quantity = document.getElementById(
+            `cartCountUpdateInput${idCount}`
+          ).value;
+          // console.log(quantity)
+
+          let categoryOffers = Number(categoryOffer);
+          let productPrices = Number(productPrice);
+          let orgQuantitys = Number(orgQuantity);
+          console.log(categoryOffer, "categoryOffers");
+          console.log(productPrices, "productPrices");
+          console.log(orgQuantitys, "orgQuantitys");
+
+          Swal.fire({
+            icon: "success",
+            title: "Product Removed",
+
+            showConfirmButton: false,
+            timer: 1500,
+          }).then((state) => {
+            if (state) {
+              document.getElementById(`cartRowProducts${idCount}`).remove();
+
+              let countOrg = document.getElementById(
+                "spanCartProductCount"
+              ).innerHTML;
+              console.log(countOrg, "hi");
+
+              document.getElementById("spanCartProductCount").innerHTML =
+                Number(countOrg) - 1;
+
+              var rowCount = $("#cartListingTableId tr").length;
+              console.log(rowCount, "row count");
+
+              if (rowCount == 1) {
+                document.getElementById(
+                  "cartListingDivId"
+                ).innerHTML = ` <div class="row container-fluid ">
+          <div class="col-md-12">
+                      <div class="col-sm-12 empty-cart-cls text-center">
+                       <img src="../../images/cart_is_empty.gif" width="380rem" height="330rem" class="img-fluid mb-4 mr-3">
+                      <h3><strong>Your Cart is Empty</strong></h3>
+                       <h4>Add something to make me happy :)</h4>
+                       <a href="/homepage" class="btn btn-success cart-btn-transform m-3" data-abc="true">continue shopping</a>        
+             </div>
+           </div>
+        </div>`;
+              } else {
+                let categoryOffers = Number(categoryOffer);
+                let productPrices = Number(productPrice);
+                let orgQuantitys = Number(orgQuantity);
+                console.log(categoryOffer, "categoryOffers");
+                console.log(productPrices, "productPrices");
+                console.log(orgQuantitys, "orgQuantitys");
+
+                console.log(subTotal, "subtotal");
+                let newSubTotal =
+                  Number(subTotal) -
+                  productPrices * window.oldQuantityState +
+                  productPrices * Number(quantity);
+                let newTotalDiscount =
+                  Number(totalDiscount) -
+                  productPrices *
+                    (categoryOffers / 100) *
+                    window.oldQuantityState +
+                  productPrices * (categoryOffers / 100) * Number(quantity);
+                document.getElementById("cartRealTotalId").innerHTML = (
+                  newSubTotal - newTotalDiscount
+                ).toFixed(2);
+
+                console.log(newSubTotal, "neew");
+                document.getElementById("cartTotalAmountId").innerHTML =
+                  newSubTotal.toFixed(2);
+                document.getElementById("cartTotalDiscountId").innerHTML =
+                  newTotalDiscount.toFixed(2);
+              }
+            }
+          });
+        },
+        error: function (err) {
+          alert("Something Error");
+        },
+      });
+    }
+  }
+
+  function userProceedToCheckout() {
+    $.ajax({
+      url: "/homepage/checkstock",
+      method: "Get",
+      success: (response) => {
+        if (response.state) {
+          Swal.fire({
+            icon: "warning",
+            title: "Product Out of Stock",
+            text: `Too Much Quantity Request Than in Stock, Try less Quantity in ${response.product}`,
+            confirmButtonColor: "rgb(15 111 58)",
+            confirmButtonText: "Ok",
+
+            showDenyButton: true,
+            denyButtonText: `Continue Shopping`,
+            denyButtonColor: "rgb(15 111 58)",
+            showCancelButton: false,
+          }).then((result) => {
+            if (result.isDenied) {
+              window.location.href = "/homepage";
+            }
+          });
+        } else {
+          window.location.href = "/homepage/checkout";
+        }
+      },
+    });
+  }
+</script>

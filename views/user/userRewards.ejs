@@ -1,0 +1,483 @@
+<%-include('../partials/userHeader.ejs') %>
+<!-- Breadcrumb Section Begin -->
+ <section class="breadcrumb-section set-bg" data-setbg="../../images/vegetables4_b72-.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>User Rewards</h2>
+                    <div class="breadcrumb__option">
+                        <a href="#">Home</a>
+                        <span>User Rewards</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+
+
+
+<div class="container mt-5">
+    <div class="row">
+       
+
+
+        <%-include('../partials/userProfileSidebar.ejs') %>
+
+
+
+
+
+<% if ( userRole.reward ) { %>
+
+    <% if ( userRole.reward.length ) { %>
+
+
+    <div class="col-lg-3">
+    </div>
+ 
+ 
+         <!-- Profile Settings-->
+         <div class="col-lg-5 pb-5">
+
+            <style>
+
+      .coupon-roww{
+                    display: flex;
+                    align-items: center;
+                    margin: 25px 0 0 8px;
+                  
+                
+                }
+        
+                /*  ================================================
+                            TICKET STYLING & COUPON EFFECT
+                    ================================================  */
+                .tickett {
+                position: relative;
+                display: table;
+                width: 450px;
+                height: 228px;
+                margin: 50px auto 0 auto;
+                padding-bottom: 57px;
+                background: #F4F4F4;
+                text-align: center;
+                z-index: 100;
+                }
+                
+                .tickett::before {
+                  content:"";
+                  position: absolute;
+                  top: 54.5%;
+                  left: 0;
+                  border-top: 20px solid transparent;
+                  border-bottom: 20px solid transparent;
+                  border-left: 20px solid #a52958;
+                }
+                
+                .tickett::after {
+                  content:"";
+                  position: absolute;
+                  top: 54.5%;
+                  right: 0;
+                
+                }
+                
+                /*  ================================================
+                                    RIBBON EFFECT
+                    ================================================  */
+                .ribbonn {
+                position: absolute;
+                display: block;
+                top: -4px;
+                right: -4px;
+                width: 110px;
+                height: 110px;
+                overflow: hidden;
+                }
+                
+                .ribbonn .labell {
+                position: relative;
+                display: block;
+                left: -10px;
+                top: 23px;
+                width: 158px;
+                padding: 10px 0;
+                font-size: 15px;
+                text-align: center;
+                color: #fff;
+                background-color: #e85e68;
+                -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.3);
+                -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.3);
+                -ms-box-shadow: 0px 0px 4px rgba(0,0,0,0.3);
+                box-shadow: 0px 0px 4px rgba(0,0,0,0.3);
+                -webkit-transform: rotate(45deg) translate3d(0,0,0);
+                -moz-transform: rotate(45deg) translate3d(0,0,0);
+                -ms-transform: rotate(45deg) translate3d(0,0,0);
+                transform: rotate(45deg) translate3d(0,0,0);
+                }
+                
+                .labell:before, .labell:after {
+                content: '';
+                position: absolute;
+                bottom: -4px;
+                border-top: 4px solid #a71c26;
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                }
+                
+                .labell:before {
+                left: 0;
+                }
+                
+                .labell:after {
+                right: 0;
+                }
+                
+                
+                
+                /*  ================================================
+                                        CONTENT
+                    ================================================  */
+                span {
+                  display: block;
+                  font-size: 20px;
+                  color: #540c5d;
+                }
+                
+                strong {
+                  display: block;
+                  font-size: 85px;
+                  color: #a52958;
+                  margin: 0 0 10px 0;
+                }
+                
+                em {
+                  display: block;
+                  font-size: 20px;
+                  font-style: normal;
+                  color: #86db78;
+                  border-top: 2px dashed rgba(0,0,0,.1);
+                  padding: 10px 0;
+                }
+                
+                
+                
+                /*  ================================================
+                              ACTION CALL & ARROW UP EFFECT
+                    ================================================  */
+                .buttonn {
+                  display: block;
+                  color: white;
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 57px;
+                  padding: 0;
+                  line-height: 58px;
+                  text-align: center;
+                  border-radius: 0;
+                  background-color: #86db78;
+                }
+                
+                .buttonn::before {
+                  content:"";
+                  position: absolute;
+                  top: -10px;
+                  left: calc(50% - 20px);
+                  border-left: 20px solid transparent;
+                  border-right: 20px solid transparent;
+                  border-bottom: 10px solid #86db78;
+                }
+                
+                
+                
+                /*  ================================================
+                                    INSIDE TICKET
+                    ================================================  */
+                .ticket-inn {
+                  width: 450px;
+                  height: 280px;
+                  position: absolute;
+                  background: #a52958;
+               
+                  left: calc(50% - 280px);
+                  z-index: 1;
+                  transition: left 2s;
+                }
+                
+                .ticket-inn.active {
+                  left: calc(50% - 585px);
+                  transition: left 1.5s;
+                }
+                
+                .contentt {
+                  height: 260px;
+                  margin: 8px;
+                  border: 2px dashed #e0c68e;
+                  border-radius: 10px;
+                }
+                
+                .contentt h1 {
+                  font-size: 29px;
+                  color: #4c483b;
+                  text-align: center;
+                  margin: 0;
+                  padding: 0;
+                  font-family: 'Berkshire Swash', cursive;
+                }
+                
+                .passs {
+                  display: block;
+                  color: white;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 420px;
+                  height: 57px;
+                  margin: 15px 0 0 15px; 
+                  padding: 0;
+                  line-height: 58px;
+                  text-align: center;
+                  border-radius: 10px 10px 0 0;
+                  background: #eadbb8;
+                  border: 1px solid #82113c;
+                }
+                
+                .passs::before {
+                  content:"";
+                  position: absolute;
+                  bottom: -10px;
+                  left: calc(50% - 20px);
+                  border-left: 20px solid transparent;
+                  border-right: 20px solid transparent;
+                  border-top: 10px solid #eadbb8;
+                }
+                
+                .contentt span {
+                  margin: 85px 0 0 0;
+                  text-align: center;
+                  color: #82113c;
+                }
+                
+                .contentt em {
+                  border: none;
+                  text-align: center;
+                  font-size: 89px;
+                  color: #eadbb8;
+                  text-shadow: 1px 1px 0 rgba(0,0,0,.7);
+                }
+                
+                .checkk{
+                  
+                  opacity: 0.8;
+                    
+                }
+                
+                
+                
+                
+                
+                
+                
+                
+                </style>
+
+
+
+
+<% for (let i=0; i<userRole.reward.length; i++) { %> 
+
+
+
+            <div class="row">
+
+<style>
+           
+          
+                #cpnCodee<%=i+1%>{
+                    border: 1px dashed #fff;
+                    padding: 10px 30px;
+                      margin-left: 3rem;
+                    border-right: 0;
+                
+                }
+                #cpnBtnn<%=i+1%>{
+                    border: 1px solid #fff;
+                    background: #fff;
+                    padding: 10px 20px;
+                    color: #7158fe;
+                    cursor: pointer;
+                  z-index : 100;
+                }
+
+
+
+
+</style>
+                    
+                    
+                    
+                     
+                        <div class="tickett">
+                            <div class="datass">
+                              <a class="linkk">
+                                <div class="ribbonn">
+                                  <div class="labell">LIMITED</div>
+                                </div>
+                                <span>Discount Coupon</span>
+                                <strong>  <%=userRole.reward[i].offer%>%</strong>
+
+                                <% if(userRole.reward[i].expiryDate < new Date() ) {%>
+
+<em style="color: red !important; font-size: larger; font-weight: 800;">  Coupon Expired</em>
+                                    <% } else {%>
+
+                                <em>Off on all Orders Above ₹<%=userRole.reward[i].minAmount%>  <br>   Valid Till : <%=userRole.reward[i].expiryDate.toDateString()%> </em>
+                                <% } %>
+                              </a>
+                            </div>
+                            <a class="buttonn" id="activateTheCoupon<%=i+1%>" onclick="activateCoupon<%=i+1%>()" >Click To View Coupon and Enter Store!</a>
+                          </div>
+                          <div class="ticket-inn" id="activateTheCouponDiv<%=i+1%>">
+                            <div class="contentt">
+                              <div class="passs">
+                                <h1>Coupon Activated</h1>
+                              </div>
+                              
+                          <center>
+                          
+                              <di class="coupon-roww">
+                                              <span id="cpnCodee<%=i+1%>"><%=userRole.reward[i].couponName%></span>
+                                              <span id="cpnBtnn<%=i+1%>"  style="z-index: 1000 !important;">Copy</span>
+                                          </di>
+                          
+                          
+                          </center>
+                           
+                            </div>
+                          </div>
+                          
+                    
+                    <script>
+                    
+                    function delay(ms) {
+                            var cur_d = new Date();
+                            var cur_ticks = cur_d.getTime();
+                            var ms_passed = 0;
+                            while(ms_passed < ms) {
+                                var d = new Date();  // Possible memory leak?
+                                var ticks = d.getTime();
+                                ms_passed = ticks - cur_ticks;
+                                // d = null;  // Prevent memory leak?
+                            }
+                        }
+                     
+                       function activateCoupon<%=i+1%>(){
+                          
+                      
+                      
+                        document.getElementById('activateTheCouponDiv<%=i+1%>').classList.toggle('active');
+                      
+                    
+                       
+                    }
+                    
+                  ;
+                               
+                    
+                                document.getElementById("cpnBtnn<%=i+1%>").onclick = function(){
+                                    navigator.clipboard.writeText(document.getElementById("cpnCodee<%=i+1%>").innerHTML);
+                                    document.getElementById("cpnBtnn<%=i+1%>").innerHTML ="Copied";
+                                    setTimeout(function(){
+                                        document.getElementById("cpnBtnn<%=i+1%>").innerHTML="Copy";
+                                    }, 3000);
+                                }
+                    
+                    /*
+                        Click on the ticket to get the special coupon access to Dreamville!!!
+                    */
+                    
+                    
+                    
+                    </script>
+    
+
+                
+            </div>
+          
+          
+           <br> <br>
+ 
+
+            <% } %>
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+        <% } else { %>
+
+            <div class="col-lg-2"></div>
+            
+            
+                    <div class="col-lg-6">
+                                <div class="col-lg-6 empty-cart-cls text-center">
+                                 <img src="../../images/cart_is_empty.gif" width="380rem" height="330rem" class="img-fluid mb-4 mr-3">
+                                <h5><strong>Your Rewards is Empty</strong></h5>
+                                 <h6>Order something to earn Rewards :)</h6>
+                                 <a href="/homepage" class="btn btn-success cart-btn-transform m-3" data-abc="true">continue shopping</a>        
+                       </div>
+                     </div>
+             
+            
+            
+                <% }  %>
+
+<% } else { %>
+
+<div class="col-lg-2"></div>
+
+
+        <div class="col-lg-6">
+                    <div class="col-lg-6 empty-cart-cls text-center">
+                     <img src="../../images/cart_is_empty.gif" width="380rem" height="330rem" class="img-fluid mb-4 mr-3">
+                    <h5><strong>Your Rewards is Empty</strong></h5>
+                     <h6>Order something to earn Rewards :)</h6>
+                     <a href="/homepage" class="btn btn-success cart-btn-transform m-3" data-abc="true">continue shopping</a>        
+           </div>
+         </div>
+ 
+
+
+    <% }  %>
+
+  
+
+        
+       
+      
+
+
+
+
+
+
+    </div>
+</div>
+<!-- Footer Section Begin -->
+<%-include('../partials/userFooter.ejs') %>
+
+

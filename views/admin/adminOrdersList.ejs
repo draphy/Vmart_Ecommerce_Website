@@ -1,0 +1,856 @@
+<style>
+#adminOrdersDataTable_paginate{
+  display: none !important;
+}
+#adminOrdersDataTable_info {
+
+  display: none !important;
+}
+.current {
+
+display: none !important;
+}
+
+</style>
+
+
+<div class="wrapper">
+    <%-include('../partials/adminNavbar.ejs')-%>
+    <%-include('../partials/adminSidebar.ejs')-%>
+
+  <main role="main" class="main-content">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <h2 class="h3 mb-3 page-title">Orders List</h2>
+     
+        
+          <table class="table border table-hover bg-white" id="adminOrdersDataTable" >
+            <thead >
+              <tr role="row" >
+             
+                <th class="text-center">Order ID </th>
+                <th class="text-center">User</th>
+                <th class="text-center">Payment Method</th>
+                <th class="text-center">Total Amount</th>
+                <th class="text-center">Location</th>
+                <th class="text-center">Order Date</th>
+                <th class="text-center">Status </th>
+                <th > More Details</th>
+              </tr>
+            </thead>
+            <tbody>
+            
+                <% for(var i=0; i<orders.length; i++) { %>
+                  <tr>
+                <td class="text-center"><%=orders[i].order.orderId%></td>
+                <td class="text-center"> <%=orders[i].email %>  </td>
+                <td class="text-center"> <%=orders[i].order.paymentMethod%>  </td>
+                <td class="text-center">₹ <%=orders[i].order.totalAmount%> </td>
+                <td class="text-center"> <%=orders[i].order.address.state%> </td>
+                <td class="text-center" >  <%=orders[i].order.date.toLocaleDateString()%> </td>
+                <td class="text-center">
+                  <% if(orders[i].order.status  == 'cancel' ) { %> 
+                  <span style="color: red; font-size:larger ; font-weight:800; ">Canceled</span>
+
+
+                  <% } else if(orders[i].order.status  == 'returnAccepted' ) { %>    
+                    
+                    <span style="color: red; font-size:larger ; font-weight:800; ">Returned</span>
+
+
+      <% } else if(orders[i].order.status  == 'delivered' ) { %>
+
+        <span style="color: green; font-size:larger ; font-weight:800; ">Delivered</span>
+
+        <% } else { %>
+
+                  <select onchange="adminCancelOrder('<%=i+1%>','<%=orders[i].order.orderId%>','<%=orders[i]._id%>','<%=orders[i].order.totalAmount%>')" class="browser-default custom-select" style=" font-weight :800; font-size: larger; " id="changeStatusSelect<%=i+1%>">
+                 
+                    <% if(orders[i].order.status  != 'placed' &&  orders[i].order.status  != 'shipped' && orders[i].order.status  != 'return'  ) { %> 
+
+                    <option  value="pending" class="text-center"  <% if(orders[i].order.status  == 'pending' ) { %> 
+                      selected 
+                      <% } %>   >Payment pending</option>
+
+                      <% } %> 
+                
+                    <option  value="cancel" class="text-center"  <% if(orders[i].order.status  == 'cancel' ) { %> 
+                    selected 
+                    <% } %>   >Cancel</option>
+
+
+                    <% if( orders[i].order.status  != 'shipped' && orders[i].order.status  != 'return' ) { %> 
+
+                  <option  value="placed" class="text-center"  <% if(orders[i].order.status  == 'placed' ) { %> 
+                    selected 
+                    <% } %>>Placed</option>
+
+                    <% } %> 
+
+
+                    <% if(  orders[i].order.status  != 'return' ) { %> 
+                  <option  value="shipped" class="text-center"  <% if(orders[i].order.status  == 'shipped' ) { %> 
+                    selected 
+                    <% } %>>Shipped</option>
+
+                    <% } %> 
+
+                    <% if(  orders[i].order.status  != 'return' ) { %> 
+
+                  <option  value="delivered" class="text-center"  <% if(orders[i].order.status  == 'delivered' ) { %> 
+                    selected 
+                    <% } %>>Delivered</option>
+
+                    <% } %> 
+
+                    <% if( orders[i].order.status  == 'return' ) { %> 
+
+                      <option  value="return" class="text-center"  <% if(orders[i].order.status  == 'return' ) { %> 
+                        selected 
+                        <% } %>>Return Requested</option>
+
+                        <option  value="returnAccepted" class="text-center" >Return Accepted</option>
+    
+                        <% } %> 
+
+
+
+
+                </select> 
+              
+                <% } %>
+              
+              </td>
+
+
+
+                <td > 
+                  
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#moreDetails<%=i+1%>">
+More Details
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="moreDetails<%=i+1%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">More Details</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+      
+         
+                <div class="card ">
+                 
+                  <div class="card-header p-4">
+                    <h5>Order Details</h5>
+                    <br>
+                    <div class="d-flex justify-content-between align-items-center">
+                    
+                      <div>
+                        <p class="text-muted mb-2"> Order ID : <span class="fw-bold text-body"><%=orders[i].order.orderId%></span></p>
+                        <p class="text-muted mb-2"> Place On : <span class="fw-bold text-body"><%=orders[i].order.date.toLocaleDateString()%></span> </p>
+                        <p class="text-muted mb-2"> Payment : <span class="fw-bold text-body"><%=orders[i].order.paymentMethod%></span> </p>
+                        <p class="text-muted mb-2"> Status : <span class="fw-bold text-body"><%=orders[i].order.status%></span> </p>
+                        <p class="text-muted mb-2"> Total : <span class="fw-bold text-body">₹ <%=orders[i].order.totalAmount%></span> </p>
+                        <p class="text-muted mb-2"> Discount : <span class="fw-bold text-body">₹ <%=orders[i].order.totalDiscount%></span> </p>
+
+                      </div>
+                     
+                    </div>
+                  </div>
+               
+                  <div class="card-body p-4">
+                    <h5>Product Details</h5>
+                    <br>
+                    <% for(var j=0; j<orders[i].order.products.length; j++) { %>
+                    <div class="d-flex flex-row mb-4 pb-2">
+                      <div class="flex-fill">
+
+                     
+                        <h6 class="bold"><%=orders[i].order.products[j].productDetails.productsName%></h6>
+                        <p class="text-muted"> Wt : <%=orders[i].order.products[j].weight%> <%=orders[i].order.products[j].productDetails.massUnit%></p>
+                        <p class="text-muted"> Qt : <%=orders[i].order.products[j].quantity%> item</p>
+                        <h4 class="mb-3"> ₹  <%=orders[i].order.products[j].productDetails.price*orders[i].order.products[j].quantity%> <span class="small text-muted">  </span></h4>
+                      
+                      </div>
+                      <div>
+                        <img class="align-self-center img-fluid"
+                          src="../../productsImages/<%=orders[i].order.products[j].productId%>.jpg" width="250">
+                      </div>
+                    </div>
+                    <% } %>
+                  </div>
+                  <div class="card-footer p-4">
+                    <div class=" justify-content-between">
+                  <h5>User Details</h5>
+<br>
+                  <div class="row">
+                    <p class="text-muted mb-2"> Name : <span class="fw-bold text-body"> <%=orders[i].name %> <%=orders[i].lastName %>  </span></p>
+                    <p class="text-muted mb-2"> Email : <span class="fw-bold text-body"> <%=orders[i].email %> </span> </p>
+                    <p class="text-muted mb-2"> Phone-Number : <span class="fw-bold text-body"> <%=orders[i].phoneNumber %> </span> </p>
+                    <p class="text-muted mb-2"> Address : <span class="fw-bold text-body"> 
+                  <br>
+                      <%=orders[i].order.address.firstName%>  <%=orders[i].order.address.lastName%>
+                     <br>
+                     <%=orders[i].order.address.streetAddress%>
+                     <br>
+                     <%=orders[i].order.address.city%> , <%=orders[i].order.address.state%> , <%=orders[i].order.address.country%>
+                     <br>
+                     <%=orders[i].order.address.postCode %>
+                     <br>
+                     <%=orders[i].order.address.phoneNumber%> , <%=orders[i].order.address.email%>
+                     </span> </p>
+
+                  </div>
+
+
+
+
+
+
+                    </div>
+                  </div>
+                </div>
+         
+      
+
+
+
+
+
+
+
+
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+
+
+
+                
+                
+                
+                
+                </td>
+             
+            </tr>
+               <% } %>
+              
+             
+             
+         
+            </tbody>
+          </table>
+          <div class="text-center mt-3">
+            <button onclick="paginatePrevious()" class="btn btn-primary"><</button>
+            <span>Page <span id="pageInfo"><%=passNo%></span></span>
+            <% if(orders.length){ %>
+            <button onclick="paginateNext()" class="btn btn-primary">></button>
+            <% } %>
+          </div>
+    
+        </div>
+      </div> <!-- .row -->
+    </div> <!-- .container-fluid -->
+    <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="list-group list-group-flush my-n3">
+              <div class="list-group-item bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="fe fe-box fe-24"></span>
+                  </div>
+                  <div class="col">
+                    <small><strong>Package has uploaded successfull</strong></small>
+                    <div class="my-0 text-muted small">Package is zipped and uploaded</div>
+                    <small class="badge badge-pill badge-light text-muted">1m ago</small>
+                  </div>
+                </div>
+              </div>
+              <div class="list-group-item bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="fe fe-download fe-24"></span>
+                  </div>
+                  <div class="col">
+                    <small><strong>Widgets are updated successfull</strong></small>
+                    <div class="my-0 text-muted small">Just create new layout Index, form, table</div>
+                    <small class="badge badge-pill badge-light text-muted">2m ago</small>
+                  </div>
+                </div>
+              </div>
+              <div class="list-group-item bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="fe fe-inbox fe-24"></span>
+                  </div>
+                  <div class="col">
+                    <small><strong>Notifications have been sent</strong></small>
+                    <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
+                    <small class="badge badge-pill badge-light text-muted">30m ago</small>
+                  </div>
+                </div> <!-- / .row -->
+              </div>
+              <div class="list-group-item bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="fe fe-link fe-24"></span>
+                  </div>
+                  <div class="col">
+                    <small><strong>Link was attached to menu</strong></small>
+                    <div class="my-0 text-muted small">New layout has been attached to the menu</div>
+                    <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                  </div>
+                </div>
+              </div> <!-- / .row -->
+            </div> <!-- / .list-group -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body px-5">
+            <div class="row align-items-center">
+              <div class="col-6 text-center">
+                <div class="squircle bg-success justify-content-center">
+                  <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
+                </div>
+                <p>Control area</p>
+              </div>
+              <div class="col-6 text-center">
+                <div class="squircle bg-primary justify-content-center">
+                  <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                </div>
+                <p>Activity</p>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-6 text-center">
+                <div class="squircle bg-primary justify-content-center">
+                  <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
+                </div>
+                <p>Droplet</p>
+              </div>
+              <div class="col-6 text-center">
+                <div class="squircle bg-primary justify-content-center">
+                  <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
+                </div>
+                <p>Upload</p>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-6 text-center">
+                <div class="squircle bg-primary justify-content-center">
+                  <i class="fe fe-users fe-32 align-self-center text-white"></i>
+                </div>
+                <p>Users</p>
+              </div>
+              <div class="col-6 text-center">
+                <div class="squircle bg-primary justify-content-center">
+                  <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                </div>
+                <p>Settings</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main> <!-- main -->
+</div> <!-- .wrapper -->
+<script src="../../jsAdmin/jquery.min.js"></script>
+<script src="../../jsAdmin/popper.min.js"></script>
+<script src="../../jsAdmin/moment.min.js"></script>
+<script src="../../jsAdmin/bootstrap.min.js"></script>
+<script src="../../jsAdmin/simplebar.min.js"></script>
+<script src='../../jsAdmin/daterangepicker.js'></script>
+<script src='../../jsAdmin/jquery.stickOnScroll.js'></script>
+<script src="../../jsAdmin/tinycolor-min.js"></script>
+<script src="../../jsAdmin/config.js"></script>
+<script src='../../jsAdmin/jquery.mask.min.js'></script>
+<script src='../../jsAdmin/select2.min.js'></script>
+<script src='../../jsAdmin/jquery.steps.min.js'></script>
+<script src='../../jsAdmin/jquery.validate.min.js'></script>
+<script src='../../jsAdmin/jquery.timepicker.js'></script>
+<script src='../../jsAdmin/dropzone.min.js'></script>
+<script src='../../jsAdmin/uppy.min.js'></script>
+<script src='../../jsAdmin/quill.min.js'></script>
+<script>
+  $('.select2').select2(
+  {
+    theme: 'bootstrap4',
+  });
+  $('.select2-multi').select2(
+  {
+    multiple: true,
+    theme: 'bootstrap4',
+  });
+  $('.drgpicker').daterangepicker(
+  {
+    singleDatePicker: true,
+    timePicker: false,
+    showDropdowns: true,
+    locale:
+    {
+      format: 'MM/DD/YYYY'
+    }
+  });
+  $('.time-input').timepicker(
+  {
+    'scrollDefault': 'now',
+    'zindex': '9999' /* fix modal open */
+  });
+  /** date range picker */
+  if ($('.datetimes').length)
+  {
+    $('.datetimes').daterangepicker(
+    {
+      timePicker: true,
+      startDate: moment().startOf('hour'),
+      endDate: moment().startOf('hour').add(32, 'hour'),
+      locale:
+      {
+        format: 'M/DD hh:mm A'
+      }
+    });
+  }
+  var start = moment().subtract(29, 'days');
+  var end = moment();
+
+  function cb(start, end)
+  {
+    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+  }
+  $('#reportrange').daterangepicker(
+  {
+    startDate: start,
+    endDate: end,
+    ranges:
+    {
+      'Today': [moment(), moment()],
+      'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+      'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+      'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+      'This Month': [moment().startOf('month'), moment().endOf('month')],
+      'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    }
+  }, cb);
+  cb(start, end);
+  $('.input-placeholder').mask("00/00/0000",
+  {
+    placeholder: "__/__/____"
+  });
+  $('.input-zip').mask('00000-000',
+  {
+    placeholder: "____-___"
+  });
+  $('.input-money').mask("#.##0,00",
+  {
+    reverse: true
+  });
+  $('.input-phoneus').mask('(000) 000-0000');
+  $('.input-mixed').mask('AAA 000-S0S');
+  $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
+  {
+    translation:
+    {
+      'Z':
+      {
+        pattern: /[0-9]/,
+        optional: true
+      }
+    },
+    placeholder: "___.___.___.___"
+  });
+  // editor
+  var editor = document.getElementById('editor');
+  if (editor)
+  {
+    var toolbarOptions = [
+      [
+      {
+        'font': []
+      }],
+      [
+      {
+        'header': [1, 2, 3, 4, 5, 6, false]
+      }],
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block'],
+      [
+      {
+        'header': 1
+      },
+      {
+        'header': 2
+      }],
+      [
+      {
+        'list': 'ordered'
+      },
+      {
+        'list': 'bullet'
+      }],
+      [
+      {
+        'script': 'sub'
+      },
+      {
+        'script': 'super'
+      }],
+      [
+      {
+        'indent': '-1'
+      },
+      {
+        'indent': '+1'
+      }], // outdent/indent
+      [
+      {
+        'direction': 'rtl'
+      }], // text direction
+      [
+      {
+        'color': []
+      },
+      {
+        'background': []
+      }], // dropdown with defaults from theme
+      [
+      {
+        'align': []
+      }],
+      ['clean'] // remove formatting button
+    ];
+    var quill = new Quill(editor,
+    {
+      modules:
+      {
+        toolbar: toolbarOptions
+      },
+      theme: 'snow'
+    });
+  }
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function()
+  {
+    'use strict';
+    window.addEventListener('load', function()
+    {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function(form)
+      {
+        form.addEventListener('submit', function(event)
+        {
+          if (form.checkValidity() === false)
+          {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
+<script>
+  var uptarg = document.getElementById('drag-drop-area');
+  if (uptarg)
+  {
+    var uppy = Uppy.Core().use(Uppy.Dashboard,
+    {
+      inline: true,
+      target: uptarg,
+      proudlyDisplayPoweredByUppy: false,
+      theme: 'dark',
+      width: 770,
+      height: 210,
+      plugins: ['Webcam']
+    }).use(Uppy.Tus,
+    {
+      endpoint: 'https://master.tus.io/files/'
+    });
+    uppy.on('complete', (result) =>
+    {
+      console.log('Upload complete! We’ve uploaded these files:', result.successful)
+    });
+  }
+</script>
+<script src="../../jsAdmin/apps.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag()
+  {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+  gtag('config', 'UA-56159088-1');
+</script>
+<script>
+
+//Ajax Orders list DataTable
+
+$(document).ready( function () {
+   
+   $('#adminOrdersDataTable').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        "ordering": false
+    } );
+
+
+
+} );
+
+</script>
+<script>
+
+function adminCancelOrder(id,orderId,userId,totalAmount){
+
+  let status = document.getElementById(`changeStatusSelect${id}`).value 
+  console.log(status);
+
+  if(status=='returnAccepted'){
+
+
+    Swal.fire({
+title: 'Are you sure?',
+text: `Do you want to change the status of Order ${orderId} `,
+icon: 'warning',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes'
+}).then((result)=>{
+
+if(result.isConfirmed){
+
+$.ajax({
+      url: "/admin_panel/order_status_return",
+      data:  {status : status ,user : userId, orderId : orderId, totalAmount : totalAmount },
+      method: "PATCH",
+      success: function (response) {
+
+          if(response.state){
+
+window.location.reload()
+
+     
+          }else{
+
+         
+
+
+            Swal.fire({
+           
+           icon: 'error',
+           title: 'Status Not Changed',
+           showConfirmButton: false,
+           timer: 1500
+
+         })
+
+
+
+
+          }
+    
+      },
+      error: function (err) {
+        alert("Something Error");
+      },
+    });
+
+
+
+
+
+
+
+
+
+
+}else{
+
+
+
+  window.location.reload()
+}
+
+
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }else{
+
+
+    Swal.fire({
+title: 'Are you sure?',
+text: `Do you want to change the status of Order ${orderId} `,
+icon: 'warning',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes'
+}).then((result)=>{
+
+if(result.isConfirmed){
+
+$.ajax({
+      url: "/admin_panel/order_status",
+      data:  {status : status ,user : userId, orderId : orderId },
+      method: "PATCH",
+      success: function (response) {
+
+          if(response.state){
+
+window.location.reload()
+
+     
+          }else{
+
+         
+
+
+            Swal.fire({
+           
+           icon: 'error',
+           title: 'Status Not Changed',
+           showConfirmButton: false,
+           timer: 1500
+
+         })
+
+
+
+
+          }
+    
+      },
+      error: function (err) {
+        alert("Something Error");
+      },
+    });
+
+
+
+
+
+
+
+
+
+
+}else{
+
+
+
+  window.location.reload()
+}
+
+
+
+
+})
+
+
+
+
+  }
+
+
+
+
+
+
+
+
+}
+
+
+
+function paginatePrevious(){
+
+let page =  document.getElementById('pageInfo').innerHTML
+page = Number(page)-1
+if(page){
+
+window.location.href= `/admin_panel/order_management/${page}`
+
+}else{
+
+  return false
+}
+
+
+}
+
+function paginateNext(){
+
+let page =  document.getElementById('pageInfo').innerHTML
+page = Number(page)+1
+if(page){
+
+window.location.href= `/admin_panel/order_management/${page}`
+
+}else{
+
+  return false
+}
+
+
+}
+
+
+
+</script>

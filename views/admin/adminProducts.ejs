@@ -1,0 +1,912 @@
+<div class="wrapper">
+    <%-include('../partials/adminNavbar.ejs')-%>
+    <%-include('../partials/adminSidebar.ejs')-%>
+
+    <!-- Modal Edit Products -->
+
+    <% for (let i=0; i<products.length; i++) { %> 
+    <div class="modal fade" id="adminEditProductsModel<%=i+1%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=i+1%>" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel<%=i+1%>">Edit Product</h5>
+            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+    
+            <form  accept="image/*"  id="adminEditProducts<%=i+1%>" class="form2" method="patch" enctype="multipart/form-data" >
+              <br>
+              <input type="hidden" name="_id" value="<%=products[i]._id%>">
+              <label for="fileUpload">Product Image</label>       
+    <!-- Image Edit  -->
+    <div class="container">
+   
+      <div class="avatar-upload">
+          <div class="avatar-edit">
+              <input  name="productsImage" type='file' id="imageUpload<%=i+1%>" accept=".png, .jpg, .jpeg" />
+              <label for="imageUpload<%=i+1%>"></label>
+          </div>
+          <div class="avatar-preview">
+              <div id="imagePreview<%=i+1%>" style="background-image: url('../../productsImages/<%=products[i]._id%>.jpg');">
+              </div>
+          </div>
+          <br>
+          <div class="text-center">
+            <h5 for="" id="editProductsImageError<%=i+1%>" style="color: red;"> </h5>
+          </div>
+      </div>
+
+      
+  </div>
+
+  <div class="form-control2">
+    <label for="subImages">Sub-Images</label>
+
+    <input  id="file-upload1<%=i+1%>" type="file" accept=".png, .jpg, .jpeg"  name="productSubImage1"  />
+    <input  id="file-upload2<%=i+1%>" type="file" accept=".png, .jpg, .jpeg"  name="productSubImage2"  />
+    <input  id="file-upload3<%=i+1%>" type="file" accept=".png, .jpg, .jpeg"  name="productSubImage3"  />
+
+  </div>
+
+
+
+
+
+
+              <div class="form-control2">
+                <label for="name">Product Name</label>
+                <input  type="text" autocomplete="off"  id="editProductsName" name="productsName" value="<%=products[i].productsName %>"/>
+            
+                <label id="editProductsNameLabel" style="color: red;"></label>
+              </div>
+              <div class="form-control2">
+                <label for="price">Price</label>
+                <input   type="number"  id="editProductsPrice"   name="price" value="<%=products[i].price%>" min="0" oninput="this.value = 
+                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"/>
+
+                <label id="editProductsPriceLabel"  style="color: red;"></label>
+              
+              </div>
+
+              <div class="form-control2">
+                <label for="category" >Category:</label>
+               
+                <select class="form-select form-select mb-3" name="categoryId" required>
+                  <% for (let j = 0; j<categories.length; j++) { %> 
+    
+                        <option value="<%=categories[j]._id %>" 
+  <% if( `${products[i].categoryId}` == `${categories[j]._id}` ) { %> 
+                            selected 
+                            <% } %> 
+                           >
+
+                          <%=categories[j].categoryName %>     
+                        </option>
+                     
+                       <% } %>
+                </select>
+              
+                <label id="editProductsCategorySelectLabel"  style="color: red;"></label>
+              
+              </div>
+              <div class="form-control2">
+                <label for="description">Description</label>
+                <textarea id="txtArea" rows="10" cols="70" name="description"  > <%=products[i].description%> </textarea>
+                <!-- <input   type="textarea"  id="addProductsPrice"   name="price"  /> -->
+                <label id="editProductsDescriptionLabel"  style="color: red;"></label>
+              
+              </div>
+             
+              <!-- <div class="form-control2">
+                <label for="instock">Instock</label>
+             
+                <input   type="number"  id="editProductsInstock"   name="instock" value="<%=products[i].instock%>" min="0" oninput="this.value = 
+                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"/>
+    
+                <label id="editProductsInstockLabel"  style="color: red;"></label>
+              
+              </div> -->
+
+              <input type="checkbox" value="true"  name="weight500"  <% if( products[i].weight.weight500State) { %>  checked    <% } %>  />
+              <label for="weight500">500</label>
+              <div class="form-control2">
+             
+                <label for="instock500">Instock</label>
+                <input   type="number"  id="editProductsinstock500" value="<%=products[i].instock.half%>"  name="instock500" min="0" oninput="this.value = 
+                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"/>
+    
+                <label id="editProductsInstockLabel"  style="color: red;"></label>
+              
+              </div>
+    
+           
+           
+              <input type="checkbox" value="true"  name="weight1"  <% if( products[i].weight.weight1State) { %>  checked    <% } %>  />
+              <label for="weight1">1000</label>
+                <div class="form-control2">
+                
+                  <label for="instock1">Instock</label>
+                  <input   type="number"  id="editProductsinstock1" value="<%=products[i].instock.full%>"  name="instock1" min="0" oninput="this.value = 
+                  !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"/>
+                  
+      
+                  <label id="editProductsInstockLabel"  style="color: red;"></label>
+              
+                
+                </div>
+
+                <div class="form-control2">
+                  <label for="massUnit">Mass Unit(g,ml)</label>
+                  <input  type="text" autocomplete="off"  id="editProductsMassUnit" name="massUnit" value="<%=products[i].massUnit %>"/>
+              
+                  <label id="editProductsMassUnitLabel" style="color: red;"></label>
+                </div>
+
+              <button type="submit"  class="btn btn-success">Edit</button>
+            </form>
+    
+    
+          </div>
+          <div >
+           <br>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <% } %>
+
+
+
+
+
+
+
+
+
+<!-- Modal Add Products -->
+
+<div class="modal fade" id="adminAddProductsModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form action="/admin_panel/addProducts" accept="image/*"  id="adminAddProducts" class="form2" method="post" enctype="multipart/form-data" >
+          <br>
+        
+          <label for="fileUpload">Products Image</label>       
+<!-- Upload  -->
+<div id="file-upload-form" class="uploader" style="    z-index: 2;">
+  <input id="file-upload" type="file" accept="image/*"   name="productsImage"/>
+
+  <label for="file-upload" id="file-drag">
+    <img id="file-image" src="#" alt="Preview" class="hidden">
+    <div id="start">
+      <i class="fa fa-download" aria-hidden="true"></i>
+      <div>Select a file or drag here</div>
+      <div id="notimage" class="hidden">Please select an image</div>
+      <span id="file-upload-btn" class="btn btn-primary" style="background-color: #8e44ad !important;">Select a file</span>
+    </div>
+    <div id="response" class="hidden">
+      <div id="messages">  </div>
+    
+    
+    </div>
+  </label>
+</div>
+
+
+
+<div id="file-image-crop-div" style="
+width: 30rem;
+height: 30rem;
+position: relative;
+right: 5px;
+  z-index: 100; 
+  display: none;
+  text-align: center ;">
+    <img id="file-image-crop" src="#" alt="Preview" style="display: none;" >
+    <div style="  position: relative;
+    z-index: 200;">
+      <a class="btn btn-success mx-10" id="crop-btn" style="    width: 10rem;
+      color: white;
+      margin-top: 1rem;
+      position: absolute;
+      top: -3.7rem;
+      right: 10rem;">crop</a>
+
+    </div>
+  
+    
+  </div>
+  <br>
+
+  <div class="form-control2">
+    <label for="subImages">Sub-Images</label>
+
+    <input onchange="subImagesCrop(event,1)" id="file-upload1" type="file" accept="image/*"   name="productSubImage1" required />
+    <input onchange="subImagesCrop(event,2)" id="file-upload2" type="file" accept="image/*"   name="productSubImage2" required />
+    <input onchange="subImagesCrop(event,3)" id="file-upload3" type="file" accept="image/*"   name="productSubImage3" required />
+
+  </div>
+
+
+          <div class="form-control2">
+            <label for="name">Products Name</label>
+            <input  type="text" autocomplete="off"  id="addProductsName" name="productsName"/>
+        
+            <label id="productsNameLabel" style="color: red;"></label>
+          </div>
+          <div class="form-control2">
+            <label for="price">Price</label>
+            <input   type="number"  id="addProductsPrice"   name="price" min="0" oninput="this.value = 
+            !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"/>
+            <label id="productsPriceLabel"  style="color: red;"></label>
+          
+          </div>
+          <div class="form-control2">
+            <label for="category" >Category:</label>
+          
+            <select class="form-select form-select mb-3" name="categoryId" required>
+              <% for (let i=0; i<categories.length; i++) { %> 
+
+                    <option value="<%=categories[i]._id %>">
+                      <%=categories[i].categoryName %>
+                    </option>
+                   
+                   <% } %>
+            </select>
+         
+            <label id="productsCategorySelectLabel"  style="color: red;"></label>
+          
+          </div>
+          <div class="form-control2">
+            <label for="description">Description</label>
+            <textarea id="txtArea" rows="10" cols="70" name="description" ></textarea>
+            <!-- <input   type="textarea"  id="addProductsPrice"   name="price"  /> -->
+            <label id="productsDescriptionLabel"  style="color: red;"></label>
+          
+          </div>
+
+
+          <input type="checkbox" value="true"  name="weight500" checked />
+          <label for="weight500">500</label>
+          <div class="form-control2">
+         
+            <label for="instock500">Instock</label>
+            <input   type="number"  id="addProductsinstock500"   name="instock500" min="0" oninput="this.value = 
+            !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"/>
+
+            <label id="productsInstockLabel"  style="color: red;"></label>
+          
+          </div>
+
+       
+       
+          <input type="checkbox" value="true"  name="weight1" checked />
+          <label for="weight1">1000</label>
+            <div class="form-control2">
+            
+              <label for="instock1">Instock</label>
+              <input   type="number"  id="addProductsinstock1"   name="instock1" min="0" oninput="this.value = 
+              !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"/>
+              
+  
+              <label id="productsInstockLabel"  style="color: red;"></label>
+          
+            
+            </div>
+         
+            <div class="form-control2">
+              <label for="massUnit">Mass Unit(g,ml)</label>
+              <input  type="text" autocomplete="off"  id="addProductsMassUnit" name="massUnit" />
+          
+              <label id="addProductsMassUnitLabel" style="color: red;"></label>
+            </div>
+     
+         
+
+          <button type="submit"  class="btn btn-success">Add</button>
+        </form>
+
+
+      </div>
+      <div >
+       <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!---------------------- Main body --------------------------->
+
+  <main role="main" class="main-content">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <h2 class="h3 mb-3 page-title">Products List</h2>
+     <div  style="text-align: right;clear:left;">
+
+       <button class="btn btn-success" type="button" data-mdb-toggle="modal" data-mdb-target="#adminAddProductsModel">Add Product</button>
+     </div>
+     <br>
+          <table class="table border table-hover bg-white" id="adminProductsDataTable" >
+            <thead>
+              <tr role="row">
+             
+                <th>ID</th>
+                <th>Image</th>
+                <th>Products Name</th>
+                <th>Price ₹</th>
+          
+                <th>category</th>
+                <th>Instock(500)</th>
+                <th>Instock(1000)</th>
+                <th>Created On</th>
+                <th>Edit</th>
+                <th>Active</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for (let i=0; i<products.length; i++) { %> 
+             <tr>
+              <td>   <%=i+1 %>   </td>
+               <td><a ><img style="max-width: 3rem;" src= '../../productsImages/<%=products[i]._id%>.jpg' alt="" ></a></td>
+             
+              <td>  <%=products[i].productsName %> </td>
+            
+                <td>  <%=products[i].price %> </td> 
+              
+              <td>   <%=products[i].categoryDetails[0].categoryName %>  </td>
+           
+              <td>  <%=products[i].instock.half %> </td>
+              <td>  <%=products[i].instock.full %> </td>
+              <td>  <%=products[i].date.toLocaleDateString() %> </td>
+              <td>     
+                 <div class="row align-items-center">
+                      <div class="col-auto">
+                        <a href="" onclick="" data-mdb-toggle="modal" data-mdb-target="#adminEditProductsModel<%=i+1%>"  style="text-decoration: none; color: black;">  <span class="fe fe-edit fe-24"></span>      </a>  
+                      </div>
+                      <!-- <div class="col-auto">
+                    <a href="" style="text-decoration: none; color: red;">  <span class="fe fe-trash fe-24"></span>      </a>    
+                      </div> -->
+                    </div>
+                  
+              </td>
+              <td id="<%=products[i]._id%>">     
+                <% if(products[i].active) { %>
+                  <span style="visibility:hidden">1</span>
+                  <div class="custom-control custom-switch">
+                  <a onclick="adminProductsActive( '<%=products[i]._id%>','true','c<%=i+1%>', '<%=products[i].categoryId %>' )"> 
+                    <input type="checkbox" class="custom-control-input" id= "c<%=i+1%>" checked>
+                    <label class="custom-control-label" for="c<%=i+1%>"></label>
+                  </a>
+                  </div>
+                 <% } else {%>
+                  <span style="visibility:hidden">0</span>
+                    <div class="custom-control custom-switch">
+                    <a onclick="adminProductsActive( '<%=products[i]._id%>','false','c<%=i+1%>','<%=products[i].categoryId %>' )"> 
+                      <input type="checkbox" class="custom-control-input" id= "c<%=i+1%>" >
+                      <label class="custom-control-label" for="c<%=i+1%>"></label>
+                    </a>
+                  </div>  
+                  <% } %>
+                </td>
+             
+                </tr>
+          
+                <% } %>
+
+
+
+
+             
+             
+         
+            </tbody>
+          </table>
+     
+        </div>
+      </div> <!-- .row -->
+    </div> <!-- .container-fluid -->
+    <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="list-group list-group-flush my-n3">
+              <div class="list-group-item bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="fe fe-box fe-24"></span>
+                  </div>
+                  <div class="col">
+                    <small><strong>Package has uploaded successfull</strong></small>
+                    <div class="my-0 text-muted small">Package is zipped and uploaded</div>
+                    <small class="badge badge-pill badge-light text-muted">1m ago</small>
+                  </div>
+                </div>
+              </div>
+              <div class="list-group-item bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="fe fe-download fe-24"></span>
+                  </div>
+                  <div class="col">
+                    <small><strong>Widgets are updated successfull</strong></small>
+                    <div class="my-0 text-muted small">Just create new layout Index, form, table</div>
+                    <small class="badge badge-pill badge-light text-muted">2m ago</small>
+                  </div>
+                </div>
+              </div>
+              <div class="list-group-item bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="fe fe-inbox fe-24"></span>
+                  </div>
+                  <div class="col">
+                    <small><strong>Notifications have been sent</strong></small>
+                    <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
+                    <small class="badge badge-pill badge-light text-muted">30m ago</small>
+                  </div>
+                </div> <!-- / .row -->
+              </div>
+              <div class="list-group-item bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="fe fe-link fe-24"></span>
+                  </div>
+                  <div class="col">
+                    <small><strong>Link was attached to menu</strong></small>
+                    <div class="my-0 text-muted small">New layout has been attached to the menu</div>
+                    <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                  </div>
+                </div>
+              </div> <!-- / .row -->
+            </div> <!-- / .list-group -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body px-5">
+            <div class="row align-items-center">
+              <div class="col-6 text-center">
+                <div class="squircle bg-success justify-content-center">
+                  <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
+                </div>
+                <p>Control area</p>
+              </div>
+              <div class="col-6 text-center">
+                <div class="squircle bg-primary justify-content-center">
+                  <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                </div>
+                <p>Activity</p>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-6 text-center">
+                <div class="squircle bg-primary justify-content-center">
+                  <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
+                </div>
+                <p>Droplet</p>
+              </div>
+              <div class="col-6 text-center">
+                <div class="squircle bg-primary justify-content-center">
+                  <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
+                </div>
+                <p>Upload</p>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-6 text-center">
+                <div class="squircle bg-primary justify-content-center">
+                  <i class="fe fe-users fe-32 align-self-center text-white"></i>
+                </div>
+                <p>Users</p>
+              </div>
+              <div class="col-6 text-center">
+                <div class="squircle bg-primary justify-content-center">
+                  <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                </div>
+                <p>Settings</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main> <!-- main -->
+</div> <!-- .wrapper -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>
+
+
+
+<script src="../../jsAdmin/jquery.min.js"></script>
+<script src="../../jsAdmin/popper.min.js"></script>
+<script src="../../jsAdmin/moment.min.js"></script>
+<script src="../../jsAdmin/bootstrap.min.js"></script>
+<script src="../../jsAdmin/simplebar.min.js"></script>
+<script src='../../jsAdmin/daterangepicker.js'></script>
+<script src='../../jsAdmin/jquery.stickOnScroll.js'></script>
+<script src="../../jsAdmin/tinycolor-min.js"></script>
+<script src="../../jsAdmin/config.js"></script>
+<script src='../../jsAdmin/jquery.mask.min.js'></script>
+<script src='../../jsAdmin/select2.min.js'></script>
+<script src='../../jsAdmin/jquery.steps.min.js'></script>
+<script src='../../jsAdmin/jquery.validate.min.js'></script>
+<script src='../../jsAdmin/jquery.timepicker.js'></script>
+<script src='../../jsAdmin/dropzone.min.js'></script>
+<script src='../../jsAdmin/uppy.min.js'></script>
+<script src='../../jsAdmin/quill.min.js'></script>
+<script>
+  $('.select2').select2(
+  {
+    theme: 'bootstrap4',
+  });
+  $('.select2-multi').select2(
+  {
+    multiple: true,
+    theme: 'bootstrap4',
+  });
+  $('.drgpicker').daterangepicker(
+  {
+    singleDatePicker: true,
+    timePicker: false,
+    showDropdowns: true,
+    locale:
+    {
+      format: 'MM/DD/YYYY'
+    }
+  });
+  $('.time-input').timepicker(
+  {
+    'scrollDefault': 'now',
+    'zindex': '9999' /* fix modal open */
+  });
+  /** date range picker */
+  if ($('.datetimes').length)
+  {
+    $('.datetimes').daterangepicker(
+    {
+      timePicker: true,
+      startDate: moment().startOf('hour'),
+      endDate: moment().startOf('hour').add(32, 'hour'),
+      locale:
+      {
+        format: 'M/DD hh:mm A'
+      }
+    });
+  }
+  var start = moment().subtract(29, 'days');
+  var end = moment();
+
+  function cb(start, end)
+  {
+    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+  }
+  $('#reportrange').daterangepicker(
+  {
+    startDate: start,
+    endDate: end,
+    ranges:
+    {
+      'Today': [moment(), moment()],
+      'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+      'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+      'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+      'This Month': [moment().startOf('month'), moment().endOf('month')],
+      'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    }
+  }, cb);
+  cb(start, end);
+  $('.input-placeholder').mask("00/00/0000",
+  {
+    placeholder: "__/__/____"
+  });
+  $('.input-zip').mask('00000-000',
+  {
+    placeholder: "____-___"
+  });
+  $('.input-money').mask("#.##0,00",
+  {
+    reverse: true
+  });
+  $('.input-phoneus').mask('(000) 000-0000');
+  $('.input-mixed').mask('AAA 000-S0S');
+  $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
+  {
+    translation:
+    {
+      'Z':
+      {
+        pattern: /[0-9]/,
+        optional: true
+      }
+    },
+    placeholder: "___.___.___.___"
+  });
+  // editor
+  var editor = document.getElementById('editor');
+  if (editor)
+  {
+    var toolbarOptions = [
+      [
+      {
+        'font': []
+      }],
+      [
+      {
+        'header': [1, 2, 3, 4, 5, 6, false]
+      }],
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block'],
+      [
+      {
+        'header': 1
+      },
+      {
+        'header': 2
+      }],
+      [
+      {
+        'list': 'ordered'
+      },
+      {
+        'list': 'bullet'
+      }],
+      [
+      {
+        'script': 'sub'
+      },
+      {
+        'script': 'super'
+      }],
+      [
+      {
+        'indent': '-1'
+      },
+      {
+        'indent': '+1'
+      }], // outdent/indent
+      [
+      {
+        'direction': 'rtl'
+      }], // text direction
+      [
+      {
+        'color': []
+      },
+      {
+        'background': []
+      }], // dropdown with defaults from theme
+      [
+      {
+        'align': []
+      }],
+      ['clean'] // remove formatting button
+    ];
+    var quill = new Quill(editor,
+    {
+      modules:
+      {
+        toolbar: toolbarOptions
+      },
+      theme: 'snow'
+    });
+  }
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function()
+  {
+    'use strict';
+    window.addEventListener('load', function()
+    {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function(form)
+      {
+        form.addEventListener('submit', function(event)
+        {
+          if (form.checkValidity() === false)
+          {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
+<script>
+  var uptarg = document.getElementById('drag-drop-area');
+  if (uptarg)
+  {
+    var uppy = Uppy.Core().use(Uppy.Dashboard,
+    {
+      inline: true,
+      target: uptarg,
+      proudlyDisplayPoweredByUppy: false,
+      theme: 'dark',
+      width: 770,
+      height: 210,
+      plugins: ['Webcam']
+    }).use(Uppy.Tus,
+    {
+      endpoint: 'https://master.tus.io/files/'
+    });
+    uppy.on('complete', (result) =>
+    {
+      console.log('Upload complete! We’ve uploaded these files:', result.successful)
+    });
+  }
+</script>
+<script src="../../jsAdmin/apps.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag()
+  {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+  gtag('config', 'UA-56159088-1');
+</script>
+<script src="../../javascripts/adminProducts.js "></script>
+
+
+<% for (let i=0; i<products.length; i++) { %> 
+<script>
+
+  // Admin Edit Products Image Edit Preview 
+
+
+  var editImageProductsState<%=i+1%> = true
+
+
+function readURL<%=i+1%>(input) {
+
+  editImageProductsState<%=i+1%> = true
+  let imageName = input.files[0].name;
+ 
+
+
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+          $('#imagePreview<%=i+1%>').css('background-image', 'url('+e.target.result +')');
+          $('#imagePreview<%=i+1%>').hide();
+          $('#imagePreview<%=i+1%>').fadeIn(650);
+      }
+      reader.readAsDataURL(input.files[0]);
+      document.getElementById('editProductsImageError<%=i+1%>').innerText = ''
+  }
+
+  
+
+  let fileSizeLimit = 1; // In MB
+ 
+
+
+
+
+var isGood = (/\.(?=jpg|png|jpeg)/gi).test(imageName);
+if (isGood) {
+
+document.getElementById('editProductsImageError<%=i+1%>').innerText = ''
+if (input.files[0].size <= fileSizeLimit * 1024 * 1024){
+   
+  document.getElementById('editProductsImageError<%=i+1%>').innerText = ''
+
+}else {
+
+  // document.getElementById('editProductsImageError').innerText = `Select a Image < ${fileSizeLimit} mb`
+  editImageProductsState<%=i+1%> = false
+  document.getElementById('editProductsImageError<%=i+1%>').innerText = `Select a Image < ${fileSizeLimit} mb`
+}
+}
+else {
+  editImageProductsState<%=i+1%> = false
+  document.getElementById('editProductsImageError<%=i+1%>').innerText = 'Please Select a Image'
+
+}
+
+
+
+}
+
+
+
+  $("#imageUpload<%=i+1%>").change(function() {
+        readURL<%=i+1%>(this);
+    });
+
+$("#adminEditProducts<%=i+1%>").on("submit", function(ev) {
+      ev.preventDefault(); // Prevent browser default submit.
+
+    
+
+   
+
+      var formData = new FormData(this);
+  
+
+        if(editImageProductsState<%=i+1%>) {
+
+
+          $.ajax({
+            url: "/admin_panel/editProducts",
+            type: "PATCH",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+             if(response.message){
+
+              swal.fire({
+                title: `${response.message} `,
+                 icon: "error",
+                 dangerMode: true, 
+                 showConfirmButton: false,
+                 timer: 1500
+               })
+
+             }else {
+
+              Swal.fire({
+    
+                icon: 'success',
+                title: 'Product Edited Successfully ',
+                showConfirmButton: false,
+                timer: 1500
+              }).then((state)=>{
+
+                if(state){
+
+               window.location.reload()
+
+                }
+              })
+
+             }
+
+            },
+          });
+        }
+        
+    });
+
+
+
+
+
+</script>
+<% } %>

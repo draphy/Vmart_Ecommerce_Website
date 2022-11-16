@@ -1,0 +1,167 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="walletTotalHistoryProfile"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Wallet History</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <% if(userRole.wallet) { %> <% for (let
+        i=userRole.wallet.History.length-1 ; i >= 0; i--) { %>
+
+        <div class="card mt-2 mb-2">
+          <div class="card-body">
+            <%=userRole.wallet.History[i].message%>
+
+            <div style="text-align: right; clear: left">
+              <%=userRole.wallet.History[i].date.toDateString()%>
+            </div>
+          </div>
+        </div>
+
+        <% } %> <% } else { %>
+
+        <div class="text-center mt-1">
+          <h1 style="color: rgba(0, 0, 0, 0.082)">No Wallet History</h1>
+        </div>
+
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-4 pb-5">
+  <!-- Account Sidebar-->
+  <div class="author-card pb-3">
+    <div
+      class="author-card-cover"
+      style="background-image: url('../../images/login_popup.jpg')"
+    >
+      <a
+        style="z-index: 100"
+        class="btn btn-style-1 btn-white btn-sm"
+        href="#"
+        data-bs-toggle="modal"
+        data-bs-target="#walletTotalHistoryProfile"
+        ><i class="fa fa-award text-md"></i>&nbsp; <% if ( userRole.wallet ) {
+        %><%=(userRole.wallet.total).toFixed(2) %><% } else { %> 0 <% } %>
+        Vcoins</a
+      >
+    </div>
+    <br />
+    <div class="author-card-profile">
+      <div class="author-card-details">
+        <h5 class="author-card-name text-lg">
+          <%=userRole.name%> <%=userRole.lastName%>
+        </h5>
+        <span class="author-card-position"
+          >Joined <%=userRole.date.toLocaleDateString()%></span
+        >
+        <br />
+        <h5 style="margin-bottom: 0.7rem" class="author-card-name text-lg">
+          Referral
+        </h5>
+        <span style="border: 1px dashed black; padding: 5px 10px"
+          ><%=userRole.referral%>&nbsp;<a
+            id="copySymbolTag"
+            onclick="copyTheReferral('<%=userRole.referral%>')"
+            href="#"
+            style="color: black"
+            ><i class="fa fa-copy text-md"></i></a
+        ></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wizard">
+    <nav class="list-group list-group-flush">
+      <a class="list-group-item" href="/homepage/user_profile"
+        ><i class="fa fa-user text-muted"></i>Profile Settings</a
+      ><a class="list-group-item" href="/homepage/user_profile_address"
+        ><i class="fa fa-map text-muted"></i>Addresses</a
+      >
+
+      <a class="list-group-item" href="#">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <i class="fa fa-shopping-bag mr-1 text-muted"></i>
+            <div class="d-inline-block font-weight-medium text-uppercase">
+              Orders List
+            </div>
+          </div>
+          <span class="badge badge-secondary"
+            ><% if ( userRole.order ) { %><%=userRole.order.length%><% } else {
+            %> 0 <% } %></span
+          >
+        </div>
+      </a>
+
+      <a
+        class="list-group-item"
+        href="/homepage/user_profile_rewards"
+        target="__blank"
+      >
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <i class="fa fa-gift mr-1 text-muted"></i>
+            <div class="d-inline-block font-weight-medium text-uppercase">
+              Rewards
+            </div>
+          </div>
+          <span class="badge badge-secondary"
+            ><% if ( userRole.reward ) { %> <%=userRole.reward.length%> <% }
+            else { %> 0 <% } %></span
+          >
+        </div>
+      </a>
+
+      <a class="list-group-item" href="#" target="__blank">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <i class="fa fa-heart mr-1 text-muted"></i>
+            <div class="d-inline-block font-weight-medium text-uppercase">
+              My Wishlist
+            </div>
+          </div>
+          <span class="badge badge-secondary">0</span>
+        </div>
+      </a>
+
+      <a class="list-group-item" href="/homepage/user_logout" target="__blank">
+        <div class="d-flex justify-content-between align-items-center">
+          <div style="color: red">
+            <i class="fa fa-power-off mr-1 text-muted"></i>
+            <div class="d-inline-block font-weight-medium text-uppercase">
+              LogOut
+            </div>
+          </div>
+        </div>
+      </a>
+    </nav>
+  </div>
+</div>
+<script>
+  function copyTheReferral(code) {
+    let cpnBtn = document.getElementById("copySymbolTag");
+
+    navigator.clipboard.writeText(code);
+
+    cpnBtn.innerHTML = ` <i class="fa text-md">COPIED</i>`;
+    setTimeout(function () {
+      cpnBtn.innerHTML = `<i class="fa fa-copy text-md"></i>`;
+    }, 1000);
+  }
+</script>

@@ -1,0 +1,508 @@
+<%-include('../partials/userHeader.ejs') %>
+<!-- Breadcrumb Section Begin -->
+ <section class="breadcrumb-section set-bg" data-setbg="../../images/vegetables4_b72-.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>User Addresses</h2>
+                    <div class="breadcrumb__option">
+                        <a href="#">Home</a>
+                        <span>User Addresses</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+
+
+
+<div class="container mt-5">
+    <div class="row">
+       
+
+
+        <%-include('../partials/userProfileSidebar.ejs') %>
+
+
+
+
+
+
+        <!-- Profile Settings-->
+        <div class="col-lg-8 pb-5">
+            <h3 style="font-weight: 600;">Addresses</h3>
+            <hr class="mt-2 mb-3">
+         <!-- Button trigger modal -->
+<button type="button" class="btn btn-success" data-mdb-toggle="modal" data-mdb-target="#userAddressModal">
+   Add Address
+  </button>
+ 
+ <% if (userRole.address) { %>
+    <% if (userRole.address.length) { %>
+  <% for (let i=0; i<userRole.address.length; i++) { %> 
+
+ <!-- Modal -->
+ <div class="modal fade" id="userEditAddressModal<%=i+1%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="font-weight: 600 !important;">Edit Address</h5>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+            <div class="col-lg-12 col-md-12">
+
+                <form  id="userProfileEditAddress<%=i+1%>">
+
+                   
+
+                <div class="row">
+
+<div class="col-12 mb-4 checkout__input">
+    <label class="mb-2" for="tag">Address Tag<span style="color: red;">*</span> </label>
+
+    <select class="col-12" aria-label="Default select example" name="tag">
+                     
+        <option value="Home" <% if( userRole.address[i].tag  == 'Home' ) { %>  selected  <% } %>  >Home</option>
+        <option  value="Work"  <% if( userRole.address[i].tag  == 'Work' ) { %>  selected  <% } %>  >Work</option>
+        <option value="Other"  <% if( userRole.address[i].tag  == 'Other' ) { %>  selected  <% } %>   >Other</option>
+      </select>
+</div>
+
+
+                    <div class="col-lg-6">
+                        <div class="checkout__input">
+                            <p>Fist Name<span>*</span></p>
+                            <input type="text" name="firstName" value="<%=userRole.address[i].firstName%>">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="checkout__input">
+                            <p>Last Name<span>*</span></p>
+                            <input type="text" name="lastName" value=" <%=userRole.address[i].lastName%>">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkout__input">
+                    <p>Country<span>*</span></p>
+                    <input type="text" name="country" value="<%=userRole.address[i].country%>">
+                </div>
+                <div class="checkout__input">
+                    <p>Address<span>*</span></p>
+                    <input type="text" placeholder="Street Address" class="checkout__input__add" name="streetAddress" value=" <%=userRole.address[i].streetAddress%>">
+                    <!-- <input type="text" placeholder="Apartment, suite, unite ect (optinal)"> -->
+                </div>
+                <div class="checkout__input">
+                    <p>Town/City<span>*</span></p>
+                    <input type="text" name="city" value="<%=userRole.address[i].city%>">
+                </div>
+                <div class="checkout__input">
+                    <p>State<span>*</span></p>
+                    <input type="text" name="state" value="<%=userRole.address[i].state%>">
+                </div>
+                <div class="checkout__input">
+                    <p>Postcode / ZIP<span>*</span></p>
+                    <input type="number" name="postCode" value="<%=userRole.address[i].postCode %>">
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="checkout__input">
+                            <p>Phone<span>*</span></p>
+                            <input type="number" name="phoneNumber" value="<%=userRole.address[i].phoneNumber%>">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="checkout__input">
+                            <p>Email<span>*</span></p>
+                            <input type="email" name="email" value="<%=userRole.address[i].email%>">
+                        </div>
+                    </div>
+                </div>
+
+
+                
+           <!---------------- Address -------------->
+              
+            
+                <!-- <div class="checkout__input__checkbox">
+                    <label for="diff-acc">
+                        Ship to a different address?
+                        <input type="checkbox" id="diff-acc">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div class="checkout__input__checkbox">
+                    <label for="diff-acc1">
+                     Home
+                        <input type="checkbox" id="diff-acc1">
+                        <span class="checkmark"></span>
+                    </label>
+                </div> -->
+            </form>
+             
+            </div>
+
+
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">Close</button>
+          <button onclick="userProfileEditAddress('<%=i+1%>','<%=userRole.address[i].uniqueId%>')" type="button" class="btn btn-success">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>  
+
+
+
+
+
+
+  <div class="card mt-3">
+    <div class="card-body">
+   <P>
+    <div class="row">
+    <div class="col-6" style="color: #0f6f3a; font-weight: 700; font-size: larger;"><%=userRole.address[i].tag%></div><div class="col-6" style="text-align: right;clear:left;"><a href="#" data-mdb-toggle="modal" data-mdb-target="#userEditAddressModal<%=i+1%>"><i  class="fa fa-pencil" style="color: rgba(0, 0, 0, 0.658);font-size: 1.3rem;"></i></a> &nbsp;<a href="#" onclick="userAddressDelete('<%=userRole.address[i].uniqueId%>')"><i  class="fa fa-trash" style="color: red; font-size: 1.5rem;"></i></a></div>
+</div>
+    <br>
+    <%=userRole.address[i].firstName%>  <%=userRole.address[i].lastName%>
+   <br>
+   <%=userRole.address[i].streetAddress%>
+   <br>
+   <%=userRole.address[i].city%> , <%=userRole.address[i].state%> , <%=userRole.address[i].country%>
+   <br>
+   <%=userRole.address[i].postCode %>
+   <br>
+   <%=userRole.address[i].phoneNumber%> , <%=userRole.address[i].email%>
+   </P>
+    </div>
+  </div>
+
+  <% } %>
+
+  <% } else {%>
+<div class="text-center mt-5">
+    <h1 style="color: rgba(0, 0, 0, 0.082);">No Saved Addresses</h1>
+</div>
+
+    <% } %>
+    <% } else {%>
+        <div class="text-center mt-5">
+            <h1 style="color: rgba(0, 0, 0, 0.082);">No Saved Addresses</h1>
+        </div>
+        
+            <% } %>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="userAddressModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="font-weight: 600 !important;">Add Address</h5>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+            <div class="col-lg-12 col-md-12">
+
+                <form  id="userProfileAddAddress">
+
+                   
+
+                <div class="row">
+
+<div class="col-12 mb-4 checkout__input">
+    <label class="mb-2" for="tag">Address Tag<span style="color: red;">*</span> </label>
+
+    <select class="col-12" aria-label="Default select example" name="tag">
+                     
+        <option selected  value="Home">Home</option>
+        <option value="Work">Work</option>
+        <option value="Other">Other</option>
+      </select>
+</div>
+
+
+                    <div class="col-lg-6">
+                        <div class="checkout__input">
+                            <p>Fist Name<span>*</span></p>
+                            <input type="text" name="firstName">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="checkout__input">
+                            <p>Last Name<span>*</span></p>
+                            <input type="text" name="lastName">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkout__input">
+                    <p>Country<span>*</span></p>
+                    <input type="text" name="country">
+                </div>
+                <div class="checkout__input">
+                    <p>Address<span>*</span></p>
+                    <input type="text" placeholder="Street Address" class="checkout__input__add" name="streetAddress">
+                    <!-- <input type="text" placeholder="Apartment, suite, unite ect (optinal)"> -->
+                </div>
+                <div class="checkout__input">
+                    <p>Town/City<span>*</span></p>
+                    <input type="text" name="city">
+                </div>
+                <div class="checkout__input">
+                    <p>State<span>*</span></p>
+                    <input type="text" name="state">
+                </div>
+                <div class="checkout__input">
+                    <p>Postcode / ZIP<span>*</span></p>
+                    <input type="number" name="postCode">
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="checkout__input">
+                            <p>Phone<span>*</span></p>
+                            <input type="number" name="phoneNumber" value="<%=userRole.phoneNumber%>">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="checkout__input">
+                            <p>Email<span>*</span></p>
+                            <input type="email" name="email" value="<%=userRole.email%>">
+                        </div>
+                    </div>
+                </div>
+
+
+                
+           <!---------------- Address -------------->
+              
+            
+                <!-- <div class="checkout__input__checkbox">
+                    <label for="diff-acc">
+                        Ship to a different address?
+                        <input type="checkbox" id="diff-acc">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div class="checkout__input__checkbox">
+                    <label for="diff-acc1">
+                     Home
+                        <input type="checkbox" id="diff-acc1">
+                        <span class="checkmark"></span>
+                    </label>
+                </div> -->
+            </form>
+             
+            </div>
+
+
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">Close</button>
+          <button onclick="userProfileAddAddress()" type="button" class="btn btn-success">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>  
+        
+       
+        </div>
+    </div>
+</div>
+<!-- Footer Section Begin -->
+<%-include('../partials/userFooter.ejs') %>
+
+
+<script>
+
+function userProfileAddAddress(){
+
+
+    $.ajax({
+      url: "/homepage/user_profile_address",
+      data: $("#userProfileAddAddress").serialize(),
+      method: "POST",
+      success:  (response) => {
+        if (response.state) {
+            var options = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-bottom-center",
+  "preventDuplicates": false,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "1000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut",
+  "onHidden": function () {
+        window.location.reload();
+      }
+}
+   
+  toastr.success('New Address Added ','Success',  options)
+
+
+       
+
+     
+
+        }else { 
+     
+            toastr.error('Address Not Added', 'Error')
+        }
+      },
+    });
+
+
+
+
+
+
+
+}
+
+
+
+function userProfileEditAddress(Id,uniqueId){
+
+
+$.ajax({
+  url: `/homepage/user_profile_address/${uniqueId}`,
+  data: $(`#userProfileEditAddress${Id}`).serialize(),
+  method: "PATCH",
+  success:  (response) => {
+    if (response.state) {
+        var options = {
+"closeButton": true,
+"debug": false,
+"newestOnTop": false,
+"progressBar": true,
+"positionClass": "toast-bottom-center",
+"preventDuplicates": false,
+"showDuration": "300",
+"hideDuration": "1000",
+"timeOut": "1000",
+"extendedTimeOut": "1000",
+"showEasing": "swing",
+"hideEasing": "linear",
+"showMethod": "fadeIn",
+"hideMethod": "fadeOut",
+"onHidden": function () {
+    window.location.reload();
+  }
+}
+
+toastr.success('Address Edited ','Success',  options)
+
+
+   
+
+ 
+
+    }else { 
+ 
+        toastr.error('Address Not Edited', 'Error')
+    }
+  },
+});
+
+
+
+
+
+
+
+}
+
+
+
+function userAddressDelete(uniqueId) {
+
+
+    Swal.fire({
+  title: 'Are you sure?',
+  text: `Do you want to delete the Address`,
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+
+
+
+
+    $.ajax({
+  url: `/homepage/user_address_delete`,
+  data: {uniqueId : uniqueId },
+  method: "DELETE",
+  success:  (response) => {
+    if (response.state) {
+        var options = {
+"closeButton": true,
+"debug": false,
+"newestOnTop": false,
+"progressBar": true,
+"positionClass": "toast-bottom-center",
+"preventDuplicates": false,
+"showDuration": "300",
+"hideDuration": "1000",
+"timeOut": "1000",
+"extendedTimeOut": "1000",
+"showEasing": "swing",
+"hideEasing": "linear",
+"showMethod": "fadeIn",
+"hideMethod": "fadeOut",
+"onHidden": function () {
+    window.location.reload();
+  }
+}
+
+toastr.success('Address Deleted ','Success',  options)
+
+
+   
+
+ 
+
+    }else { 
+ 
+        toastr.error('Address Not Deleted', 'Error')
+    }
+  },
+});
+
+
+
+  }
+
+
+
+})
+
+
+
+}
+
+
+
+
+
+
+</script>

@@ -1,0 +1,708 @@
+<%-include('../partials/userHeader.ejs') %>
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../js/jQuery-mooZoom-1.0.0.js"></script> -->
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="../../images/vegetables4_b72-.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2><%=product[0].productsName%></h2>
+                    <div class="breadcrumb__option">
+                        <a href="./index.html">Home</a>
+                        <a href="./index.html"><%=product[0].categoryDetails[0].categoryName%></a>
+                        <span><%=product[0].productsName%></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Product Details Section Begin -->
+<section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6" >
+                <div class="product__details__pic" >
+                    <div class="product__details__pic__item  " >
+                      
+                            <img class="product__details__pic__item--large block__pic "  
+                            src="../../productsImages/<%=product[0]._id%>.jpg" alt="">
+                       
+                       
+                    </div>
+                    <div class="product__details__pic__slider owl-carousel">
+                        <img data-imgbigurl="../../productsImages/<%=product[0]._id%>.jpg"
+                            src="../../productsImages/<%=product[0]._id%>.jpg" alt="">
+                        <img data-imgbigurl="../../productsImages/<%=product[0]._id%>_subimage1.jpg"
+                            src="../../productsImages/<%=product[0]._id%>_subimage1.jpg" alt="">
+                        <img data-imgbigurl="../../productsImages/<%=product[0]._id%>_subimage2.jpg"
+                            src="../../productsImages/<%=product[0]._id%>_subimage2.jpg" alt="">
+                        <img data-imgbigurl="../../productsImages/<%=product[0]._id%>_subimage3.jpg"
+                            src="../../productsImages/<%=product[0]._id%>_subimage3.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3><%=product[0].productsName%></h3>
+                    <div class="product__details__rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                        <span>(18 reviews)</span>
+                    </div>
+                    <% if(product[0].categoryDetails[0].offer) { %>
+                     
+                    <div class="product__details__price"id="weightProductPriceOfferhalf">₹ <span ><%=(product[0].price)-(product[0].price*(product[0].categoryDetails[0].offer/100)) %></span>&nbsp<del style="color: rgba(0, 0, 0, 0.404) !important ; font-size: 1.3rem;  ">₹<span id="weightProductPrice"><%=product[0].price %></span></del><span style="color:rgba(0, 0, 0, 0.411) ; font-size :medium ; " >(500<%=product[0].massUnit%>)</span></div>
+              
+
+                    <div class="product__details__price" id="weightProductPriceOfferfull">₹ <span ><%=(product[0].price*2)-(product[0].price*2*(product[0].categoryDetails[0].offer/100)) %></span>&nbsp<del style="color: rgba(0, 0, 0, 0.404) !important ; font-size: 1.3rem;  ">₹<span id="weightProductPrice"><%=product[0].price*2 %></span></del><span style="color:rgba(0, 0, 0, 0.411) ; font-size :medium ; " >(1000<%=product[0].massUnit%>)</span></div>
+               
+
+                    <%} else {%>
+                    
+                            <div class="product__details__price" id="weightProductPriceOfferhalf">₹ <span ><%=product[0].price %></span><span style="color:rgba(0, 0, 0, 0.411) ; font-size :medium ; " >(500<%=product[0].massUnit%>)</span></div>  
+                        
+                        
+                         
+                            <div class="product__details__price" id="weightProductPriceOfferfull">₹ <span ><%=product[0].price*2 %></span><span style="color:rgba(0, 0, 0, 0.411) ; font-size :medium ; " >(1000<%=product[0].massUnit%>)</span></div>  
+                     
+                       
+                       
+                            <% } %>
+                    <p><%=product[0].description%></p>
+                    <% if(product[0].active) { %>
+                    <% if(product[0].instock.half > 10 || product[0].instock.full > 10  ) { %>
+                    <div class="product__details__quantity">
+                        <div class="quantity">
+                            <div class="pro-qty">
+                                <input type="text" value="1" id="quantityInputProduct" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <a  href="javascript:void(0);" onclick="addToCart('<%=product[0]._id%>')" class="primary-btn">ADD TO CART</a>
+                    <%} else {%>  <h3  style="color: red; display: inline;">Out of Stock</h3> &nbsp;<%}%>
+
+                    <% if (userRole) { %> 
+                              
+                        <% if (userRole.wishlist) { %>  
+
+                    <% let wishproduct = userRole.wishlist.findIndex(products => products.productId.toString() == product[0]._id.toString()) 
+                   
+                    %>  
+                    <% if (wishproduct != -1) { %>  
+                      <span id="wishlistState<%=product[0]._id%>">
+
+                        <a href="javascript:void(0);" class="heart-icon" onclick="addToWishlist('<%=product[0]._id%>')" style="border-radius: 25px;  background-color: #739f03 !important; "><i class="fa fa-heart" style=" color:white  !important;"></i></a>
+                      </span> 
+                    <% } else {%> 
+                      <span id="wishlistState<%=product[0]._id%>">
+
+                        <a href="javascript:void(0);" class="heart-icon"  onclick="addToWishlist('<%=product[0]._id%>')" style="border-radius: 25px; background-color:rgb(170, 170, 170) !important;"><i class="fa fa-heart" style="color: white !important;"></i></a>
+                    </span>
+                    
+                      <% } %>
+               
+                     <% } else {%> 
+                      <span id="wishlistState<%=product[0]._id%>">
+
+                        <a href="javascript:void(0);" class="heart-icon"  onclick="addToWishlist('<%=product[0]._id%>')" style="border-radius: 25px; background-color:rgb(170, 170, 170) !important;"><i class="fa fa-heart" style="color: white !important;"></i></a>
+                    </span>
+                    
+                      <% } %>
+               
+                      <% } else {%> 
+                        <span id="wishlistState<%=product[0]._id%>">
+  
+                          <a href="javascript:void(0);" class="heart-icon"  onclick="showPopup()" style="border-radius: 25px; background-color:rgb(170, 170, 170) !important;"><i class="fa fa-heart" style="color: white !important;"></i></a>
+                      </span>
+                      
+                        <% } %>
+        
+
+              
+                    <ul>
+                        <% if(product[0].instock.half > 10 || product[0].instock.full > 10  ) { %>
+                        <li>
+
+                            <form id="weightFormId">
+                              
+                                <% if(product[0].weight.weight500State && product[0].instock.half>10  ) { %>
+                                <label class="weightContainer">500 <%=product[0].massUnit%>
+                                  <input type="radio" name="weight" checked="checked"  value= "500" onclick="changeWeightPrice()" >
+                                  <span class="checkmark"></span>
+                                </label>
+                                <% } else { %>
+                                     <label style="color: red; font-weight: 600;" for=""> 500 <%=product[0].massUnit%> (out of stock)</label>
+                                    <% } %>
+                                &nbsp;
+                                <% if(product[0].weight.weight1State && product[0].instock.full>10 ) { %>
+                                <label class="weightContainer">1000 <%=product[0].massUnit%>
+                                    <input type="radio"  name="weight" checked="checked" value= "1000" onclick="changeWeightPrice()">
+                                    <span class="checkmark"></span>
+                                  </label>
+                                  <% } else { %>
+                                    <label style="color: red; font-weight: 600;" for=""> 1000 <%=product[0].massUnit%> (out of stock)</label>
+                                   <% } %>
+
+                                 
+                                </form>
+
+
+
+
+                        </li>
+                        <% } %>
+                        <li><b>Availability</b> <% if(product[0].instock.half > 10 || product[0].instock.full > 10  ) { %> <span>In Stock</span> <%} else {%><span style="color: red;">Out of Stock</span><%}%></li>
+                        <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+                        <!-- <li><b>Weight</b> <span>0.5 kg</span></li>
+                        <li><b>Share on</b>
+                            <div class="share">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                            </div>
+                        </li> -->
+                    </ul>
+                    <%} else {%> <h3  style="color: red; display: inline; font-weight: 500;">Product Discontinued</h3><%}%>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="product__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                                aria-selected="true">Description</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                                aria-selected="false">Information</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                                aria-selected="false">Reviews <span>(1)</span></a>
+                        </li> -->
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Products Infomation</h6>
+                                <p><%=product[0].description%></p>
+                                    
+                            </div>
+                        </div>
+                        <!-- <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Products Infomation</h6>
+                                <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
+                                    Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
+                                    Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
+                                    sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
+                                    eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
+                                    Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
+                                    sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
+                                    diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
+                                    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+                                    Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
+                                    Proin eget tortor risus.</p>
+                                <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
+                                    ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
+                                    elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
+                                    porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
+                                    nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Products Infomation</h6>
+                                <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
+                                    Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
+                                    Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
+                                    sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
+                                    eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
+                                    Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
+                                    sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
+                                    diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
+                                    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+                                    Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
+                                    Proin eget tortor risus.</p>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Details Section End -->
+
+<!-- Related Product Section Begin -->
+<% if (product[0].similarProducts.length) { %> 
+<section class="related-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title related__product__title">
+                    <h2>Related Product</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+          
+            <% for (let i=0; i<product[0].similarProducts.length; i++) { %> 
+            <div class="col-lg-3 col-md-4 col-sm-6">
+
+                <% if (product[0].categoryDetails[0].offer) { %> 
+
+                    <div class="product__discount__item">
+                        <div class="product__discount__item__pic set-bg"
+                            data-setbg="../../productsImages/<%=product[0].similarProducts[i]._id%>.jpg">
+                            <div class="product__discount__percent">-<%=product[0].categoryDetails[0].offer %>%</div>
+                            <ul class="product__item__pic__hover">
+                                <li>
+                                    
+                                    <% if (userRole) { %> 
+                              
+                                        <% if (userRole.wishlist) { %>  
+                                    
+                                    <% let wishproduct = userRole.wishlist.findIndex(products => products.productId.toString() == product[0].similarProducts[i]._id.toString()) 
+                   
+                                    %>  
+                                    <% if (wishproduct != -1) { %>  
+                                      <span id="wishlistState<%=product[0].similarProducts[i]._id%>">
+                
+                                        <a href="javascript:void(0);" onclick="singleAddToWishlist('<%=product[0].similarProducts[i]._id%>', 500)" style="background-color: #739f03; border-color:#739f03;  "><i class="fa fa-heart" style=" color: white;"></i></a>
+                                      </span> 
+                                    <% } else {%> 
+                                      <span id="wishlistState<%=product[0].similarProducts[i]._id%>">
+                
+                                        <a href="javascript:void(0);" onclick="singleAddToWishlist('<%=product[0].similarProducts[i]._id%>', 500)"><i class="fa fa-heart"></i></a>
+                                      </span>
+                                    
+                                      <% } %>
+                                
+                                      <% } else {%> 
+                                        <span id="wishlistState<%=product[0].similarProducts[i]._id%>">
+                  
+                                          <a href="javascript:void(0);" onclick="singleAddToWishlist('<%=product[0].similarProducts[i]._id%>', 500)"><i class="fa fa-heart"></i></a>
+                                        </span>
+                                      
+                                        <% } %>
+                                        <% } else {%> 
+                                            <span id="wishlistState<%=product[0].similarProducts[i]._id%>">
+                      
+                                              <a href="javascript:void(0);" onclick="showPopup()"><i class="fa fa-heart"></i></a>
+                                            </span>
+                                          
+                                            <% } %>
+                                
+                                
+                                </li>
+                             
+                                <li><a href="javascript:void(0);" onclick="singleAddToCart('<%=product[0].similarProducts[i]._id%>','<%=product[0].similarProducts[i].instock.half%>')"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__discount__item__text">
+                            <span><%=product[0].categoryDetails[0].categoryName%></span>
+                            <h5><a href="/homepage/home/<%=product[0].categoryDetails[0].categoryName.replace(' ','_')%>?productId=<%=product[0].similarProducts[i]._id%>" > <%=product[0].similarProducts[i].productsName %></a></h5>
+                            <div class="product__item__price">₹ <%=(product[0].similarProducts[i].price)-(product[0].similarProducts[i].price*(product[0].categoryDetails[0].offer/100)) %><span>₹ <%=product[0].similarProducts[i].price %></span></div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <% } else {%> 
+                <div class="product__item">
+                  
+                    <div class="product__item__pic set-bg" data-setbg="../../productsImages/<%=product[0].similarProducts[i]._id%>.jpg">
+                        <ul class="product__item__pic__hover">
+                            <li>
+
+                                <% if (userRole) { %> 
+                              
+                                    <% if (userRole.wishlist) { %>  
+
+
+
+                                <% let wishproduct = userRole.wishlist.findIndex(products => products.productId.toString() == product[0].similarProducts[i]._id.toString()) 
+                   
+                                %>  
+                                <% if (wishproduct != -1) { %>  
+                                  <span id="wishlistState<%=product[0].similarProducts[i]._id%>">
+            
+                                    <a href="javascript:void(0);" onclick="singleAddToWishlist('<%=product[0].similarProducts[i]._id%>', 500)" style="background-color: #739f03; border-color:#739f03;  "><i class="fa fa-heart" style=" color: white;"></i></a>
+                                  </span> 
+                                <% } else {%> 
+                                  <span id="wishlistState<%=product[0].similarProducts[i]._id%>">
+            
+                                    <a href="javascript:void(0);" onclick="singleAddToWishlist('<%=product[0].similarProducts[i]._id%>', 500)"><i class="fa fa-heart"></i></a>
+                                  </span>
+                                
+                                  <% } %>
+                                  <% } else {%> 
+                                    <span id="wishlistState<%=product[0].similarProducts[i]._id%>">
+              
+                                      <a href="javascript:void(0);" onclick="singleAddToWishlist('<%=product[0].similarProducts[i]._id%>', 500)"><i class="fa fa-heart"></i></a>
+                                    </span>
+                                  
+                                    <% } %>
+                                    <% } else {%> 
+                                        <span id="wishlistState<%=product[0].similarProducts[i]._id%>">
+                  
+                                          <a href="javascript:void(0);" onclick="showPopup()"><i class="fa fa-heart"></i></a>
+                                        </span>
+                                      
+                                        <% } %>
+                            
+                            </li>
+                         
+                            <li><a href="javascript:void(0);" onclick="singleAddToCart('<%=product[0].similarProducts[i]._id%>')"><i class="fa fa-shopping-cart"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <span style="font-size: .78rem; color:rgba(0, 0, 0, 0.425); font-weight: 700; "><%=product[0].categoryDetails[0].categoryName%></span>
+                        <h6><a href="/homepage/home/<%=product[0].categoryDetails[0].categoryName.replace(' ','_')%>?productId=<%=product[0].similarProducts[i]._id%>" > <%=product[0].similarProducts[i].productsName %></a></h6>
+                        <h5>₹ <%=product[0].similarProducts[i].price %></h5>
+                    </div>
+                </div>
+                <% } %>
+
+
+
+
+
+            </div>
+            <% } %>
+        </div>
+    </div>
+</section>
+<% } else {%> 
+
+    <section class="related-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title related__product__title">
+                        <h2>No Related Product</h2>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </section>
+   
+    <% }%>   
+<!-- Related Product Section End -->
+
+<%-include('../partials/userFooter.ejs') %>
+
+<!-- <script src="https://code.jquery.com/jquery-3.4.0.min.js" 
+        integrity="sha384-JUMjoW8OzDJw4oFpWIB2Bu/c6768ObEthBMVSiIx4ruBIEdyNSUQAjJNFqT5pnJ6" 
+        crossorigin="anonymous">
+</script>
+<script src="../../js/zoomsl.min.js"></script>
+
+<script>
+
+$(function(){
+  $(".block_pic").imagezoomsl();
+});
+</script> -->
+
+
+<!-- second script -->
+
+
+<!-- <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha384-JUMjoW8OzDJw4oFpWIB2Bu/c6768ObEthBMVSiIx4ruBIEdyNSUQAjJNFqT5pnJ6" crossorigin="anonymous"></script> -->
+<script src="../../js/zoomsl.js"></script>
+<script>
+    $(document).ready(function () {
+        
+    $(".block__pic").imagezoomsl({
+       
+        zoomrange: [3, 3]
+    });
+});
+
+</script>
+
+<!-- third script -->
+
+<!-- <script type="text/javascript">
+    var options = {
+        zoom: {
+            width: 100,
+            height: 100,
+            zIndex: 600
+        },
+        overlay: {
+            opacity: 0.65,
+            zIndex: 500,
+            backgroundColor: '#000000',
+            fade: true
+        },
+        detail: {
+            zIndex: 600,
+            margin: {
+                top: 0,
+                left: 10
+            },
+            fade: true
+        }
+    };
+    jQuery(document).ready(function() {
+        jQuery('.imgZoom').mooZoom(options);
+    });
+</script> -->
+<script>
+
+    (function ($) {
+          /*-------------------
+            Quantity change
+        --------------------- */
+        var proQty = $('.pro-qty');
+        proQty.prepend('<span class="dec qtybtn">-</span>');
+        proQty.append('<span class="inc qtybtn">+</span>');
+        proQty.on('click', '.qtybtn', function () {
+            var $button = $(this);
+            var oldValue = $button.parent().find('input').val();
+            if ($button.hasClass('inc')) {
+                var newVal = parseFloat(oldValue) + 1;
+            } else {
+                // Don't allow decrementing below zero
+                if (oldValue > 1) {
+                    var newVal = parseFloat(oldValue) - 1;
+                } else {
+                    newVal = 1;
+                }
+            }
+            $button.parent().find('input').val(newVal);
+           
+        });
+    
+    })(jQuery);
+    
+    </script>
+    <script>
+
+function addToWishlist(productId){
+    
+
+    
+    
+        $.ajax({
+            url: "/homepage/add_to_wishlist",
+            data:  $('#weightFormId').serialize()+'&'+`productId=${productId}`,
+            method: "POST",
+            success: function (response) {
+    
+                if(response.message == 'insert'){
+    
+    
+    
+    Swal.fire({
+    
+    icon: 'success',
+    title: 'Added to Wishlist',
+    
+    showConfirmButton: false,
+    timer: 2500
+    }).then((state)=>{
+    if(state){
+    
+    if(state){ 
+    
+    document.getElementById(`wishlistState${productId}`).innerHTML = `<a href="javascript:void(0);" class="heart-icon" onclick="addToWishlist('${productId}')" style="border-radius: 25px;  background-color: #739f03 !important; "><i class="fa fa-heart" style=" color:white  !important;"></i></a>
+ `
+    
+    let countOrg = document.getElementById('spanWishlistProductCount').innerHTML
+    console.log(countOrg,'hi')
+    document.getElementById('spanWishlistProductCount').innerHTML = Number(countOrg)+1
+    
+    }
+    
+    
+    
+    }
+    
+    })
+    }else  if(response.message == 'pull'){
+    
+    
+    
+      Swal.fire({
+      
+      icon: 'error',
+      title: 'Removed from Wishlist',
+      
+      showConfirmButton: false,
+      timer: 2500
+      }).then((state)=>{
+      if(state){
+      
+      if(state){ 
+      
+        document.getElementById(`wishlistState${productId}`).innerHTML = ` <a href="javascript:void(0);" class="heart-icon"  onclick="addToWishlist('${productId}')" style="border-radius: 25px; background-color:rgb(170, 170, 170) !important;"><i class="fa fa-heart" style="color: white !important;"></i></a>
+  `
+
+
+      let countOrg = document.getElementById('spanWishlistProductCount').innerHTML
+      console.log(countOrg,'hi')
+      document.getElementById('spanWishlistProductCount').innerHTML = Number(countOrg)-1
+      
+      }
+      
+      
+      
+      }
+      
+      })
+      } else{
+    
+    showPopup()
+    }
+          
+            },
+            error: function (err) {
+              alert("Something Error");
+            },
+          });
+    
+    
+    
+    
+    
+    
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+function addToCart(productId){
+    
+let quantity = document.getElementById('quantityInputProduct').value
+console.log(quantity,'hi quantity')
+
+
+    $.ajax({
+        url: "/homepage/add_to_cart",
+        data:  $('#weightFormId').serialize()+'&'+`productId=${productId}&quantity=${quantity}`,
+        method: "POST",
+        success: function (response) {
+
+            if(response.state){
+
+
+
+                Swal.fire({
+           
+             icon: 'success',
+             title: 'Added to Cart',
+          
+             showConfirmButton: false,
+             timer: 2500
+           }).then((state)=>{
+         if(state){
+    
+         if(response.message=='insert'){
+    
+    
+    let countOrg = document.getElementById('spanCartProductCount').innerHTML
+    console.log(countOrg,'hi')
+    document.getElementById('spanCartProductCount').innerHTML = Number(countOrg)+1
+    
+         }
+    
+    
+    
+         }
+    
+           })
+            }else{
+
+                showPopup()
+            }
+      
+        },
+        error: function (err) {
+          alert("Something Error");
+        },
+      });
+
+
+
+
+
+
+}
+
+$(window).on('load', function () {
+       
+      
+  let weight =  $('#weightFormId').serializeArray()
+if(weight.length!=0){
+  console.log(weight);
+   if (weight[0].value==1000) {
+
+document.getElementById('weightProductPriceOfferhalf').setAttribute("style","display:none");
+
+    
+   }
+   if(weight[0].value==500){
+
+    document.getElementById('weightProductPriceOfferfull').setAttribute("style","display:none");
+
+
+   }
+}else{
+    document.getElementById('weightProductPriceOfferfull').setAttribute("style","display:none");
+}
+    
+    });
+
+
+function changeWeightPrice(){
+
+    let weight =  $('#weightFormId').serializeArray()
+if(weight.length!=0){
+  console.log(weight);
+   if (weight[0].value==1000) {
+
+document.getElementById('weightProductPriceOfferhalf').setAttribute("style","display:none");
+document.getElementById('weightProductPriceOfferfull').setAttribute("style","display:block");
+    
+   }else{
+
+    document.getElementById('weightProductPriceOfferfull').setAttribute("style","display:none");
+    document.getElementById('weightProductPriceOfferhalf').setAttribute("style","display:block");
+
+   }
+}
+
+
+}
+
+
+
+
+
+    </script>

@@ -1,0 +1,815 @@
+<%-include('../partials/userHeader.ejs') %>
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="../../images/vegetables4_b72-.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Checkout</h2>
+                    <div class="breadcrumb__option">
+                        <a href="./index.html">Home</a>
+                        <span>Checkout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+
+
+
+
+                <% if (userRole.address) { %>
+                    <% if (userRole.address.length) { %>
+              <h4 style="font-weight: 800;">Saved Address</h4>
+              <br>
+        
+         
+
+              <div class="row">
+                <% for (let i=0; i<userRole.address.length; i++) { %> 
+                <div class="col-3">
+        
+                    <div class="card">
+                        <div class="card-body">
+                            <label class="weightContainer" style="color: #0f6f3a ; font-size: larger; font-weight: 700;"> <%=userRole.address[i].tag%>
+                                <input onclick="userBillingSavedAddress('<%=userRole.address[i].firstName%>','<%=userRole.address[i].lastName%>','<%=userRole.address[i].country%>',' <%=userRole.address[i].streetAddress%>','<%=userRole.address[i].city%>','<%=userRole.address[i].state%>',' <%=userRole.address[i].postCode %>',' <%=userRole.address[i].phoneNumber%>','<%=userRole.address[i].email%>')" type="radio"  name="address" value="COD" >
+                                <span class="checkmark"></span>
+                              </label>
+        <p>
+        
+        <%=userRole.address[i].firstName%>  <%=userRole.address[i].lastName%>
+        <br>
+        <%=userRole.address[i].streetAddress%>
+        <br>
+        <%=userRole.address[i].city%> , <%=userRole.address[i].state%> , <%=userRole.address[i].country%>
+        <br>
+        <%=userRole.address[i].postCode %>
+        <br>
+        <%=userRole.address[i].phoneNumber%> , <%=userRole.address[i].email%>
+        </p>
+        
+        
+        
+                        </div>
+                      </div>
+        
+                 
+        
+        
+                </div>
+                <% } %>
+               
+            </div>
+            <% } %>
+            <% } %>
+        
+        <br> 
+        
+            <hr class="mt-2 mb-3">
+
+
+
+
+
+
+
+
+
+
+               
+            </div>
+        </div>
+
+     
+
+
+        <div class="checkout__form">
+          
+            <h4>Billing Details</h4>
+            <form  onsubmit="event.preventDefault();" id="userPlaceOrderForm">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Fist Name<span>*</span></p>
+                                    <input id="billingFirstName" type="text" name="firstName"   >
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Last Name<span>*</span></p>
+                                    <input id="billingLastName" type="text" name="lastName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Country<span>*</span></p>
+                            <input id="billingCountry" type="text" name="country">
+                        </div>
+                        <div class="checkout__input">
+                            <p>Address<span>*</span></p>
+                            <input id="billingStreetAddress" type="text" placeholder="Street Address" class="checkout__input__add" name="streetAddress">
+                            <!-- <input type="text" placeholder="Apartment, suite, unite ect (optinal)"> -->
+                        </div>
+                        <div class="checkout__input">
+                            <p>Town/City<span>*</span></p>
+                            <input id="billingCity" type="text" name="city">
+                        </div>
+                        <div class="checkout__input">
+                            <p>State<span>*</span></p>
+                            <input id="billingState" type="text" name="state">
+                        </div>
+                        <div class="checkout__input">
+                            <p>Postcode / ZIP<span>*</span></p>
+                            <input id="billingPostCode" type="number" name="postCode">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Phone<span>*</span></p>
+                                    <input id="billingPhoneNumber" type="number" name="phoneNumber">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Email<span>*</span></p>
+                                    <input id="billingEmail" type="email" name="email">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+                   <!---------------- Address -------------->
+                      
+                    
+                        <!-- <div class="checkout__input__checkbox">
+                            <label for="diff-acc">
+                                Ship to a different address?
+                                <input type="checkbox" id="diff-acc">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="checkout__input__checkbox">
+                            <label for="diff-acc1">
+                             Home
+                                <input type="checkbox" id="diff-acc1">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div> -->
+                     
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="checkout__order">
+                            <h4>Your Order</h4>
+                            <div class="checkout__order__products">Products <span>Total</span></div>
+                            <ul style="margin: 0px 0 0 -30px !important;">
+                                <% for (let i=0; i < cartItems.length; i++) { %> 
+                                <li><%=cartItems[i].productDetails.productsName %><a style="font-size: .75rem;"> (<%=cartItems[i].weight %><%=cartItems[i].productDetails.massUnit %>) x <%=cartItems[i].quantity %>  </a>   <span>  ₹ <%=cartItems[i].productDetails.price*(cartItems[i].weight/500)*cartItems[i].quantity %></span></li>
+                              
+                               
+                                <% } %>
+                            </ul>
+                        
+                            <div class="checkout__order__subtotal">Subtotal <span>₹ <%=totalAmount%></span></div>
+                            <div class="checkout__order__total">Discount <span>₹ <%=totalDiscount%></span></div>
+                            <div class="checkout__order__total">Coupon  <span id="couponDiscount">₹ 0</span></div>
+                            <input type="hidden" id="hiddenTotalAmount" value="<%=totalAmount-totalDiscount%>">
+                            <div class="checkout__order__total">Total <span id="totalAmountFinal">₹ <%=totalAmount-totalDiscount%></span></div>
+                          
+                         <div>
+
+                             <label class="weightContainer"> Cash On Delivery 
+                                 <input onclick="paymentButtonChange('COD')" type="radio"  name="payment" value="COD" checked>
+                                 <span class="checkmark"></span>
+                               </label>
+                         </div>
+                          
+                              <div>
+
+                                  <label class="weightContainer"> Razorpay
+                                      <input onclick="paymentButtonChange('razorpay')"  type="radio"  name="payment" value="razorpay" >
+                                      <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                              <div>
+
+                                <label class="weightContainer"> Paypal
+                                    <input onclick="paymentButtonChange('paypal')"  type="radio"  name="payment" value="paypal" >
+                                    <span class="checkmark"></span>
+                                  </label>
+                            </div>
+
+                            <div>
+
+                                <label class="weightContainer">Vmart Wallet
+                                    <input onclick="paymentButtonChange('wallet')"  type="radio"  name="payment" value="wallet" >
+                                    <span class="checkmark"></span>
+                                  </label>
+                            </div>
+                    
+                            <!-- <div class="checkout__input__checkbox">
+                                <label for="paypal">
+                                    Paypal
+                                    <input type="checkbox" id="paypal">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div> -->
+
+
+      <!-- paypal -->
+
+        <!-- Replace "test" with your own sandbox Business account app client ID -->
+        <script src="https://www.paypal.com/sdk/js?client-id=AW4UDrhMu57ZfF1QgazPr7oAcOBC51ddQwVFEUfikfO9s5Jl-g-sgr937m5q1xNXhCOozmWkzQ_TmEtz&currency=USD"></script>
+
+   <!-- Set up a container element for the button -->
+   <div id="paypal-button-container" class="clr d-none"></div>
+
+                            <div id="paymentButtonChangeDiv">
+
+                                <button onclick="userPlaceOrder()" class="site-btn" id="placeOrder"  >PLACE ORDER</button>
+                            </div>
+
+
+                            
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="shoping__continue">
+                                <div class="shoping__discount">
+                                    <h5>Discount Codes</h5>
+                                       <input type="hidden" name="couponId" id="hiddenCouponId" value="null">
+                                       <input type="hidden" name="couponOffer" id="hiddenCouponOffer" value="null">
+                                        <input type="text" id="userCheckoutCouponName" placeholder="Enter your coupon code" style="height: 3rem;" name="couponName"  >
+                                        <button onclick="userCouponCheck('<%=totalAmount-totalDiscount%>')" class="site-btn btn-success">APPLY COUPON</button>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </form>
+         
+            
+        </div>
+      
+    </div>
+</section>
+<!-- Checkout Section End -->
+
+
+<!-- Footer Section Begin -->
+<%-include('../partials/userFooter.ejs') %>
+
+
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+
+
+function deleteCoupon(){
+
+    toastr.error('Coupon Removed', 'Canceled')
+let total = document.getElementById('hiddenTotalAmount').value
+
+document.getElementById('totalAmountFinal').innerHTML = `₹ ${total}  ` 
+document.getElementById('couponDiscount').innerHTML = `₹ 0 ` 
+document.getElementById('userCheckoutCouponName').value = null
+document.getElementById('hiddenCouponId').value = 'null'
+document.getElementById('hiddenCouponOffer').value = 'null'
+}
+
+function userCouponCheck(total){
+let couponName = document.getElementById('userCheckoutCouponName').value
+
+    $.ajax({
+        url: "/homepage/user_coupon_check",
+        data:    {couponName : couponName , total : total}      ,
+        method: "POST",
+        success: function (response) {
+            console.log(response);
+
+        if(response.coupon){
+
+            toastr.success('Coupon Applied','Success')    
+
+document.getElementById('hiddenCouponId').value = response.coupon._id 
+document.getElementById('hiddenCouponOffer').value = response.coupon.offer
+let offer = Number(response.coupon.offer)
+let couponDiscount = (total*(offer/100)).toFixed(2)
+let totalFinal = (total - couponDiscount).toFixed(2)
+
+document.getElementById('couponDiscount').innerHTML = `₹ ${couponDiscount} &nbsp <a onclick='deleteCoupon()'> <i  class="fa fa-trash" style="color: #db0000; font-size: 1.5rem;"></i> </a> `
+
+document.getElementById('totalAmountFinal').innerHTML = `₹ ${totalFinal}  ` 
+
+        }else {
+            let totalReal = document.getElementById('hiddenTotalAmount').value
+
+document.getElementById('totalAmountFinal').innerHTML = `₹ ${totalReal}` 
+
+            document.getElementById('userCheckoutCouponName').value = null
+            document.getElementById('couponDiscount').innerHTML = `₹ 0 ` 
+
+            toastr.error('Invalid Coupon', 'Error')
+
+
+        }
+
+
+   
+      
+        } ,
+        error: function (err) {
+          alert("Something Error");
+        },
+      });
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function userPlaceOrder(){
+
+    $.ajax({
+        url: "/homepage/place_order",
+        data:  $('#userPlaceOrderForm').serialize(),
+        method: "POST",
+        success: function (response) {
+
+            if(response.paymentMethodId === 'COD'){
+
+if(<%=totalAmount-totalDiscount%> > 500 ){
+
+
+setTimeout( ()=>{
+
+ window.location.href='/homepage/rewards'
+
+},1100)
+
+
+}
+
+                Swal.fire({
+           
+             icon: 'success',
+             title: 'Order Placed',
+          
+             confirmButtonColor: 'rgb(15 111 58)',
+  confirmButtonText: 'View Orders',
+ 
+  showDenyButton: true,
+  denyButtonText: `Continue Shopping`,
+  denyButtonColor: 'rgb(15 111 58)',
+  showCancelButton: false,
+           }).then((result)=>{
+            if (result.isConfirmed) {
+
+
+
+   window.location.href='/homepage/orders'
+
+  } else if (result.isDenied) {
+    window.location.href="/homepage"
+  }
+    
+           })
+
+        }else if( response.paymentMethodId=='razorpay'){
+
+
+
+
+
+          razorpayPayment(response.order)
+
+
+
+
+
+
+            }else if( response.paymentMethodId=='wallet'){
+
+
+
+// wallet method 
+                if (response.walletState){
+
+
+
+                    if(<%=totalAmount-totalDiscount%> > 500 ){
+
+
+setTimeout( ()=>{
+
+ window.location.href='/homepage/rewards'
+
+},1100)
+
+
+}
+
+
+                    Swal.fire({
+           
+           icon: 'success',
+           title: 'Order Placed',
+        
+           confirmButtonColor: 'rgb(15 111 58)',
+confirmButtonText: 'View Orders',
+
+showDenyButton: true,
+denyButtonText: `Continue Shopping`,
+denyButtonColor: 'rgb(15 111 58)',
+showCancelButton: false,
+         }).then((result)=>{
+          if (result.isConfirmed) {
+
+
+
+ window.location.href='/homepage/orders'
+
+} else if (result.isDenied) {
+  window.location.href="/homepage"
+}
+  
+         })
+
+
+
+
+
+                }else{
+
+
+                    Swal.fire({
+  
+  icon: 'warning',
+  title: 'Insufficient Balance',
+  text : 'Try another Payment Method' ,
+  
+  showConfirmButton: false,
+  timer: 2500
+  })
+
+
+
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+  }else if ( response.paymentMethodId=='paypal'){
+
+    if(<%=totalAmount-totalDiscount%> > 500 ){
+
+
+setTimeout( ()=>{
+
+ window.location.href='/homepage/rewards'
+
+},1100)
+
+
+}
+
+                Swal.fire({
+           
+           icon: 'success',
+           title: 'Order Placed',
+        
+           confirmButtonColor: 'rgb(15 111 58)',
+confirmButtonText: 'View Orders',
+
+showDenyButton: true,
+denyButtonText: `Continue Shopping`,
+denyButtonColor: 'rgb(15 111 58)',
+showCancelButton: false,
+         }).then((result)=>{
+          if (result.isConfirmed) {
+ window.location.href='/homepage/orders'
+} else if (result.isDenied) {
+  window.location.href="/homepage"
+}
+  
+         })
+
+   
+
+
+
+
+
+
+  }else if(response.statePayment){
+
+                Swal.fire({
+           
+           icon: 'warning',
+           title: 'Order Already Placed',
+           confirmButtonColor: 'rgb(15 111 58)',
+  confirmButtonText: 'View Orders',
+ 
+  showDenyButton: true,
+  denyButtonText: `Continue Shopping`,
+  denyButtonColor: 'rgb(15 111 58)',
+  showCancelButton: false,
+        
+         }).then((result)=>{
+            if (result.isConfirmed) {
+                window.location.href='/homepage/orders'
+  } else if (result.isDenied) {
+    window.location.href="/homepage"
+  }
+  
+         })
+
+
+
+
+
+
+            }
+      
+        },
+        error: function (err) {
+          alert("Something Error");
+        },
+      });
+
+
+
+
+
+
+}
+
+function userBillingSavedAddress(firstName,lastName,country,streetAddress,city,state,postCode,phoneNumber,email){
+
+
+
+document.getElementById('billingFirstName').value = firstName
+document.getElementById('billingLastName').value = lastName
+document.getElementById('billingCountry').value = country
+document.getElementById('billingStreetAddress').value = streetAddress
+document.getElementById('billingCity').value = city
+document.getElementById('billingState').value = state
+document.getElementById('billingPostCode').value = Number(postCode)
+document.getElementById('billingPhoneNumber').value = Number ( phoneNumber)
+document.getElementById('billingEmail').value = email
+
+
+
+
+
+
+
+
+}
+
+
+
+
+function  paymentButtonChange(paymentMethod) {
+
+
+if(paymentMethod=='COD'){
+
+
+ document.getElementById('paypal-button-container').classList.add('d-none')
+    document.getElementById('paymentButtonChangeDiv').classList.add('d-block')
+    document.getElementById('paymentButtonChangeDiv').classList.remove('d-none')
+
+}else if (paymentMethod=='paypal'){
+
+
+
+    document.getElementById('paymentButtonChangeDiv').classList.add('d-none')
+    document.getElementById('paypal-button-container').classList.add('d-block')
+    document.getElementById('paypal-button-container').classList.remove('d-none')
+
+
+} else if (paymentMethod=='razorpay'){
+
+
+
+ document.getElementById('paypal-button-container').classList.add('d-none')
+    document.getElementById('paymentButtonChangeDiv').classList.add('d-block')
+    document.getElementById('paymentButtonChangeDiv').classList.remove('d-none')
+
+
+}else if(paymentMethod=='wallet'){
+
+
+document.getElementById('paypal-button-container').classList.add('d-none')
+   document.getElementById('paymentButtonChangeDiv').classList.add('d-block')
+   document.getElementById('paymentButtonChangeDiv').classList.remove('d-none')
+
+}
+
+
+
+}
+
+
+
+
+function razorpayPayment(order){
+
+    var options = {
+    "key": "rzp_test_W778OTIAt9ZppG", // Enter the Key ID generated from the Dashboard
+    "amount": order.amount , // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Vmart Corp",
+    "description": "Test Transaction",
+    "image": "../../images/VMart-logo.png",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+
+    "handler": function (res){
+  
+
+verifyRazorpayPayment(res,order)
+
+
+
+},
+
+
+
+    "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+    "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#0f6f3a"
+    }
+};
+
+var rzp1 = new Razorpay(options);
+
+    rzp1.open();
+ 
+    rzp1.on('payment.failed', function (response){
+        swal.fire({
+            title: `Transaction Failed`,
+            text: `Error Occured`,
+            icon: "error",
+        
+            showConfirmButton: false,
+            timer: 2500
+          })
+}
+    )
+
+
+
+}
+
+
+
+
+function verifyRazorpayPayment(payment,order){
+
+
+    $.ajax({
+      url: "/homepage/verify_razorpay_payment",
+      data: { payment : payment , order : order},
+      method: "POST",
+      success: (response) => {
+
+if(response.state){
+
+
+
+
+    if(<%=totalAmount-totalDiscount%> > 500 ){
+
+
+setTimeout( ()=>{
+
+ window.location.href='/homepage/rewards'
+
+},2000)
+
+
+}
+
+
+    Swal.fire({
+           
+           icon: 'success',
+           title: 'Transaction Successful',
+        text : 'Order Placed',
+           confirmButtonColor: 'rgb(15 111 58)',
+confirmButtonText: 'View Orders',
+
+showDenyButton: true,
+denyButtonText: `Continue Shopping`,
+denyButtonColor: 'rgb(15 111 58)',
+showCancelButton: false,
+         }).then((result)=>{
+          if (result.isConfirmed) {
+
+
+
+ window.location.href='/homepage/orders'
+
+
+} else if (result.isDenied) {
+  window.location.href="/homepage"
+}
+  
+         })
+
+
+
+}else{
+
+
+    swal.fire({
+            title: `Transaction Failed`,
+            text: `Error Occured`,
+            icon: "error",
+        
+            showConfirmButton: false,
+            timer: 2500
+          })
+
+
+}
+
+
+
+
+
+
+
+      },
+      error: function (err) {
+        swal.fire({
+            title: `Transaction Failed`,
+            text: `Error Occured`,
+            icon: "error",
+        
+            showConfirmButton: false,
+            timer: 2500
+          })
+    }
+ })
+
+}
+
+ function getTotal(){
+
+return <%=convertedAmount%>
+
+
+ }
+
+
+
+
+</script>
+<script src="../../javascripts/paypal.js"></script>

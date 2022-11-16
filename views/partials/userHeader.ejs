@@ -1,0 +1,482 @@
+<!-- <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"
+></script> -->
+
+<div
+  class="modal fade"
+  id="exampleModalToggle"
+  aria-hidden="true"
+  aria-labelledby="exampleModalToggleLabel"
+  tabindex="-1"
+  style="background-color: rgba(255, 255, 255, 0.075) !important"
+>
+  <div class="modal-dialog">
+    <div class="modal-content popup_responsive">
+      <div style="text-align: right; clear: left">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <!-- Section: Design Block -->
+      <section class="">
+        <!-- Jumbotron -->
+        <div class="px-4 py-5 px-md-5 text-center text-lg-start">
+          <div class="container">
+            <div class="row gx-lg-5 align-items-center">
+              <div class="col-lg-6 mb-5 mb-lg-0"></div>
+
+              <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="card">
+                  <div class="card-body py-5 px-md-5" id="loginSignInWrite">
+                    <!-- Pills navs -->
+                    <ul
+                      class="nav nav-pills nav-justified mb-3"
+                      id="ex1"
+                      role="tablist"
+                    >
+                      <li class="nav-item" role="presentation">
+                        <a
+                          class="nav-link active"
+                          id="tab-login"
+                          data-mdb-toggle="pill"
+                          href="#pills-login"
+                          role="tab"
+                          aria-controls="pills-login"
+                          aria-selected="true"
+                          >Login</a
+                        >
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <a
+                          class="nav-link"
+                          id="tab-register"
+                          data-mdb-toggle="pill"
+                          href="#pills-register"
+                          role="tab"
+                          aria-controls="pills-register"
+                          aria-selected="false"
+                          >Register</a
+                        >
+                      </li>
+                    </ul>
+
+                    <!-- Pills navs -->
+
+                    <!-- Pills content -->
+                    <div class="tab-content">
+                      <div
+                        class="tab-pane fade show active"
+                        id="pills-login"
+                        role="tabpanel"
+                        aria-labelledby="tab-login"
+                      >
+                        <form id="userSignIn" class="form2">
+                          <div class="form-control2">
+                            <label for="username">Email</label>
+                            <input
+                              onkeyup="userSignIn()"
+                              type="email"
+                              placeholder="florinpop@gmail.com"
+                              id="userLoginemail"
+                              name="email"
+                            />
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                          </div>
+                          <div class="form-control2">
+                            <label for="username">Password</label>
+                            <input
+                              onkeyup="userSignIn()"
+                              type="password"
+                              placeholder="Password"
+                              id="userLoginpassword"
+                              name="password"
+                            />
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                          </div>
+                        </form>
+                        <!-- 2 column grid layout -->
+                        <div class="row mb-4">
+                          <div
+                            class="col-md-6 d-flex justify-content-center"
+                          ></div>
+
+                          <div class="col-md-6 d-flex justify-content-center">
+                            <!-- Simple link -->
+                            <a href="">Forgot password?</a>
+                          </div>
+                        </div>
+                        <!-- Submit button -->
+                        <button
+                          type="submit"
+                          class="btn btn-primary btn-block mb-4"
+                          onclick="userSignInButton()"
+                        >
+                          Login
+                        </button>
+
+                        <!-- Register buttons -->
+                        <div class="text-center">
+                          <p>
+                            Not a member?
+                            <a href="#" onclick="registerDivert()">Register</a>
+                          </p>
+                        </div>
+
+                        <form
+                          id="userOtpLogin"
+                          onkeydown="if (event.keyCode == 13) { return false;}"
+                        >
+                          <div class="text-center mb-3">
+                            <p style="font-size: 18px">OR</p>
+                          </div>
+
+                          <!-- Phone Number input -->
+                          <div class="form-control1">
+                            <label for="username"
+                              >Enter Your Phone-Number</label
+                            >
+                            <input
+                              type="number"
+                              placeholder="+91"
+                              id="userOtpLoginphoneNumber"
+                              name="phoneNumber"
+                            />
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                          </div>
+                        </form>
+                        <!-- Submit button -->
+                        <button
+                          type="submit"
+                          class="btn btn-primary btn-block mb-4"
+                          onclick="otplogin()"
+                        >
+                          OTP Login
+                        </button>
+                      </div>
+
+                      <div
+                        class="tab-pane fade"
+                        id="pills-register"
+                        role="tabpanel"
+                        aria-labelledby="tab-register"
+                      >
+                        <form id="userSignUp" class="form1">
+                          <div class="form-control1">
+                            <label for="username">First Name</label>
+                            <input
+                              onkeyup="userSignUp()"
+                              type="text"
+                              placeholder="Florin "
+                              id="userSignUpname"
+                              name="name"
+                            />
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                          </div>
+                          <div class="form-control1">
+                            <label for="username">Last Name</label>
+                            <input
+                              onkeyup="userSignUp()"
+                              type="text"
+                              placeholder="Pop"
+                              id="userSignUpusername"
+                              name="lastName"
+                            />
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                          </div>
+                          <div class="form-control1">
+                            <label for="username">Email</label>
+                            <input
+                              onkeyup="userSignUp()"
+                              type="email"
+                              placeholder="florinpop@gmail.com"
+                              id="userSignUpemail"
+                              name="email"
+                            />
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                          </div>
+                          <div class="form-control1">
+                            <label for="username">Password</label>
+                            <input
+                              onkeyup="userSignUp()"
+                              type="password"
+                              placeholder="Password"
+                              id="userSignUppassword"
+                              name="password"
+                            />
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                          </div>
+                          <div class="form-control1">
+                            <label for="username">Confirm Password</label>
+                            <input
+                              onkeyup="userSignUp()"
+                              type="password"
+                              placeholder="Password "
+                              id="userSignUppassword2"
+                            />
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                          </div>
+                          <div class="form-control1">
+                            <label for="username">Phone-Number</label>
+                            <input
+                              onkeyup="userSignUp()"
+                              type="number"
+                              placeholder="+91"
+                              id="userSignUpphoneNumber"
+                              name="phoneNumber"
+                            />
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                          </div>
+                          <div class="form-control1">
+                            <label for="referralCode">Referral Code</label>
+                            <input
+                              onkeyup="userSignUp()"
+                              type="text"
+                              placeholder="Type the code here"
+                              id="userSignUpreferral"
+                              name="referralCode"
+                            />
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                          </div>
+                        </form>
+
+                        <button
+                          id="userSignUpButton"
+                          type="submit"
+                          class="btn btn-primary btn-block mb-3"
+                          onclick="userSignUpButton()"
+                        >
+                          Register
+                        </button>
+                      </div>
+                    </div>
+                    <!-- Pills content -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Jumbotron -->
+      </section>
+      <!-- Section: Design Block -->
+    </div>
+  </div>
+</div>
+<!-- Humberger Begin -->
+<div class="humberger__menu__overlay"></div>
+<div class="humberger__menu__wrapper">
+  <div
+    class="humberger__menu__logo"
+    style="width: 7rem; position: relative; left: 50px"
+  >
+    <a href="/homepage"><img src="../../images/VMart_logo.png" alt="" /></a>
+  </div>
+  <div class="humberger__menu__cart">
+    <!-- <ul>
+      <li>
+        <a href="/homepage/wishlist"><i class="fa fa-heart"></i> <span>0</span></a>
+      </li>
+      <li>
+        <a href="/homepage/cart"><i class="fa fa-shopping-bag"></i> <span>0</span></a>
+      </li>
+    </ul> -->
+    <!-- <div class="header__cart__price">item: <span>0.00</span></div> -->
+  </div>
+  <div class="humberger__menu__widget">
+    <% if (userRole) { %>
+    <div class="header__top__right__language">
+      <div><i class="fa fa-user"></i>&nbsp <%=userRole.name%></div>
+
+      <ul>
+        <li><a href="/homepage/user_profile">Profile</a></li>
+        <li><a href="/homepage/orders">Orders</a></li>
+        <li><a href="homepage/wishlist">Wishlist</a></li>
+        <li><a href="/homepage/user_logout">Logout</a></li>
+      </ul>
+    </div>
+    <% } else { %>
+    <div class="header__top__right__auth">
+      <a data-bs-toggle="modal" href="#exampleModalToggle" role="button"
+        ><i class="fa fa-user"></i> Login</a
+      >
+    </div>
+    <% } %>
+  </div>
+  <nav class="humberger__menu__nav mobile-menu">
+    <ul>
+      <li class="active"><a href="/homepage">Home</a></li>
+      <li><a href="#">Shop</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+  <div id="mobile-menu-wrap"></div>
+  <div class="header__top__right__social">
+    <a href="#"><i class="fa fa-facebook"></i></a>
+    <a href="#"><i class="fa fa-twitter"></i></a>
+    <a href="#"><i class="fa fa-linkedin"></i></a>
+    <a href="#"><i class="fa fa-pinterest-p"></i></a>
+  </div>
+  <div class="humberger__menu__contact">
+    <ul>
+      <!-- <li><i class="fa fa-envelope"></i> hello@colorlib.com</li> -->
+      <li>Free Shipping for all Order above 599</li>
+    </ul>
+  </div>
+</div>
+<!-- Humberger End -->
+
+<!-- Header Section Begin -->
+<header class="header">
+  <div class="header__top" style="background-color: #004e36">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="header__logo__head imgwrapper">
+            <a href="/homepage"
+              ><img
+                class="img-responsive"
+                src="../../images/VMart-logo.png"
+                alt=""
+            /></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="header__top__left">
+            <!-- <ul>
+                            <li><i class="fa fa-envelope"></i> </li>
+                            <li>Free Shipping for all Order of $99</li>
+                        </ul> -->
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+          <div class="header__top__right">
+            <div class="header__top__right__social">
+              <a href="#"
+                ><i class="fa fa-facebook" style="color: white"></i
+              ></a>
+              <a href="#"><i class="fa fa-twitter" style="color: white"></i></a>
+              <a href="#"
+                ><i class="fa fa-linkedin" style="color: white"></i
+              ></a>
+              <a href="#"
+                ><i class="fa fa-pinterest-p" style="color: white"></i
+              ></a>
+            </div>
+            <% if (userRole) { %>
+            <div class="header__top__right__language">
+              <div style="color: white">
+                <i class="fa fa-user" style="color: white"></i>&nbsp
+                <%=userRole.name%>
+              </div>
+
+              <ul>
+                <li><a href="/homepage/user_profile">Profile</a></li>
+                <li><a href="/homepage/orders">Orders</a></li>
+                <li><a href="homepage/wishlist">Wishlist</a></li>
+                <li><a href="/homepage/user_logout">Logout</a></li>
+              </ul>
+            </div>
+            <% } else { %>
+            <div class="header__top__right__auth">
+              <a
+                id="loginPopIntervel"
+                data-bs-toggle="modal"
+                href="#exampleModalToggle"
+                role="button"
+                style="color: white"
+                ><i class="fa fa-user" style="color: white"></i> Login</a
+              >
+            </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="header__logo2 imgwrapper">
+          <a href="../index.html"
+            ><img
+              class="img-responsive"
+              src="../../images/VMart_logo.png"
+              alt=""
+          /></a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <nav class="header__menu">
+          <ul>
+            <li class="active"><a href="/homepage">Home</a></li>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-lg-3">
+        <div class="header__cart">
+          <%if(userRole){%>
+          <ul>
+            <li>
+              <a href="/homepage/wishlist"
+                ><i class="fa fa-heart"></i> <%if(userRole.wishlist){%><span
+                  id="spanWishlistProductCount"
+                  ><%=userRole.wishlist.length%></span
+                ><%}else{%><span id="spanWishlistProductCount">0</span><%}%></a
+              >
+            </li>
+            <li>
+              <a href="/homepage/cart"
+                ><i class="fa fa-shopping-bag"></i> <%if(userRole.cart){%><span
+                  id="spanCartProductCount"
+                  ><%=userRole.cart.length%></span
+                ><%}else{%><span id="spanCartProductCount">0</span><%}%></a
+              >
+            </li>
+          </ul>
+
+          <!-- <div class="header__cart__price">item: <span>0.00</span></div> -->
+          <%}%>
+        </div>
+      </div>
+    </div>
+    <div class="humberger__open">
+      <i class="fa fa-bars"></i>
+    </div>
+  </div>
+</header>
+<!-- Header Section End -->

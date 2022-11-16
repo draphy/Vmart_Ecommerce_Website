@@ -1,0 +1,410 @@
+
+ <%-include('../partials/userHeader.ejs') %>
+
+    <!-- Hero Section Begin -->
+    <section class="hero">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="hero__categories">
+              <div class="hero__categories__all">
+                <i class="fa fa-bars"></i>
+                <span> All departments </span>
+              </div>
+              <ul>
+                <% for (let i=0; i<categories.length; i++) { %> 
+                <li><a href="/homepage/shop/<%=categories[i].categoryName.replace(' ','_')%>?categoryId=<%=categories[i]._id%>&categoryName=<%=categories[i].categoryName%>">  <%=categories[i].categoryName %>        </a></li>
+                <% } %>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="hero__search">
+              <div class="hero__search__form">
+                <form action="/homepage/search/key" method="get">
+                  <div class="hero__search__categories">
+                    All Categories
+                    <span class="arrow_carrot-down"></span>
+                  </div>
+                  <input
+                    class="text-wrap"
+                    type="text"
+                    placeholder="What do you need?"
+                    name="search"
+                  />
+                  <button type="submit" class="site-btn">SEARCH</button>
+                </form>
+              </div>
+              <div class="hero__search__phone">
+                <div class="hero__search__phone__icon">
+                  <i class="fa fa-phone"></i>
+                </div>
+                <div class="hero__search__phone__text">
+                  <h5>+91 8281187712</h5>
+                  <span>support 24/7 time</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero__item set-bg set-header-bg">
+              <div class="text-wrap">
+                <div
+                  class="hero__text bg-card-shadow container-fluid pb-4 pt-2"
+                >
+                  <h2>
+                    Vegan <span>Products </span> <br />
+                    <span>100% </span> Organic
+                  </h2>
+                  <p>Free Pickup and Delivery Available</p>
+                  <a href="#" class="primary-btn">SHOP NOW</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Categories Section Begin -->
+    <section class="categories">
+      <div class="container">
+        <div class="row">
+          <div class="categories__slider owl-carousel">
+            <% for (let i=0; i<categories.length; i++) { %> 
+
+            <div class="col-lg-3">
+              <div
+                class="categories__item set-bg"
+                data-setbg="../../categoryImages/<%=categories[i]._id%>.jpg"
+              >
+                <h5><a href="/homepage/shop/<%=categories[i].categoryName.replace(' ','_')%>?categoryId=<%=categories[i]._id%>&categoryName=<%=categories[i].categoryName%>"> <%=categories[i].categoryName %> </a></h5>
+              </div>
+            </div>
+            <% } %>
+           
+        </div>
+      </div>
+    </section>
+    <!-- Categories Section End -->
+
+    <!-- Featured Section Begin -->
+    <section class="featured spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title">
+              <h2>Featured Product</h2>
+            </div>
+            <div class="featured__controls">
+              <ul>
+                <li class="active" data-filter="*">All</li>
+                <% for (let i=0; i<categories.length; i++) { %> 
+                <li data-filter=".<%=categories[i].categoryName.replace(' ','_')%>"><%=categories[i].categoryName%></li>
+                <% } %>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row featured__filter">
+
+          <% for (let i=0; i<categories.length; i++) { %> 
+            <% for (let j=0; j<categories[i].productDetails.length; j++) { %> 
+          <div class="col-lg-3 col-md-4 col-sm-6 mix <%=categories[i].categoryName.replace(' ','_')%> ">
+           
+            <% if (categories[i].offer) { %> 
+
+              <div class="product__discount__item">
+                  <div class="product__discount__item__pic set-bg"
+                      data-setbg="../../productsImages/<%=categories[i].productDetails[j]._id%>.jpg">
+                      <div class="product__discount__percent">-<%=categories[i].offer %>%</div>
+                      <ul class="product__item__pic__hover">
+                          <li>   
+                            
+                            <% if (userRole) { %> 
+                              
+                              <% if (userRole.wishlist) { %>  
+
+                            <% let product = userRole.wishlist.findIndex(product => product.productId.toString() == categories[i].productDetails[j]._id.toString()) 
+                   
+                            %>  
+                            <% if (product!=-1) { %>  
+                              <span id="wishlistState<%=categories[i].productDetails[j]._id%>">
+        
+                                <a href="javascript:void(0);" onclick="singleAddToWishlist('<%=categories[i].productDetails[j]._id%>', 500)" style="background-color: #739f03; border-color:#739f03;  "><i class="fa fa-heart" style=" color: white;"></i></a>
+                              </span> 
+                            <% } else {%> 
+                              <span id="wishlistState<%=categories[i].productDetails[j]._id%>">
+        
+                                <a href="javascript:void(0);" onclick="singleAddToWishlist('<%=categories[i].productDetails[j]._id%>', 500)"><i class="fa fa-heart"></i></a>
+                              </span>
+                            
+                              <% } %>
+
+                              <% } else {%> 
+                                <span id="wishlistState<%=categories[i].productDetails[j]._id%>">
+          
+                                  <a href="javascript:void(0);" onclick="singleAddToWishlist('<%=categories[i].productDetails[j]._id%>', 500)"><i class="fa fa-heart"></i></a>
+                                </span>
+                              
+                                <% } %>
+
+
+
+                              <% } else {%> 
+                                <span>
+          
+                                  <a href="javascript:void(0);" onclick=" showPopup()"><i class="fa fa-heart"></i></a>
+                                </span>
+                              
+                                <% } %>
+                          </li>
+                       
+                          <li>  <a href="javascript:void(0);" onclick="singleAddToCart('<%=categories[i].productDetails[j]._id%>','<%=categories[i].productDetails[j].instock.half%>')"><i class="fa fa-shopping-cart"></i></a></li>
+                      </ul>
+                  </div>
+                  <div class="product__discount__item__text">
+                      <span><%=categories[i].categoryName%></span>
+                      <h5><a href="/homepage/home/<%=categories[i].categoryName.replace(' ','_')%>?productId=<%=categories[i].productDetails[j]._id%>"><%=categories[i].productDetails[j].productsName%></a></h5>
+                      <div class="product__item__price">₹ <%=(categories[i].productDetails[j].price)-(categories[i].productDetails[j].price*(categories[i].offer/100)) %><span>₹ <%=categories[i].productDetails[j].price%></span></div>
+                  </div>
+              </div>
+
+
+
+
+
+              <% } else {%> 
+
+
+
+
+
+
+
+            <div class="featured__item">
+              <div
+                class="featured__item__pic set-bg"
+                data-setbg="../../productsImages/<%=categories[i].productDetails[j]._id%>.jpg"
+              >
+                <ul class="featured__item__pic__hover">
+                  <li>
+                    <% if (userRole) { %> 
+                              
+                      <% if (userRole.wishlist) { %>  
+
+                    <% let product = userRole.wishlist.findIndex(product => product.productId.toString() == categories[i].productDetails[j]._id.toString()) 
+           
+                    %>  
+                    <% if (product!=-1) { %>  
+                      <span id="wishlistState<%=categories[i].productDetails[j]._id%>">
+
+                        <a href="javascript:void(0);" onclick="singleAddToWishlist('<%=categories[i].productDetails[j]._id%>', 500)" style="background-color: #739f03; border-color:#739f03;  "><i class="fa fa-heart" style=" color: white;"></i></a>
+                      </span> 
+                    <% } else {%> 
+                      <span id="wishlistState<%=categories[i].productDetails[j]._id%>">
+
+                        <a href="javascript:void(0);" onclick="singleAddToWishlist('<%=categories[i].productDetails[j]._id%>', 500)"><i class="fa fa-heart"></i></a>
+                      </span>
+                    
+                      <% } %>
+
+                      <% } else {%> 
+                        <span id="wishlistState<%=categories[i].productDetails[j]._id%>">
+  
+                          <a href="javascript:void(0);" onclick="singleAddToWishlist('<%=categories[i].productDetails[j]._id%>', 500)"><i class="fa fa-heart"></i></a>
+                        </span>
+                      
+                        <% } %>
+
+
+
+                      <% } else {%> 
+                        <span>
+  
+                          <a href="javascript:void(0);" onclick=" showPopup()"><i class="fa fa-heart"></i></a>
+                        </span>
+                      
+                        <% } %>
+
+                  </li>
+              
+                  <li>
+                    <a href="javascript:void(0);" onclick="singleAddToCart('<%=categories[i].productDetails[j]._id%>','<%=categories[i].productDetails[j].instock.half%>')"><i class="fa fa-shopping-cart"></i></a>
+                  </li>
+                </ul>
+              </div>
+              <div class="featured__item__text">
+                <h6><a href="/homepage/home/<%=categories[i].categoryName.replace(' ','_')%>?productId=<%=categories[i].productDetails[j]._id%>"><%=categories[i].productDetails[j].productsName%></a></h6>
+                <h5>₹ <%=categories[i].productDetails[j].price%></h5>
+              </div>
+            </div>
+            <% } %>
+          
+          </div>
+          <% } %>
+        
+          <% } %>
+         
+        
+        
+         
+        </div>
+      </div>
+    </section>
+    <!-- Featured Section End -->
+
+    <!-- Banner Begin -->
+    <div class="banner">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="banner__pic">
+              <img src="../../img/banner/banner-1.jpg" alt="" />
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="banner__pic">
+              <img src="../../img/banner/banner-2.jpg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Banner End -->
+    <% if(topProducts.length) { %> 
+    <!-- Latest Product Section Begin -->
+    <section class="latest-product spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-6">
+            <div class="latest-product__text">
+
+              <h4>Top Selling Products</h4>
+              <div class="latest-product__slider owl-carousel">
+
+                <% for (let i=1; i<=2; i++) { %> 
+                <div class="latest-prdouct__slider__item">
+
+                  <% for (let j = topProducts.length-topProducts.length/i ; j<topProducts.length/(3-i); j++) { %> 
+                  <a href="/homepage/home/<%=topProducts[j].detail.order.products.productDetails.productsName.replace(' ','_')%>?productId=<%=topProducts[j].detail.order.products.productId%>" class="latest-product__item">
+                    <div class="latest-product__item__pic">
+                      <img src="../../productsImages/<%=topProducts[j].detail.order.products.productId%>.jpg" alt="" />
+                    </div>
+                    <div class="latest-product__item__text">
+                      <h6><%=topProducts[j].detail.order.products.productDetails.productsName%></h6>
+                      <span></span>
+                    </div>
+                  </a>
+                  <% } %>
+                </div>
+                <% } %>
+
+              
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6">
+            <div class="latest-product__text">
+
+              <h4>Latest Products</h4>
+              <div class="latest-product__slider owl-carousel">
+
+                <% for (let i=1; i<=2; i++) { %> 
+                <div class="latest-prdouct__slider__item">
+              
+                  <% for (let j = latest.length-latest.length/i ; j<latest.length/(3-i); j++) { %> 
+                  <a href="/homepage/home/<%=latest[j].productsName.replace(' ','_')%>?productId=<%=latest[j]._id%>" class="latest-product__item">
+                    <div class="latest-product__item__pic">
+                      <img src="../../productsImages/<%=latest[j]._id%>.jpg" alt="" />
+                    </div>
+                    <div class="latest-product__item__text">
+                      <h6><%=latest[j].productsName%></h6>
+                      <span></span>
+                    </div>
+                  </a>
+                  <% } %>
+                </div>
+              
+                <% } %>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Latest Product Section End -->
+    <% } %>
+    <!-- Blog Section Begin -->
+    <!-- <section class="from-blog spad"> -->
+
+    <!-- <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title from-blog__title">
+                        <h2>From The Blog</h2>
+                    </div>
+                </div>
+            </div> -->
+    <!-- <div class="row ">
+                <div class="col-5 standard_tag">
+
+                </div>
+<div class="col-6">
+   <div class="container-fluid">
+    <h1>Our Standards</h1>
+   </div>
+</div> -->
+    <!-- <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic">
+                            <img src="img/blog/blog-1.jpg" alt="">
+                        </div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                                <li><i class="fa fa-comment-o"></i> 5</li>
+                            </ul>
+                            <h5><a href="#">Cooking tips make cooking simple</a></h5>
+                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic">
+                            <img src="img/blog/blog-2.jpg" alt="">
+                        </div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                                <li><i class="fa fa-comment-o"></i> 5</li>
+                            </ul>
+                            <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
+                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic">
+                            <img src="img/blog/blog-3.jpg" alt="">
+                        </div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                                <li><i class="fa fa-comment-o"></i> 5</li>
+                            </ul>
+                            <h5><a href="#">Visit the clean farm in the US</a></h5>
+                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                        </div>
+                    </div>
+                </div> -->
+    <!-- </div>
+      
+    </section> -->
+    <!-- Blog Section End -->
+    <%-include('../partials/userFooter.ejs') %>
+  
+

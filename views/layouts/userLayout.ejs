@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Vmart" />
+    <meta
+      name="keywords"
+      content="Vmart, vegan Products, plant based Products, Organic"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" href="../../images/VMart-logo.png" />
+
+    <title>Vmart | Go Vegan</title>
+
+    <link rel="stylesheet" href="../../stylesheets/style.css" />
+
+    <!-- Bootstrap new version -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
+      rel="stylesheet"
+    />
+    <!-- MDB -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"
+    ></script>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome.min.css"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="../../css/elegant-icons.css" type="text/css" />
+    <link rel="stylesheet" href="../../css/nice-select.css" type="text/css" />
+    <link rel="stylesheet" href="../../css/jquery-ui.min.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="../../css/owl.carousel.min.css"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="../../css/slicknav.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- toastr -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"
+      integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
+      integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+      <div class="loader"></div>
+    </div>
+
+    <% if (!userRole) { %>
+    <script>
+      window.addEventListener("load", function () {
+        showPopup();
+      });
+
+      function showPopup() {
+        const timeLimit = 1; // seconds;
+        let i = 0;
+        const timer = setInterval(function () {
+          i++;
+          if (i == timeLimit) {
+            clearInterval(timer);
+            Swal.fire({
+              title: "Keep Calm and Go Vegan",
+              confirmButtonColor: "rgb(15 111 58)",
+              confirmButtonText: "Login Now",
+              showCancelButton: true,
+              cancelButtonColor: "#d33",
+              imageUrl: "../../images/VMart-logo.png",
+              imageWidth: 200,
+              imageHeight: 200,
+              imageAlt: "Custom image",
+              backdrop: `
+  rgb(0 0 0 / 20%)
+    url("../../images/offer.png")
+
+  left top
+    no-repeat
+  `,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                document.getElementById("loginPopIntervel").click();
+              }
+            });
+          }
+        }, 1000);
+      }
+
+      function registerDivert() {
+        document.getElementById("tab-register").click();
+      }
+    </script>
+
+    <% } else if ( userRole.block){ %>
+    <script>
+      window.addEventListener("load", function () {
+        showPopup();
+      });
+
+      function showPopup() {
+        const timeLimit = 1; // seconds;
+        let i = 0;
+        const timer = setInterval(function () {
+          i++;
+          if (i == timeLimit) {
+            clearInterval(timer);
+            swal
+              .fire({
+                title: `You Are Blocked`,
+                text: `Contact vmartinc@gmail.com for more info`,
+                icon: "error",
+                confirmButtonColor: "rgb(15 111 58)",
+                showCancelButton: true,
+                cancelButtonColor: "#d33",
+                dangerMode: true,
+              })
+              .then((result) => {
+                if (result.isConfirmed) {
+                  //  window.location.href='/homepage'
+                  window.open("mailto:vmartinc@gmail.com");
+                }
+              });
+          }
+        }, 1000);
+      }
+    </script>
+    <% } %> <%-body%>
+
+    <!-- bootstrap new version -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Js Plugins -->
+    <!-- <script src="../../js/jquery-3.3.1.min.js"></script> -->
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery.nice-select.min.js"></script>
+    <script src="../../js/jquery-ui.min.js"></script>
+    <script src="../../js/jquery.slicknav.js"></script>
+    <script src="../../js/mixitup.min.js"></script>
+    <script src="../../js/owl.carousel.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+    <!-- User Authenication Validation -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  -->
+
+    <script src="../../javascripts/userAjax.js"></script>
+    <!-- <script src="../../javascripts/userAuthValidation.js"></script> -->
+  </body>
+</html>

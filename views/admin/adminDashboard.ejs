@@ -1,0 +1,1220 @@
+
+    <div class="wrapper">
+    
+     <%-include('../partials/adminNavbar.ejs')-%>
+      <%-include('../partials/adminSidebar.ejs')-%>
+
+      <main role="main" class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <div class="row">
+
+
+                <div class="col-md-6 col-xl-3 mb-4">
+                  <div class="card shadow border-0">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-3 text-center">
+                          <span class="circle circle-sm bg-primary">
+                            <i class="fe fe-16 fe-shopping-bag text-white mb-0"></i>
+                          </span>
+                        </div>
+                        <div class="col pr-0">
+                          <p class="small text-muted mb-0">Monthly Sales</p>
+                          <span class="h3 mb-0 "> ₹ <%=(monthSales[0].total).toFixed(0)%></span>
+
+                          <!-- <span class="small text-muted">+5.5%</span> -->
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <div class="col-md-6 col-xl-3 mb-4">
+                  <div class="card shadow border-0">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-3 text-center">
+                          <span class="circle circle-sm bg-primary">
+                            <i class="fe fe-16 fe-shopping-bag text-white mb-0"></i>
+                          </span>
+                        </div>
+                        <div class="col pr-0">
+                          <p class="small text-muted mb-0">Yearly Sales</p>
+                          <span class="h3 mb-0"> ₹ <%=(yearlySales[0].total).toFixed(0)%></span>
+
+                          <!-- <span class="small text-success">+16.5%</span> -->
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+                <div class="col-md-6 col-xl-3 mb-4">
+                  <div class="card shadow border-0">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-3 text-center">
+                          <span class="circle circle-sm bg-primary">
+                            <i class="fe fe-16 fe-shopping-cart text-white mb-0"></i>
+                          </span>
+                        </div>
+                        <div class="col pr-0">
+                          <p class="small text-muted mb-0">Total Sales</p>
+                          <span class="h3 mb-0">₹ <%=(totalSales[0].total).toFixed(0)%></span>
+
+                          <!-- <span class="small text-success">+16.5%</span> -->
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+                <div class="col-md-6 col-xl-3 mb-4">
+                  <div class="card shadow border-0">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-3 text-center">
+                          <span class="circle circle-sm bg-primary">
+                            <i class="fe fe-16 fe-activity text-white mb-0"></i>
+                          </span>
+                        </div>
+                        <div class="col">
+                          <p class="small text-muted mb-0">AVG Orders</p>
+                          <span class="h3 mb-0">₹ <%=(((totalSales[0].total).toFixed(0))/totalSales[0].count).toFixed(0)%></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> <!-- end section -->
+
+
+              <!-- <div class="row align-items-center my-2">
+                <div class="col-auto ml-auto">
+                  <form class="form-inline">
+                    <div class="form-group">
+                      <label for="reportrange" class="sr-only">Date Ranges</label>
+                      <div id="reportrange" class="px-2 py-2 text-muted">
+                        <i class="fe fe-calendar fe-16 mx-2"></i>
+                        <span class="small"></span>
+                      </div>
+                    </div> -->
+                    <!-- <div class="form-group">
+                      <button type="button" class="btn btn-sm"><span class="fe fe-refresh-ccw fe-12 text-muted"></span></button>
+                      <button type="button" class="btn btn-sm"><span class="fe fe-filter fe-12 text-muted"></span></button>
+                    </div> -->
+                  <!-- </form>
+                </div>
+              </div> -->
+
+
+              <!-- charts-->
+              <div class="row my-4">
+                <div class="col-md-12">
+                  <div class="chart-box">
+                    <div id="columnChart"></div>
+                  </div>
+                </div> <!-- .col -->
+              </div> <!-- end section -->
+
+
+              <!-- info small box -->
+              
+              <div class="row">
+                <!-- <div class="col-md-4">
+                  <div class="card shadow mb-4">
+                    <div class="card-body">
+                      <div class="chart-widget">
+                        <div id="gradientRadial"></div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6 text-center">
+                          <p class="text-muted mb-0">Yesterday</p>
+                          <h4 class="mb-1">126</h4>
+                          <p class="text-muted mb-2">+5.5%</p>
+                        </div>
+                        <div class="col-6 text-center">
+                          <p class="text-muted mb-0">Today</p>
+                          <h4 class="mb-1">86</h4>
+                          <p class="text-muted mb-2">-5.5%</p>
+                        </div>
+                      </div>
+                    </div> 
+                  </div> 
+                </div>  -->
+                <!-- <div class="col-md-4">
+                  <div class="card shadow mb-4">
+                    <div class="card-body">
+                      <div class="chart-widget mb-2">
+                        <div id="radialbar"></div>
+                      </div>
+                      <div class="row items-align-center">
+                        <div class="col-4 text-center">
+                          <p class="text-muted mb-1">Cost</p>
+                          <h6 class="mb-1">$1,823</h6>
+                          <p class="text-muted mb-0">+12%</p>
+                        </div>
+                        <div class="col-4 text-center">
+                          <p class="text-muted mb-1">Revenue</p>
+                          <h6 class="mb-1">$6,830</h6>
+                          <p class="text-muted mb-0">+8%</p>
+                        </div>
+                        <div class="col-4 text-center">
+                          <p class="text-muted mb-1">Earning</p>
+                          <h6 class="mb-1">$4,830</h6>
+                          <p class="text-muted mb-0">+8%</p>
+                        </div>
+                      </div>
+                    </div> 
+                  </div> 
+                </div>  -->
+            
+
+
+
+                <div class="col-md-6">
+                  <div class="card shadow mb-4">
+                    <div class="card-body">
+                      <div class="card-title">
+                        <strong> Categories</strong>
+                        <!-- <a class="float-right small text-muted" href="#!">View all</a> -->
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div id="chart-box">
+                            <div id="donutChartWidget"></div>
+                          </div>
+                        </div>
+                        <!-- <div class="col-md-12"> -->
+                          <!-- <div class="row align-items-center my-3">
+                            <div class="col">
+                              <strong>Cloud Server</strong>
+                              <div class="my-0 text-muted small">Global, Services</div>
+                            </div>
+                            <div class="col-auto">
+                              <strong>+85%</strong>
+                            </div>
+                            <div class="col-3">
+                              <div class="progress" style="height: 4px;">
+                                <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                          </div> -->
+                          <!-- <div class="row align-items-center my-3">
+                            <div class="col">
+                              <strong>CDN</strong>
+                              <div class="my-0 text-muted small">Global, Services</div>
+                            </div>
+                            <div class="col-auto">
+                              <strong>+75%</strong>
+                            </div>
+                            <div class="col-3">
+                              <div class="progress" style="height: 4px;">
+                                <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                          </div> -->
+                          <!-- <div class="row align-items-center my-3">
+                            <div class="col">
+                              <strong>Databases</strong>
+                              <div class="my-0 text-muted small">Local, DC</div>
+                            </div>
+                            <div class="col-auto">
+                              <strong>+62%</strong>
+                            </div>
+                            <div class="col-3">
+                              <div class="progress" style="height: 4px;">
+                                <div class="progress-bar" role="progressbar" style="width: 62%" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                          </div> -->
+                        <!-- </div>  -->
+                      </div> <!-- .row -->
+                    </div> <!-- .card-body -->
+                  </div> <!-- .card -->
+                </div> <!-- .col-md -->
+               
+
+                <div class="col-md-6">
+                  <div class="card shadow mb-6">
+                    <div class="card-body" style="height: 16.5rem;">
+                      <p class="mb-0"><strong class="mb-0 text-uppercase text-muted">Today</strong></p>
+                      <h3 class="mb-0">₹ <% if(todaySales.length) {  %><%=(todaySales[0].total).toFixed(0)%><% } else {%> 0  <%}%></h3>
+                   
+                      <div class="chart-box mt-n5">
+                        <div id="lineChartWidget"></div>
+                      </div>
+                      <!-- <div class="row">
+                        <div class="col-4 text-center mt-3">
+                          <p class="mb-1 text-muted">Completions</p>
+                          <h6 class="mb-0">26</h6>
+                          <span class="small text-muted">+20%</span>
+                          <span class="fe fe-arrow-up text-success fe-12"></span>
+                        </div>
+                        <div class="col-4 text-center mt-3">
+                          <p class="mb-1 text-muted">Goal Value</p>
+                          <h6 class="mb-0">$260</h6>
+                          <span class="small text-muted">+6%</span>
+                          <span class="fe fe-arrow-up text-success fe-12"></span>
+                        </div>
+                        <div class="col-4 text-center mt-3">
+                          <p class="mb-1 text-muted">Conversion</p>
+                          <h6 class="mb-0">6%</h6>
+                          <span class="small text-muted">-2%</span>
+                          <span class="fe fe-arrow-down text-danger fe-12"></span>
+                        </div>
+                      </div> -->
+                    </div> <!-- .card-body -->
+                  </div> <!-- .card -->
+                </div> <!-- .col-md -->
+               
+               
+                <!-- <div class="col-md-6">
+                  <div class="card shadow mb-4">
+                    <div class="card-body">
+                      <div class="card-title">
+                        <strong>Region</strong>
+                        <a class="float-right small text-muted" href="#!">View all</a>
+                      </div>
+                      <div class="map-box" style="position: relative; width: 350px; min-height: 130px; margin:0 auto;">
+                        <div id="dataMapUSA"></div>
+                      </div>
+                      <div class="row align-items-center h-100 my-2">
+                        <div class="col">
+                          <p class="mb-0">France</p>
+                          <span class="my-0 text-muted small">+10%</span>
+                        </div>
+                        <div class="col-auto text-right">
+                          <span>118</span><br />
+                          <div class="progress mt-2" style="height: 4px;">
+                            <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row align-items-center my-2">
+                        <div class="col">
+                          <p class="mb-0">Netherlands</p>
+                          <span class="my-0 text-muted small">+0.6%</span>
+                        </div>
+                        <div class="col-auto text-right">
+                          <span>1008</span><br />
+                          <div class="progress mt-2" style="height: 4px;">
+                            <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row align-items-center my-2">
+                        <div class="col">
+                          <p class="mb-0">Italy</p>
+                          <span class="my-0 text-muted small">+1.6%</span>
+                        </div>
+                        <div class="col-auto text-right">
+                          <span>67</span><br />
+                          <div class="progress mt-2" style="height: 4px;">
+                            <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row align-items-center my-2">
+                        <div class="col">
+                          <p class="mb-0">Spain</p>
+                          <span class="my-0 text-muted small">+118%</span>
+                        </div>
+                        <div class="col-auto text-right">
+                          <span>186</span><br />
+                          <div class="progress mt-2" style="height: 4px;">
+                            <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>  -->
+              </div> 
+              <div class="row">
+                <!-- Recent orders -->
+                <div class="col-md-12">
+                  <h6 class="mb-3">Last orders</h6>
+                  <table class="table table-borderless table-striped">
+                    <thead>
+                      <tr role="row">
+                        <th>ID</th>
+                        <th>Purchase Date</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Total</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                   
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(var i=0; i<orders.length; i++) { %>
+
+
+                      <tr>
+                        <th scope="col"><%=orders[i].order.orderId%></th>
+                        <td><%=orders[i].order.date.toLocaleDateString()%></td>
+                        <td>   <%=orders[i].order.address.firstName%>  <%=orders[i].order.address.lastName%>                           </td>
+                        <td>   <%=orders[i].order.address.phoneNumber%> </td>
+                        <td>₹ <%=orders[i].order.totalAmount%></td>
+                        <td><%=orders[i].order.paymentMethod%>  </td>
+                        <td> <%=orders[i].order.status%></td>
+                    
+                      </tr>
+                 
+                      <% } %>
+                    
+                    </tbody>
+                  </table>
+                </div> <!-- / .col-md-3 -->
+              </div> <!-- end section -->
+            </div>
+          </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
+        <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="list-group list-group-flush my-n3">
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-box fe-24"></span>
+                      </div>
+                      <div class="col">
+                        <small><strong>Package has uploaded successfull</strong></small>
+                        <div class="my-0 text-muted small">Package is zipped and uploaded</div>
+                        <small class="badge badge-pill badge-light text-muted">1m ago</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-download fe-24"></span>
+                      </div>
+                      <div class="col">
+                        <small><strong>Widgets are updated successfull</strong></small>
+                        <div class="my-0 text-muted small">Just create new layout Index, form, table</div>
+                        <small class="badge badge-pill badge-light text-muted">2m ago</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-inbox fe-24"></span>
+                      </div>
+                      <div class="col">
+                        <small><strong>Notifications have been sent</strong></small>
+                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
+                        <small class="badge badge-pill badge-light text-muted">30m ago</small>
+                      </div>
+                    </div> <!-- / .row -->
+                  </div>
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-link fe-24"></span>
+                      </div>
+                      <div class="col">
+                        <small><strong>Link was attached to menu</strong></small>
+                        <div class="my-0 text-muted small">New layout has been attached to the menu</div>
+                        <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                      </div>
+                    </div>
+                  </div> <!-- / .row -->
+                </div> <!-- / .list-group -->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body px-5">
+                <div class="row align-items-center">
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-success justify-content-center">
+                      <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Control area</p>
+                  </div>
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Activity</p>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Droplet</p>
+                  </div>
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Upload</p>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-users fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Users</p>
+                  </div>
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Settings</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main> <!-- main -->
+    </div> <!-- .wrapper -->
+  
+    <script src="../../jsAdmin/jquery.min.js"></script>
+    <script src="../../jsAdmin/popper.min.js"></script>
+    <script src="../../jsAdmin/moment.min.js"></script>
+    <script src="../../jsAdmin/bootstrap.min.js"></script>
+    <script src="../../jsAdmin/simplebar.min.js"></script>
+    <script src='../../jsAdmin/daterangepicker.js'></script>
+    <script src='../../jsAdmin/jquery.stickOnScroll.js'></script>
+    <script src="../../jsAdmin/tinycolor-min.js"></script>
+    <script src="../../jsAdmin/config.js"></script>
+    <script src="../../jsAdmin/d3.min.js"></script>
+    <script src="../../jsAdmin/topojson.min.js"></script>
+    <script src="../../jsAdmin/datamaps.all.min.js"></script>
+    <script src="../../jsAdmin/datamaps-zoomto.js"></script>
+    <script src="../../jsAdmin/datamaps.custom.js"></script>
+    <script src="../../jsAdmin/Chart.min.js"></script>
+    <script>
+      /* defind global options */
+      Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
+      Chart.defaults.global.defaultFontColor = colors.mutedColor;
+    </script>
+    <script src="../../jsAdmin/gauge.min.js"></script>
+    <script src="../../jsAdmin/jquery.sparkline.min.js"></script>
+    <script src="../../jsAdmin/apexcharts.min.js"></script>
+    <script src="../../jsAdmin/apexcharts.custom.js"></script>
+    <script src='../../jsAdmin/jquery.mask.min.js'></script>
+    <script src='../../jsAdmin/select2.min.js'></script>
+    <script src='../../jsAdmin/jquery.steps.min.js'></script>
+    <script src='../../jsAdmin/jquery.validate.min.js'></script>
+    <script src='../../jsAdmin/jquery.timepicker.js'></script>
+    <script src='../../jsAdmin/dropzone.min.js'></script>
+    <script src='../../jsAdmin/uppy.min.js'></script>
+    <script src='../../jsAdmin/quill.min.js'></script>
+    <script>
+      $('.select2').select2(
+      {
+        theme: 'bootstrap4',
+      });
+      $('.select2-multi').select2(
+      {
+        multiple: true,
+        theme: 'bootstrap4',
+      });
+      $('.drgpicker').daterangepicker(
+      {
+        singleDatePicker: true,
+        timePicker: false,
+        showDropdowns: true,
+        locale:
+        {
+          format: 'MM/DD/YYYY'
+        }
+      });
+      $('.time-input').timepicker(
+      {
+        'scrollDefault': 'now',
+        'zindex': '9999' /* fix modal open */
+      });
+      /** date range picker */
+      if ($('.datetimes').length)
+      {
+        $('.datetimes').daterangepicker(
+        {
+          timePicker: true,
+          startDate: moment().startOf('hour'),
+          endDate: moment().startOf('hour').add(32, 'hour'),
+          locale:
+          {
+            format: 'M/DD hh:mm A'
+          }
+        });
+      }
+      var start = moment().subtract(29, 'days');
+      var end = moment();
+
+      function cb(start, end)
+      {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+      }
+      $('#reportrange').daterangepicker(
+      {
+        startDate: start,
+        endDate: end,
+        ranges:
+        {
+          'Today': [moment(), moment()],
+          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month': [moment().startOf('month'), moment().endOf('month')],
+          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+      }, cb);
+      cb(start, end);
+      $('.input-placeholder').mask("00/00/0000",
+      {
+        placeholder: "__/__/____"
+      });
+      $('.input-zip').mask('00000-000',
+      {
+        placeholder: "____-___"
+      });
+      $('.input-money').mask("#.##0,00",
+      {
+        reverse: true
+      });
+      $('.input-phoneus').mask('(000) 000-0000');
+      $('.input-mixed').mask('AAA 000-S0S');
+      $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
+      {
+        translation:
+        {
+          'Z':
+          {
+            pattern: /[0-9]/,
+            optional: true
+          }
+        },
+        placeholder: "___.___.___.___"
+      });
+      // editor
+      var editor = document.getElementById('editor');
+      if (editor)
+      {
+        var toolbarOptions = [
+          [
+          {
+            'font': []
+          }],
+          [
+          {
+            'header': [1, 2, 3, 4, 5, 6, false]
+          }],
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'code-block'],
+          [
+          {
+            'header': 1
+          },
+          {
+            'header': 2
+          }],
+          [
+          {
+            'list': 'ordered'
+          },
+          {
+            'list': 'bullet'
+          }],
+          [
+          {
+            'script': 'sub'
+          },
+          {
+            'script': 'super'
+          }],
+          [
+          {
+            'indent': '-1'
+          },
+          {
+            'indent': '+1'
+          }], // outdent/indent
+          [
+          {
+            'direction': 'rtl'
+          }], // text direction
+          [
+          {
+            'color': []
+          },
+          {
+            'background': []
+          }], // dropdown with defaults from theme
+          [
+          {
+            'align': []
+          }],
+          ['clean'] // remove formatting button
+        ];
+        var quill = new Quill(editor,
+        {
+          modules:
+          {
+            toolbar: toolbarOptions
+          },
+          theme: 'snow'
+        });
+      }
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function()
+      {
+        'use strict';
+        window.addEventListener('load', function()
+        {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function(form)
+          {
+            form.addEventListener('submit', function(event)
+            {
+              if (form.checkValidity() === false)
+              {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+    </script>
+    <script>
+      var uptarg = document.getElementById('drag-drop-area');
+      if (uptarg)
+      {
+        var uppy = Uppy.Core().use(Uppy.Dashboard,
+        {
+          inline: true,
+          target: uptarg,
+          proudlyDisplayPoweredByUppy: false,
+          theme: 'dark',
+          width: 770,
+          height: 210,
+          plugins: ['Webcam']
+        }).use(Uppy.Tus,
+        {
+          endpoint: 'https://master.tus.io/files/'
+        });
+        uppy.on('complete', (result) =>
+        {
+          console.log('Upload complete! We’ve uploaded these files:', result.successful)
+        });
+      }
+    </script>
+    <script src="../../jsAdmin/apps.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag()
+      {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-56159088-1');
+    </script>
+
+
+<script>
+
+
+
+
+ fetch('/admin_panel/orders_month', {
+    method: "get",
+}).then(data => data.json()).then((data) => {
+    // console.log(data);
+console.log(data,'mpnthhhhhhhhhhhhhhhhhh');
+  
+    let orderCount = [0,0,0,0,0,0,0,0,0,0,0,0]
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    for (const val of data) {
+        let month = ` ${val.detail.month} `
+        if(   new Date().getMonth()+1 >= month){
+  
+        orderCount[month-1]  =  (val.count)
+      
+      }
+    }
+
+
+    fetch(' /admin_panel/users_month ', {
+    method: "get",
+}).then(data => data.json()).then((data) => { 
+
+  console.log(data,'userrrrrrrrrs monthhhhhhhhhhhhh');
+let userCount = [0,0,0,0,0,0,0,0,0,0,0,0]
+
+  for (const val of data) {
+        let month = ` ${val.detail.month} `
+      
+        if(   new Date().getMonth()+1 >= month){
+  
+
+        userCount[month-1]  =  (val.count)
+      
+      
+      }
+    }
+
+// Admin columnChart Total Orders and Users 
+
+var columnChart,
+  columnChartoptions = {
+  chart: {
+    height: 380,
+    type: "line"
+  },
+  series: [
+    {
+      name: "Number of Orders",
+      type: "column",
+      data: [...orderCount]
+    },
+    {
+      name: "Number of New Users",
+      type: "column",
+      data: [...userCount]
+    }
+  ],
+  stroke: {
+    width: [0, 4],
+    curve: 'smooth'
+  },
+
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  // labels: [
+  //   "01 Jan 2001",
+  //   "02 Jan 2001",
+  //   "03 Jan 2001",
+  //   "04 Jan 2001",
+  //   "05 Jan 2001",
+  //   "06 Jan 2001",
+  //   "07 Jan 2001",
+  //   "08 Jan 2001",
+  //   "09 Jan 2001",
+  //   "10 Jan 2001",
+  //   "11 Jan 2001",
+  //   "12 Jan 2001"
+  // ],
+  xaxis: {
+    type: "text"
+  },
+
+};
+
+
+  columnChartCtn = document.querySelector("#columnChart");
+
+  
+columnChartCtn &&
+  (columnChart = new ApexCharts(columnChartCtn, columnChartoptions)).render();
+
+
+
+  // end   of   bar   chart 
+
+
+
+
+
+
+
+
+
+
+
+
+})
+
+
+
+
+
+
+
+
+    
+
+
+    // Get the chart's base64 image string
+        // var image = masspopChart1.toBase64Image();
+        // console.log(image);
+
+        // document.getElementById('btn-download').onclick = function () {
+
+        //     // Trigger the download
+        //     var a = document.createElement('a');
+        //     a.href = masspopChart1.toBase64Image();
+        //     a.download = 'my_file_name.png';
+        //     a.click();
+        // }
+
+
+
+
+
+})
+
+
+
+fetch('/admin_panel/orders_day', {
+    method: 'get',
+}).then((val) => val.json())
+    .then((data) => {
+        console.log(data,'dauuuuuuuuyyyyy');
+ 
+        let orderCountsDay = [0, 0, 0, 0, 0, 0, 0]
+        for (const val of data) {
+            let date = `${val.detail.dayOfWeek}`
+         if(   new Date().getDay()+1 > date){
+
+           console.log(date-1);
+                  orderCountsDay[date-1]= (val.count)
+
+
+         }
+        }
+
+ 
+        fetch(' /admin_panel/users_day ', {
+    method: "get",
+}).then(data => data.json()).then((data) => { 
+
+  console.log(data,'userrrrrrrrrs day');
+let userCount = [0, 0, 0, 0, 0, 0, 0]
+
+  for (const val of data) {
+        let month = ` ${val.detail.dayOfWeek} `
+        if(   new Date().getDay()+1 > month){
+  
+        userCount[month-1]  =  (val.count)
+      }
+    }
+console.log(userCount);
+// Admin Line Chart Today Orders   
+
+var lineChartWidget,
+  lineChartWidgetoptions = {
+    series: [
+      {
+        name: "Users",
+        data: [
+      ...userCount
+        ],
+      },
+      {
+        name: "Orders",
+        data: [
+         ...orderCountsDay
+        ],
+      },
+    ],
+
+    chart: {
+      height: 140,
+      type: "line",
+      toolbar: { show: true },
+      zoom: { enabled: !1 },
+    },
+    theme: { mode: colors.chartTheme },
+    stroke: {
+      show: !0,
+      curve: "straight",
+      lineCap: "butt",
+      colors: chartColors,
+      width: [3, 2],
+      dashArray: [0, 0],
+    },
+    dataLabels: { enabled: !1 },
+    markers: { size: 0 },
+    xaxis: {
+      type: "text",
+      categories: [
+      'sunday',
+      'monday',
+      'tuesday',
+      'wednesday',
+      'thursday',
+      'friday',
+      'saturday',
+     
+     
+
+      ],
+      labels: { show: !1 },
+      axisBorder: { show: !1 },
+      axisTicks: { show: !1 },
+    },
+    yaxis: { labels: { show: !1 } },
+    legend: { show: !1 },
+    grid: { show: !1, padding: { top: 0, right: 0, bottom: 0, left: -5 } },
+  },
+  lineChartWidgetCtn = document.querySelector("#lineChartWidget");
+lineChartWidgetCtn &&
+  (lineChartWidget = new ApexCharts(
+    lineChartWidgetCtn,
+    lineChartWidgetoptions
+  )).render();
+
+// end
+
+
+
+
+
+
+  })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Get the chart's base64 image string
+
+        // var image = masspopChart.toBase64Image();
+        // console.log(image);
+
+        // document.getElementById('btn-download').onclick = function () {
+        //     // Trigger the download
+        //     var a = document.createElement('a');
+        //     a.href = masspopChart.toBase64Image();
+        //     a.download = 'my_file_name.png';
+        //     a.click();
+        // }
+
+
+
+    })
+
+
+
+
+
+    fetch(' /admin_panel/categorySales', {
+    method: 'get',
+}).then((val) => val.json())
+    .then((data) => {
+        console.log(data,'hiiiiiii categoryyyyyyyyyy');
+      
+         let catPercent = []
+         let categories = []
+      
+        for (const val of data) {
+        
+        catPercent.push(val.count)
+         categories.push(val.categoryName)
+       }
+
+
+
+
+
+
+
+
+
+     // Admin Dashboard Donut Chart Top categories
+
+
+var donutChartWidget,
+  donutChartWidgetOptions = {
+        series: [...catPercent],
+        colors: ['#ffb822', '#249EFA', '#1dc9b7', '#fd397a', '#5578eb'], 
+        chart: {
+       
+      height: 185,
+   
+      toolbar: { show: true },
+      zoom: { enabled: !1 },
+
+            type: 'donut',
+     
+        },
+        dataLabels: {
+            enabled: false
+        },
+        labels: [...categories],
+        legend: {
+            show: false,
+        },
+        fill: {
+            type: 'gradient',
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }],
+        tooltip: {
+    custom: function({ series, seriesIndex, dataPointIndex, w }) {
+      return (
+        '<div class="arrow_box">' +
+   
+        
+        "<span>" +
+        w.globals.labels[seriesIndex] +
+        ": " +
+        series[seriesIndex] +
+        "</span>" +
+        "</div>"
+      );
+    }
+  },
+        plotOptions: {
+            pie: {
+                expandOnClick: false,
+                donut: {
+                    labels: {
+                        show: true,
+                        name: {
+                            show: true,
+                            fontSize: '22px',
+                            offsetY: -5
+                        },
+                        value: {
+                            show: true,
+                            fontSize: '16px',
+                            color: undefined,
+                            offsetY: +5,
+                            formatter: function (val) {
+                                return val
+                            }
+                        },
+                        total: {
+                            show: true,
+                            label: 'Total Orders',
+                            color: '#ffa500',
+                            formatter: function (w) {
+                                return w.globals.seriesTotals.reduce((a, b) => {
+                                    return a + b
+                                }, 0)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+
+
+
+
+  donutChartWidgetCtn = document.querySelector("#donutChartWidget");
+donutChartWidgetCtn &&
+  (donutChartWidget = new ApexCharts(
+    donutChartWidgetCtn,
+    donutChartWidgetOptions
+  )).render();
+
+
+// end  
+
+
+
+
+
+
+
+
+
+
+
+
+        // Get the chart's base64 image string
+
+        // var image = masspopChart.toBase64Image();
+        // console.log(image);
+
+        // document.getElementById('btn-download').onclick = function () {
+        //     // Trigger the download
+        //     var a = document.createElement('a');
+        //     a.href = masspopChart.toBase64Image();
+        //     a.download = 'my_file_name.png';
+        //     a.click();
+        // }
+    })
+
+
+
+
+    
+
+
+
+
+
+
+
+
+  
+</script>

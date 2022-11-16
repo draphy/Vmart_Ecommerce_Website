@@ -1,0 +1,126 @@
+<%-include('../partials/userHeader.ejs') %>
+
+<!-- Breadcrumb Section Begin -->
+<section
+  class="breadcrumb-section set-bg"
+  data-setbg="../../images/vegetables4_b72-.jpg"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <div class="breadcrumb__text">
+          <h2>Orders</h2>
+          <div class="breadcrumb__option">
+            <a href="./index.html">Home</a>
+            <span>Orders</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+  <% if( orders) { %> <% if( orders.length) { %>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="shoping__cart__table">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 4rem; text-align: left">No:</th>
+                <th style="width: 25rem; text-align: left">Order Id</th>
+                <th>Order Date</th>
+                <th>Payment Method</th>
+                <th>Total Products</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for (let i=0; i < orders.length; i++) { %>
+              <tr>
+                <td><%=i+1%>.</td>
+                <td style="text-align: left; width: 25rem">
+                  <a
+                    href="/homepage/order_details/<%=orders[i].order.orderId %>"
+                    style="color: white; font-size: large"
+                    class="btn btn-success"
+                    ><%=orders[i].order.orderId %></a
+                  >
+                </td>
+                <td>
+                  <h6><%=orders[i].order.date.toLocaleDateString() %></h6>
+                </td>
+                <td>
+                  <h6><%=orders[i].order.paymentMethod %></h6>
+                </td>
+                <td>
+                  <h6><%=orders[i].order.products.length %></h6>
+                </td>
+
+                <td class="shoping__cart__total">
+                  ₹ <%=orders[i].order.totalAmount %>
+                </td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% }else {%>
+
+  <div class="row container-fluid">
+    <div class="col-md-12">
+      <div class="col-sm-12 empty-cart-cls text-center">
+        <img
+          src="../../images/cart_is_empty.gif"
+          width="380rem"
+          height="330rem"
+          class="img-fluid mb-4 mr-3"
+        />
+        <h3><strong>Your Orders is Empty</strong></h3>
+        <h4>Order something to make me happy :)</h4>
+        <a
+          href="/homepage"
+          class="btn btn-success cart-btn-transform m-3"
+          data-abc="true"
+          >continue shopping</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <% } %> <% }else {%>
+
+  <div class="row container-fluid">
+    <div class="col-md-12">
+      <div class="col-sm-12 empty-cart-cls text-center">
+        <img
+          src="../../images/cart_is_empty.gif"
+          width="380rem"
+          height="330rem"
+          class="img-fluid mb-4 mr-3"
+        />
+        <h3><strong>Your Orders is Empty</strong></h3>
+        <h4>Order something to make me happy :)</h4>
+        <a
+          href="/homepage"
+          class="btn btn-success cart-btn-transform m-3"
+          data-abc="true"
+          >continue shopping</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <% } %>
+</section>
+<!-- Shoping Cart Section End -->
+
+<!-- Footer Section Begin -->
+<%-include('../partials/userFooter.ejs') %>
