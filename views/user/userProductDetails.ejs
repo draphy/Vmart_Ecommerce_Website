@@ -88,7 +88,16 @@
                         </div>
                     </div>
                     <a  href="javascript:void(0);" onclick="addToCart('<%=product[0]._id%>')" class="primary-btn">ADD TO CART</a>
-                    <%} else {%>  <h3  style="color: red; display: inline;">Out of Stock</h3> &nbsp;<%}%>
+                    <%} else {%> 
+                        <form id="weightFormId">
+
+                            <input type='hidden' name="weight"   value= "500" > 
+
+                        </form>
+
+                        
+                         <h3  style="color: red; display: inline;">Out of Stock</h3> &nbsp;
+                         <%}%>
 
                     <% if (userRole) { %> 
                               
