@@ -81,7 +81,12 @@
                 </td>
 
                 <% }else { %>
-
+                <input
+                  id="cartCountUpdateInput<%=i+1%>"
+                  type="hidden"
+                  value="<%=cartItems[i].quantity %>"
+                  readonly="readonly"
+                />
                 <td style="width: 10rem">
                   <span style="color: red">Out of Stock</span>
                 </td>
@@ -104,6 +109,13 @@
                 </td>
 
                 <% }else { %>
+
+                <input
+                  id="cartCountUpdateInput<%=i+1%>"
+                  type="hidden"
+                  value="<%=cartItems[i].quantity %>"
+                  readonly="readonly"
+                />
 
                 <td style="width: 10rem">
                   <span style="color: red">Out of Stock</span>

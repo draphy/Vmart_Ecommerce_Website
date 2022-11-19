@@ -356,6 +356,50 @@ document.getElementById('totalAmountFinal').innerHTML = `₹ ${totalReal}`
 
 function userPlaceOrder(){
 
+    let addressState = true
+
+let fname = document.getElementById('billingFirstName').value.trim()
+let lname = document.getElementById('billingLastName').value.trim()
+let country = document.getElementById('billingCountry').value.trim()
+let city = document.getElementById('billingCity').value.trim()
+let state = document.getElementById('billingState').value.trim()
+let email = document.getElementById('billingEmail').value.trim()
+let phoneNumber = document.getElementById('billingPhoneNumber').value.trim()
+let postCode = document.getElementById('billingPostCode').value.trim()
+let streetAddress = document.getElementById('billingStreetAddress').value.trim()
+
+if(fname === ''){
+    addressState = false
+}
+if(lname === ''){
+    addressState = false
+}
+if(country === ''){
+    addressState = false
+}
+if(city === ''){
+    addressState = false
+}
+if(state === ''){
+    addressState = false
+}
+if(email === ''){
+    addressState = false
+}
+if(phoneNumber === ''){
+    addressState = false
+}
+if(postCode === ''){
+    addressState = false
+}
+if(streetAddress === ''){
+    addressState = false
+}
+
+
+
+if (addressState){
+
     $.ajax({
         url: "/homepage/place_order",
         data:  $('#userPlaceOrderForm').serialize(),
@@ -573,6 +617,17 @@ showCancelButton: false,
           alert("Something Error");
         },
       });
+
+
+}else{
+
+    toastr.error('Fill the Address Form', 'Error')
+
+
+}
+
+
+ 
 
 
 
