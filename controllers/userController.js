@@ -53,7 +53,7 @@ module.exports = {
   userSearchGet: (req, res, next) => {
     let search = req.query.search;
     let minAmount = 10;
-    let maxAmount = 10000;
+    let maxAmount = 1000;
     if (req.query.minAmount) {
       minAmount = Number(req.query.minAmount);
       maxAmount = Number(req.query.maxAmount);
@@ -366,7 +366,7 @@ module.exports = {
 
   userCategoryProductDetailsGet: (req, res) => {
     let minAmount = 10;
-    let maxAmount = 10000;
+    let maxAmount = 1000;
     if (req.query.minAmount) {
       minAmount = Number(req.query.minAmount);
       maxAmount = Number(req.query.maxAmount);
