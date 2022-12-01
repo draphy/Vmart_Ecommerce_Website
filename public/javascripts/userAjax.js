@@ -26,6 +26,9 @@ function userSignIn() {
     if (passwordValue === "") {
       setErrorFor(password, "Password cannot be blank");
       status = false;
+    } else  if (passwordValue.length < 8) {
+      setErrorFor(password, "Password should contain 8 characters");
+      status = false;
     } else {
       setSuccessFor(password);
     }
@@ -149,6 +152,9 @@ function userSignUp() {
     if (status) {
       if (passwordValue === "") {
         setErrorFor(password, "Password cannot be blank");
+        status = false;
+      }else  if (passwordValue.length < 8) {
+        setErrorFor(password, "Password should contain 8 characters");
         status = false;
       } else {
         setSuccessFor(password);
