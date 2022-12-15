@@ -1641,6 +1641,7 @@ module.exports = {
             {
               $set: {
                 "order.$[orderPosition].status": status,
+                "order.$[orderPosition].statusDate": new Date(),
               },
             },
             {
