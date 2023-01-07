@@ -1,8 +1,7 @@
 # E-Commerce-app-using-MERN
 ## Ecommerce application Live 
  * Hosted on AWS EC2 instance 
- 
-[Link to the live application](https://www.vmart.ml/homepage)
+ [Link to the live application](https://www.vmart.ml/homepage)
 ## Features:
 * User & Admin Authentication
 * Payment gateways integrated: Razorpay, PayPal
