@@ -38,6 +38,7 @@
 ## Services used:
 * AWS
 * EC2
+* Cloudflare
 
 
 ## Future Updations:
