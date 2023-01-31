@@ -47,6 +47,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 //routes
+// app.use("/" , (req,res)=>{
+//   res.redirect("/homepage")
+// })
 app.use("/homepage", usersRouter);
 app.use("/admin_panel", adminRouter);
 
@@ -63,7 +66,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.redirect('/homepage')
+  res.redirect("/homepage")
   // res.render("error", { user: false, issue: true });
 });
 

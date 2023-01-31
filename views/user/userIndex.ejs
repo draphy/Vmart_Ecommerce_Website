@@ -271,50 +271,51 @@
       </div>
     </div>
     <!-- Banner End -->
-    <% if(topProducts.length) { %> 
+    <% if(topProducts.length>2 && latest.length>2) { %> 
     <!-- Latest Product Section Begin -->
     <section class="latest-product spad">
       <div class="container">
         <div class="row">
           <div class="col-lg-6 col-md-6">
             <div class="latest-product__text">
-
               <h4>Top Selling Products</h4>
               <div class="latest-product__slider owl-carousel">
-
-                <% for (let i=1; i<=2; i++) { %> 
-                <div class="latest-prdouct__slider__item">
-
-                  <% for (let j = topProducts.length-topProducts.length/i ; j<topProducts.length/(3-i); j++) { %> 
-                  <a href="/homepage/home/<%=topProducts[j].detail.order.products.productDetails.productsName.replace(' ','_')%>?productId=<%=topProducts[j].detail.order.products.productId%>" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="../../productsImages/<%=topProducts[j].detail.order.products.productId%>.jpg" alt="" />
+                <% for (let i = 0; i < 2; i++) { %> 
+            
+                    <div class="latest-prdouct__slider__item">
+                      <% for (let j = i * (topProducts.length / 2); j < (i + 1) * (topProducts.length / 2); j++) { %> 
+                        <% if (topProducts[j]) { %>
+                        <a href="/homepage/home/<%=topProducts[j]?.detail.order.products.productDetails.productsName.replace(' ','_')%>?productId=<%=topProducts[j].detail.order.products.productId%>" class="latest-product__item">
+                          <div class="latest-product__item__pic">
+                            <img src="../../productsImages/<%=topProducts[j].detail.order.products.productId%>.jpg" alt="" />
+                          </div>
+                          <div class="latest-product__item__text">
+                            <h6><%=topProducts[j].detail.order.products.productDetails.productsName%></h6>
+                            <span></span>
+                          </div>
+                        </a>
+                        <% } %>
+                        <% } %>
                     </div>
-                    <div class="latest-product__item__text">
-                      <h6><%=topProducts[j].detail.order.products.productDetails.productsName%></h6>
-                      <span></span>
-                    </div>
-                  </a>
-                  <% } %>
-                </div>
-                <% } %>
-
               
-                
+                  
+                <% } %>
               </div>
             </div>
           </div>
+          
 
           <div class="col-lg-6 col-md-6">
             <div class="latest-product__text">
-
+          
               <h4>Latest Products</h4>
               <div class="latest-product__slider owl-carousel">
-
+          
                 <% for (let i=1; i<=2; i++) { %> 
                 <div class="latest-prdouct__slider__item">
-              
+          
                   <% for (let j = latest.length-latest.length/i ; j<latest.length/(3-i); j++) { %> 
+                  <% if (latest[j]) { %>
                   <a href="/homepage/home/<%=latest[j].productsName.replace(' ','_')%>?productId=<%=latest[j]._id%>" class="latest-product__item">
                     <div class="latest-product__item__pic">
                       <img src="../../productsImages/<%=latest[j]._id%>.jpg" alt="" />
@@ -325,13 +326,15 @@
                     </div>
                   </a>
                   <% } %>
+                  <% } %>
                 </div>
-              
+          
                 <% } %>
-
+          
               </div>
             </div>
           </div>
+          
         </div>
       </div>
     </section>

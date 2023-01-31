@@ -162,13 +162,6 @@ module.exports = {
             $project: { order: 1 },
           },
           {
-            $match: {
-              "order.date": {
-                $gte: new Date(new Date() - 1000 * 60 * 60 * 24 * 31),
-              },
-            },
-          },
-          {
             $unwind: "$order.products",
           },
           {
